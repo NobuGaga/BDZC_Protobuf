@@ -1,0 +1,38 @@
+
+¯
+PQuest.protoPQuestPCommon.proto"P
+
+PMainQuest
+questid (Rquestid
+pro (Rpro
+maxval (Rmaxval"g
+PDailyQuest
+questid (Rquestid
+pro (Rpro
+maxval (Rmaxval
+state (Rstate"$
+CDoneReq
+questid (Rquestid"*
+CActiveAward
+activeid (Ractiveid"%
+CShareAward
+reward (Rreward"½
+SInit0
+	mainQuest (2.PQuest.PMainQuestR	mainQuest3
+
+dailyQuest (2.PQuest.PDailyQuestR
+dailyQuest 
+activeValue (RactiveValue+
+awarded_activeids (RawardedActiveids"[
+SDailyUpdate)
+quest (2.PQuest.PDailyQuestRquest 
+activeValue (RactiveValue"T
+SActiveAward
+activeid (Ractiveid(
+
+rewardList (2.PIntIntR
+rewardList"]
+SShareAward
+times (Rtimes 
+rewardtimes (Rrewardtimes
+reward (RrewardBH

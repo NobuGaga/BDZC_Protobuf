@@ -1,0 +1,173 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PWharf;
+
+// enum WharfCmd
+// {
+    // cVist = 1,                   // 寻访请求
+    // cXiaozai = 2,                // 消灾
+    // cZhuanyun = 3,               // 转运
+    // cRecoverEnergy = 4,          // 恢复体力
+    // cGirlEvent = 5,              // 美女事件状态列表
+    // cReadEvent = 6,              // 读事件
+    // cChallenge = 7,              // 挑战（事件对应npc）
+    // cActivateGirlPictorial = 8,  // 激活美女图鉴
+    
+    // sBaseInfo = 1,               // 系统基本信息
+    // sVist = 2,                   // 寻访结果
+    // sGirlList = 3,               // 美女解锁状态列表
+    // sEventList = 4,              // 新事件列表
+    // sGirlEvent = 5,              // 美女事件状态列表
+    // sNewEvent = 6,               // 新事件
+    // sReadEvent = 7,              // 读事件
+    // sChallenge = 8,              // 挑战（事件对应npc）
+    // sUnlockGirl = 9,             // 解锁美女 PGirl
+    // sGirlPictorial = 10,         // 激活美女图鉴列表
+    // sNewGirlPictorial = 11,      // 新激活美女图鉴
+// }
+
+// 消灾方法
+enum XiaozaiWay
+{
+    XiaozaiDisable = 0;             // 不消灾
+    XiaozaiByProduction = 1;        // 业绩消灾
+    XiaozaiByGoods = 2;             // 商品消灾
+}
+
+
+// 寻访结果
+message PVisitResult
+{
+    required int32 peopleId = 1;    // 人物ID
+    repeated PItem itemList = 2;    // 奖励道具
+}
+
+
+// Client -> Server
+// 寻访
+message CVisit
+{
+    required int32 autoXiaozai = 1;         // 自动消灾（0、不自动消灾，1、使用业绩，2、使用商品）
+    required int32 autoXiaozaiThreshold = 2;// 自动消灾阀值（小于该值时自动消灾）
+    optional bool onekey = 3;               // 一键寻访 
+}
+
+// // 手动消灾
+message CXiaozai
+{
+    required int32 xiaozaiWay = 1;      // 消灾方法
+}
+
+// Server -> Client
+// 系统基本信息
+message SBaseInfo
+{
+    required int32 luck = 1;            // 运势值
+    optional int32 luckRecoverCD = 2;   // 运势恢复剩余时间
+    required int32 xiaozaiTimes = 3;    // 已消灾次数
+    required int32 zhuanyunTimes = 4;   // 已转运次数
+    required int32 energy = 5;          // 体力值
+    optional int32 energyRecoverCD = 6; // 体力恢复剩余时间
+    required int32 prestige = 7;        // 名望
+}
+
+// 寻访结果
+message SVisit
+{
+    repeated PVisitResult resList = 1;  // 结果列表
+    optional bool onekey = 2;           // 是否一键寻访
+}
+
+
+//////////////////////////////////////////////////////////
+// 寻访V2.0
+// 1、初始化时服务器推送SGirlList（美女解锁状态列表）和SEventList（新事件列表），独立于SBaseInfo主要考虑到SBaseInfo会在其中涉及的信息
+//    发生变化时进行同步，为减少同步数据量特将其独立进行发送
+// 2、点击美女头像或者新事件发送CGirlEvent请求美女详细事件列表（事件状态列表）
+// 3、特殊NPC可能触发事件（活动需求或特殊剧情），该类事件没有关系链，但有剧情甚至可出现挑战玩法
+
+message PEvent
+{
+    required int32 id = 1;              // 事件id
+    optional int32 state = 2;           // 状态 0未读 1已读 2完成（美女列表时不发该字段）
+    optional int32 peopleId = 3;        // 人物id（美女列表时不发该字段）
+}
+
+message PGirl
+{
+    required int32 id = 1;              // 美女id
+    required int32 peopleId = 2;        // 人物id
+    required int32 state = 3;           // 状态 1已解锁 2已结识
+}
+
+// 美女解锁状态列表
+message SGirlList
+{
+    repeated PGirl list = 1;            // 美女列表（美女解锁状态）
+}
+
+// 新事件列表
+message SEventList
+{
+    repeated PEvent list = 1;            // 事件列表（新事件，按先后顺序排列）
+}
+
+// 美女事件状态列表
+message CGirlEvent
+{
+    required int32 girlId = 1;          // 美女id
+}
+
+message SGirlEvent
+{
+    required int32 girlId = 1;          // 美女id
+    repeated PEvent eventList = 2;      // 事件列表
+}
+
+// 新事件
+message SNewEvent
+{
+    required PEvent event = 1;         // 事件
+}
+
+// 读事件
+message CReadEvent
+{
+    required int32 eventId = 1;         // 事件id
+}
+
+message SReadEvent
+{
+    required int32 eventId = 2;         // 事件id
+}
+
+// 挑战（事件对应npc）
+message CChallenge
+{
+    required int32 eventId = 1;         // 事件id
+}
+
+message SChallenge
+{
+    required int32 eventId = 1;         // 事件id
+    required int32 result = 2;          // 结果 1成功 0失败
+}
+
+// 图鉴
+message CActivateGirlPictorial
+{
+    required int32 girlId = 1;          // 美女id
+}
+
+message SGirlPictorial
+{
+    repeated int32 girlList = 1;        // 已激活列表
+}
+
+message SNewGirlPictorial
+{
+    required int32 girlId = 1;          // 美女id
+}

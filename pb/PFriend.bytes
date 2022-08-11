@@ -1,0 +1,56 @@
+
+ˆ	
+PFriend.protoPFriendPCommon.proto"ã
+PPlayerInfo
+id (Rid
+name (	Rname
+power (Rpower
+vip (Rvip
+level (Rlevel
+headId (RheadId
+sex (Rsex
+	leaveTime (R	leaveTime
+relation	 (Rrelation
+
+commerceId
+ (R
+commerceId"
+commerceName (	RcommerceName
+marryNum (RmarryNum
+bodyId (RbodyId
+chatBg (RchatBg"7
+PPlayerList(
+list (2.PFriend.PPlayerInfoRlist"L
+PPlayerIdsList
+ids (Rids(
+list (2.PFriend.PPlayerInfoRlist"=
+PPlayerRelation
+id (Rid
+relation (Rrelation"8
+CAddList
+relation (Rrelation
+ids (Rids"v
+	CFeedback3
+list (2.PFriend.CFeedback.FeedbackInfoRlist4
+FeedbackInfo
+id (Rid
+state (Rstate"#
+CLook
+relation (Rrelation"
+CFindIds
+ids (Rids"#
+CFind
+nameOrId (	RnameOrId"
+SInit/
+info (2.PFriend.SInit.RelationListRinfo
+addNum (RaddNum>
+RelationList
+relation (Rrelation
+list (Rlist"_
+SUpdate
+id (Rid
+name (	Rname
+relation (Rrelation
+state (Rstate"!
+SAddFriendNum
+num (RnumBH

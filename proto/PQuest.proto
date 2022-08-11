@@ -1,0 +1,84 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PQuest;
+
+// 协议描述
+// enum QuestCmd
+// {
+// 	cQuestMainDone							=	1,//请求主线任务完成 PQuest.CDoneReq
+// 	cQuestDailyDone							=	2,//请求日常任务完成 PQuest.CDoneReq
+// 	cQuestActiveAward						=	3,//每日活跃度奖励 PQuest.CActiveAward
+//	cQuestShareAward						=	5,//每日分享奖励 PQuest.CShareAward
+
+// 	sQuestInit								=	1,//初始化	PQuest.SInit
+// 	sQuestMainUpdate						=	2,//主线任务更新状态 PQuest.PMainQuest
+// 	sQuestDailyUpdate						=	3,//日常任务更新状态 PQuest.SDailyUpdate
+// 	sQuestActiveAward						=	4,//活跃度奖励 PQuest.SActiveAward
+//	sQuestShareAward						=	5,//每日分享奖励PQuest.SShareAward
+// };
+
+//////////////////////////////////////////////////////////////////////////
+// Common message
+message PMainQuest
+{
+	required int32 questid = 1; //任务id
+	required int64 pro = 2;		//进度 --> 当进度 == 总量的时候为完成状态
+	required int64 maxval = 3;		//总量
+}
+
+message PDailyQuest
+{
+	required int32 questid = 1; 	//任务id
+	required int64 pro = 2;			//进度 --> 当进度 == 总量的时候为完成状态
+	required int64 maxval = 3;		//总量
+	required int32 state = 4;		//1未完成 2已完成(未领取奖励) 3已领取奖励
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+message CDoneReq
+{
+	required int32 questid = 1; //任务id
+}
+
+message CActiveAward
+{
+	required int32 activeid = 1;//活跃度id	
+}
+
+message CShareAward
+{
+	required bool reward = 1; //是否领取奖励 true：领奖 false：分享
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Server -> Client
+message SInit
+{
+	required PMainQuest mainQuest = 1;	//主线任务
+	repeated PDailyQuest dailyQuest = 2; //日常
+	required int32 activeValue = 3;	//当权日常活跃度
+	repeated int32 awarded_activeids = 4;//已经领取过的活跃度id列表
+}
+
+message SDailyUpdate
+{
+	required PDailyQuest quest = 1; 	//任务信息
+	required int32 activeValue = 2;	//当前日常活跃度
+}
+
+message SActiveAward
+{
+	required int32 activeid = 1;//活跃度id
+	repeated PIntInt rewardList = 2;//奖励列表
+}
+
+message SShareAward
+{
+	required int32 times = 1;//每日已分享次数
+	required int32 rewardtimes = 2;//每日分享奖励次数
+	optional bool reward = 3;//是否领奖成功
+}

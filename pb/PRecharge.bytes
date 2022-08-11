@@ -1,0 +1,16 @@
+
+Ü
+PRecharge.proto	PRecharge"I
+PRechargeInfo
+	productId (R	productId
+buyTimes (RbuyTimes"%
+CCharge
+chargeID (RchargeID"H
+SRechargeSuccess
+	productId (R	productId
+amount (Ramount"?
+SVipSysInfo
+viplevel (Rviplevel
+value (Rvalue"=
+SRechargeInfo,
+list (2.PRecharge.PRechargeInfoRlistBH

@@ -1,0 +1,46 @@
+
+×
+PAirplane.proto	PAirplane"W
+PAirplaneSeat
+index (Rindex
+staffid (Rstaffid
+finish (Rfinish"”
+PAirplaneAward6
+	airplanes (2.PAirplane.PAirplaneSeatR	airplanes
+skillexp (Rskillexp
+bookexp (Rbookexp
+isGod (RisGod"
+	CAirplane
+ID (RID"A
+CAirplaneChoice
+index (Rindex
+staffid (Rstaffid"&
+CAirplaneAward
+index (Rindex"g
+PStudyTimes
+maxTimes (RmaxTimes
+	leftTimes (R	leftTimes
+
+recoveryCD (R
+recoveryCD"Þ
+SAirplaneInit0
+airplane (2.PAirplane.SAirplaneRairplane"
+airplaneSkin (RairplaneSkin?
+airplaneSeats (2.PAirplane.SAirplaneSeatsRairplaneSeats6
+
+studyTimes (2.PAirplane.PStudyTimesR
+studyTimes"w
+	SAirplane
+
+airplaneID (R
+airplaneID&
+airplaneSkinID (RairplaneSkinID"
+airplaneTime (RairplaneTime"(
+SAirplaneSkins
+skinID (RskinID"N
+SAirplaneSeats<
+airplaneSeat (2.PAirplane.PAirplaneSeatRairplaneSeat"S
+SAirplaneAwardA
+airplaneAwards (2.PAirplane.PAirplaneAwardRairplaneAwards"+
+SAirplaneActivate
+skinID (RskinIDBH

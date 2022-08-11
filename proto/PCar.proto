@@ -1,0 +1,243 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PCar;
+
+//系统id: 座驾
+//Car = 115,
+// local CMD_ID = 
+// {
+// 	cCarLevelUp						= 2,//升级 PCar.CCar
+// 	cCarStarUp						= 3,//升星 PCar.CCar
+// 	cCarAddParking					= 4,//车位开启PCar.CCar
+// 	cCarAdd							= 5,//车位添加车PCar.CCarAdd
+// 	cCarAddStaff					= 6,//员工乘驾PCar.CCarAddStaff
+// 	cCarRepalce						= 7,//车位更换车PCar.CCarAdd
+// 	cCarRepalceStaff				= 8,//更换员工PCar.CCarAddStaff
+//	cCarBreakDown					= 9,//分解PCar.CCar
+//	cCarReCast						= 10,//重铸PCar.CCar
+//	cCarHandsel						= 11,//赠送PCar.CCarHandsel
+//  cCarTotalBreakDown				= 14,//一键分解PCar.CCarTotalBreakDown
+//  cCarTotalSell					= 15,//一键出售PCar.CCarTotalSell
+//  cCarIntensify					= 16,//资质强化PCar.CCarIntensify
+//  cCarItemBreakDown				= 17,//材料分解PCar.CCarItemBreakDown
+//  cCarMerge						= 18,//合成PCar.CCarMerge
+//  cCarExtendSkill					= 19,//扩展技能PCar.CExtendSkill
+//  cCarChangeSkill					= 20,//改装技能PCar.CChangeSkill
+//  cCarReplaceSkill				= 21,//替换技能PCar.CReplaceSkill
+
+// 	sCarInit						= 1,//初始化 PCar.SCarInit
+// 	sCarLevelUp						= 2,//升级 PCar.SCarUpdate
+// 	sCarStarUp						= 3,//升星 PCar.SCarUpdate
+// 	sCarAddParking					= 4,//车位开启PCar.SAddParking
+// 	sCarAdd							= 5,//车位添加车PCar.SCarAdd
+// 	sCarAddStaff					= 6,//员工乘驾PCar.SCarAddStaff
+// 	sCarRepalce						= 7,//车位更换车PCar.SCarAdd
+// 	sCarRepalceStaff				= 8,//更换员工PCar.SCarAddStaff
+//	sCarBreakDown					= 9,//分解PCar.SCarBreakDown
+//	sCarReCast						= 10,//重铸PCar.SCarBreakDown
+//	sCarHandsel						= 11,//赠送PCar.SCarHandsel
+//	sCarSeatOpen					= 12,//车位开启推送PCar.SAddParking
+//	sCarNew							= 13,//添加新车推送PCar.SCarUpdate
+//	sCarTotalBreakDown				= 14,//一键分解返回PCar.SCarTotalBreakDown
+//	sCarTotalSell					= 15,//一键出售返回PCar.SCarTotalSell
+//	sCarIntensify					= 16,//资质强化PCar.SCarUpdate
+//  sCarItemBreakDown				= 17,//材料分解
+//  sCarMerge						= 18,//合成PCar.SCarMerge
+//  sCarExtendSkill					= 19,//扩展技能PCar.SExtendSkill
+//  sCarChangeSkill					= 20,//改装技能PCar.SChangeSkill
+//  sCarReplaceSkill				= 21,//替换技能PCar.SReplaceSkill
+//  sCarUpdateSkills				= 22,//更新技能列表PCar.SUpdateSkills
+// }
+
+message PCarInfo
+{
+	required int32 id = 1;	
+	required int32 carid = 2;	
+	required int32 level = 3;		//等级
+	required int32 color = 4;		//品阶
+	required int32 star = 5;		//阶级（星级）
+	required PAttribute Attr = 6;	//属性
+	required bool isequip = 7;		//是否装备
+	repeated PIntInt staffs = 8;	//座驾上员工
+	repeated PIntInt breakdown = 9;//分解后的材料
+	repeated PIntInt recast = 10;	//重铸后的材料
+	optional int32 intensifylv = 11;//强化
+	optional bool upresult = 12;//强化结果 true： 成功
+	repeated PSkill skillList = 13;	//技能列表
+}
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+message CCar
+{
+    required int32 id = 1;//车辆id
+}
+
+message CCarAdd
+{
+	required int32 index 	= 1;	//车位，从1开始
+    required int32 id 		= 2;	//车辆id
+}
+
+message CCarAddStaff
+{
+	required int32 carid 	= 1;	//车辆id
+	required int32 staffid 	= 2;	//员工ID
+	required int32 index 	= 3;	//车座位
+}
+
+message CCarHandsel
+{
+	required int32 playerid = 1;	//玩家id
+	required int32 carid 	= 2;	//座驾id	
+}
+
+message CCarTotalBreakDown
+{
+	repeated int32 carlist = 1;		//座驾id列表
+}
+
+message CCarTotalSell
+{
+	repeated int32 matlist = 1;		//材料id列表
+}
+
+message CCarIntensify
+{
+	required int32 type = 1;	//强化类型
+	required int32 carid = 2;	//座驾id	
+}
+
+message CCarItemBreakDown
+{
+	required int32 itemid = 1;	//id
+	required int32 itemCount = 2;		
+}
+
+message CCarMerge
+{
+	required int32 itemid = 1;	//id	
+}
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+message SCarInit
+{
+	repeated PIntInt carlist 	= 1;//车位中的车列表 k:index, v:carid
+	repeated PCarInfo carinfolist 	= 2;//座驾列表
+}
+
+message SCarUpdate
+{
+	required PCarInfo carinfo 	= 1;	
+}
+
+message SAddParking
+{
+	required int32 index = 1;	//车位
+}
+
+message SCarAdd
+{
+	required int32 index 		= 1;	//车位，从1开始
+    required PCarInfo carinfo 	= 2;	//车辆
+}
+
+message SCarAddStaff
+{
+	required int32 id = 1;	
+	required int32 seatid = 2;		 //车座位
+	required int32 staffid = 3;		 //座驾上员工
+	required int32 oldcarid = 4;     //员工之前乘坐的座驾id
+	optional PAttribute addAttr = 5; //座驾加成属性
+}
+
+message SCarBreakDown
+{
+	required int32 carid 		= 1;	//ID
+	repeated PIntInt getlist 	= 2;	//获得奖励列表
+	optional PCarInfo carinfo 	= 3;
+}
+
+message SCarHandsel
+{
+	required int32 carid 		= 1;	//ID
+}
+
+message SCarTotalBreakDown
+{
+	repeated int32 carlist 		= 1;	//座驾id列表
+	repeated PIntInt getlist 	= 2;	//获得奖励列表
+}
+
+message SCarTotalSell
+{
+	repeated int32 matlist		= 1;	//材料id列表
+	repeated PIntInt getlist 	= 2;	//获得奖励列表
+}
+
+message SCarMerge
+{
+	optional PCarInfo carinfo 	= 1;
+	optional PItem iteminfo 	= 2; //合成后的道具信息
+}
+
+
+//座驾技能
+message PSkill
+{
+	required int32 attrType = 1;	//属性类型
+	required int64 attrVal = 2;		//属性值
+	required int32 valType = 3;		//数值类型 1万分比 2固定值
+	required int32 skillId = 4;		//技能id
+}
+
+//扩展技能
+message CExtendSkill
+{
+	required int32 carId = 1;		//座驾id
+}
+
+message SExtendSkill
+{
+	required int32 carId = 1;		//座驾id
+	required int32 grid = 2;		//格子
+	required PSkill skill = 3;		//技能
+}
+
+//改装技能
+message CChangeSkill
+{
+	required int32 carId = 1;		//座驾id
+	required int32 grid = 2;		//格子
+}
+
+message SChangeSkill
+{
+	required int32 carId = 1;		//座驾id
+	required int32 grid = 2;		//格子
+	required PSkill skill = 3;		//技能
+}
+
+//替换技能
+message CReplaceSkill
+{
+	required int32 carId = 1;		//座驾id
+	required int32 grid = 2;		//格子
+}
+
+message SReplaceSkill
+{
+	required int32 carId = 1;		//座驾id
+	required int32 grid = 2;		//格子
+	required PSkill skill = 3;		//技能
+}
+
+//更新的技能列表
+message SUpdateSkills
+{
+	required int32 carId = 1;		//座驾id
+	repeated PSkill skills = 2;		//技能列表
+}

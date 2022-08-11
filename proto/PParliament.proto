@@ -1,0 +1,131 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+
+package PParliament;
+
+// 协议描述
+// 系统id: 议会
+// Parliament = 154,
+// enum ParliamentCmd
+// {
+// 	cParliamentList = 1,				//议会列表请求  
+// 	cParliamentGet = 2,         		//议会崇拜请求
+// 	cParliamentSetMsg = 3,				//议会留言请求 Parliament:CParliamentMessage 
+//	cUseTitle = 4,						//请求使用称号 Parliament:CUseTitle
+// 	cParliamentGivenList = 6,			//请求已赠送礼物玩家列表
+//	cParliamentGift = 7,				//请求赠送礼物 Parliament:CGift
+//  cParliamentLevelUp = 8,				//升级时装 Parliament:CLevelUp
+
+// 	sParliamentList = 1,				//议会列表返回 Parliament:SParliamentList 
+// 	sParliamentGet = 2,         		//议会崇拜返回
+// 	sParliamentSetMsg = 3,				//议会留言返回 Parliament:SParliamenMsg
+//	sUpdateTitleId = 4,					//称号ID更新 Parliament:SUpdateTitleId
+//	sTitleList = 5,						//称号列表下发 Parliament:STitleList
+//	sParliamentGiftList = 6,			//已赠送礼物玩家列表下发 Parliament:SGivenList
+//	sParliamentGetGifts = 7,			//已赠送礼物玩家下发 Parliament:SGetGift
+//	sParliamentupdate = 8,				//殿堂称号广播 Parliament:SParliamentAdd
+//  sParliamentSexUpdate = 9,			//殿堂人物性别更新 Parliament:SParliamentSex
+//  sParliamentLevelUp = 10,			//升级时装 Parliament:SLevelUp
+// };
+
+message PParliamentList
+{
+	required int32 titleID = 1;			//官职ID
+	required int32 playerID = 2;		//玩家ID 
+	required int32 sex = 3;				//性别 1 女 2 男 
+	required int32 head = 4;			//角色头像 
+	required string playerName = 5; 	//玩家名
+	required string msg = 6; 			//玩家留言
+	optional int64 endTime = 7; 		//称号结束时间戳
+	optional int32 serverid = 8;		//区服id
+}
+
+message PTitleList
+{
+	required int32 titleID	= 1;		//称号ID
+	required int32 time = 2;			//倒计时
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+message CParliamentMessage
+{
+	required int32 titleID	= 1;		//官职ID
+	required string msg	= 2;			//留言	
+}
+
+message CUseTitle
+{
+	required int32 titleID	= 1;		//称号ID	
+	required int32 type = 2; 			//1:穿上,2:卸下
+}
+
+message CGift
+{
+	required int32 playerID	= 1;		//玩家ID
+	required int32 titleId = 2;			//称号ID
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Server -> Client
+message SParliamentList
+{
+	repeated PParliamentList list = 1;	
+	required bool isGet = 2;			//是否已经领取奖励 true:领取，flase:未领取
+}
+
+message SUpdateTitleId
+{
+	required PTitleList title = 1;		//称号ID
+	optional int32 type = 2; 			//1:穿上,2:卸下,3:添加,4:过期（删除）
+}
+
+message STitleList
+{
+	required int32 titleId = 1;			//当前使用称号ID,没有不下发0
+	repeated PTitleList titlelist = 2; 	//拥有称号列表
+	repeated PIntInt titleLvList = 3;	//称号等级列表 [id, level]
+}
+
+message SParliamenMsg
+{
+	required int32 titleID	= 1;		//官职ID
+	required string msg	= 2;			//留言	
+}
+
+message SGivenList
+{
+	repeated int32 playerID	= 1;		//玩家ID
+	required int32 restTime = 2;		//剩余赠送次数
+}
+
+message SGetGift
+{
+	required int32 playerID	= 1;		//玩家ID
+	required int32 restTime = 2;		//剩余赠送次数
+}
+
+message SParliamentAdd
+{
+	required PParliamentList parliament = 1;
+} 
+
+message SParliamentSex
+{
+	required int32 playerID	= 1;		//玩家ID
+	required int32 sex = 2; 			//性别
+}
+
+
+//时装升级
+message CLevelUp
+{
+	required int32 titleID = 1;			//称号ID
+}
+
+message SLevelUp
+{
+	required int32 titleID = 1;			//称号ID
+	required int32 level = 2;			//时装等级
+}

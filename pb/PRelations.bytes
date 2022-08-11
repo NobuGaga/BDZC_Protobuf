@@ -1,0 +1,203 @@
+
+Ñ%
+PRelations.proto
+PRelationsPCommon.proto"á
+PRelationsInfo
+staffid (Rstaffid
+state (Rstate
+time (Rtime
+exnum (Rexnum
+maxnum (Rmaxnum
+freenum (Rfreenum
+cdnum (Rcdnum
+maxcdnum (Rmaxcdnum
+	staffName	 (	R	staffName
+name
+ (	Rname
+
+recoveTime (R
+recoveTime
+action (2.PBiIntRaction
+staffs (Rstaffs,
+leftRecoveryCount (RleftRecoveryCount"ì
+PRelationsStaff
+staffid (Rstaffid
+color (Rcolor
+level (Rlevel
+	staffattr (R	staffattr
+	staffName (	R	staffName"C
+PRelationsBlood
+blood (Rblood
+maxblood (Rmaxblood"ò
+PRelationsReport
+attack (Rattack
+
+oleftblood (R
+oleftblood
+
+mleftblood (R
+mleftblood
+index (Rindex
+iscrit (Riscrit"í
+
+PAdverInfo
+name (	Rname
+point (Rpoint
+level (Rlevel
+power (Rpower
+time (Rtime
+playerid (Rplayerid"‰
+PDefenseInfo
+name (	Rname
+allpoint (Rallpoint
+point (Rpoint
+num (Rnum
+power (Rpower
+time (Rtime
+staffid (Rstaffid
+playerid (Rplayerid
+	staffName	 (	R	staffName"|
+PLogInfo
+index (Rindex
+playerid (Rplayerid
+name (	Rname
+point (Rpoint
+level (Rlevel"ı
+	PNewsInfo
+index (Rindex
+playerid (Rplayerid
+name (	Rname
+staffid (Rstaffid
+failname (	Rfailname
+time (Rtime
+num (Rnum
+type (Rtype
+times	 (Rtimes
+	staffName
+ (	R	staffName"ß
+PNewsOnekey
+index (Rindex
+staffid (Rstaffid
+buyAddId (RbuyAddId
+isWin (RisWin
+blood (Rblood 
+reward (2.PIntIntRreward"U
+	PShopItem
+index (Rindex
+goodid (Rgoodid
+buyCount (RbuyCount"∞
+PShop0
+nextRefreshLeftTime (RnextRefreshLeftTime,
+todayRefreshCount (RtodayRefreshCount
+point (Rpoint1
+itemList (2.PRelations.PShopItemRitemList"
+CRelationsMain"1
+CRelationsSelectStaff
+staffid (Rstaffid"e
+CRelationsFight
+playerid (Rplayerid
+staffid (Rstaffid
+	fighttype (R	fighttype" 
+CRelationsFind
+id (Rid""
+CRelationsBuyAdd
+id (Rid",
+CRelationsReport
+staffid (Rstaffid"!
+CRelationOnekey
+id (Rid" 
+CRefreshShop
+pay (Rpay"6
+CShopBuy
+index (Rindex
+count (Rcount"g
+SRelationsMain.
+info (2.PRelations.PRelationsInfoRinfo%
+shop (2.PRelations.PShopRshop"%
+SRelationsDaily
+name (	Rname"§
+SRelationsFight
+name (	Rname3
+staffs (2.PRelations.PRelationsStaffRstaffs
+
+otherpoint (R
+otherpoint
+staffnum (Rstaffnum
+surnum (Rsurnum;
+
+mstaffinfo (2.PRelations.PRelationsStaffR
+mstaffinfo
+mypoint (Rmypoint
+	attackadd (R	attackadd
+skilladd	 (Rskilladd1
+blood
+ (2.PRelations.PRelationsBloodRblood
+adds (2.PIntIntRadds
+type (Rtype"è
+SRelationsBuyAdd
+id (Rid
+	attackadd (R	attackadd
+skilladd (Rskilladd1
+blood (2.PRelations.PRelationsBloodRblood"
+SRelationsReport
+state (Rstate
+point (Rpoint1
+blood (2.PRelations.PRelationsBloodRblood3
+oblood (2.PRelations.PRelationsBloodRoblood
+	liansheng (R	liansheng
+award (2.PIntIntRaward6
+reports (2.PRelations.PRelationsReportRreports;
+
+ostaffinfo (2.PRelations.PRelationsStaffR
+ostaffinfo;
+
+mstaffinfo	 (2.PRelations.PRelationsStaffR
+mstaffinfo$
+allaward
+ (2.PIntIntRallaward
+allpoint (Rallpoint
+name (	Rname"
+exaward (2.PIntIntRexaward
+	shopPoint (R	shopPoint"
+allshopPoint (RallshopPoint
+	leftblood (R	leftblood"=
+SRelationsAdver*
+list (2.PRelations.PAdverInfoRlist"A
+SRelationsDefense,
+list (2.PRelations.PDefenseInfoRlist"9
+SRelationsLog(
+list (2.PRelations.PLogInfoRlist"Ê
+SRelationsFind 
+avatar (2.PAvatarRavatar
+playerid (Rplayerid
+name (	Rname
+level (Rlevel
+point (Rpoint
+rank (Rrank
+power (Rpower
+staffnum (Rstaffnum
+sex	 (Rsex"¡
+SRelationsNews
+
+attackname (	R
+attackname
+failname (	Rfailname
+times (Rtimes
+lastname (	Rlastname
+lastid (Rlastid)
+list (2.PRelations.PNewsInfoRlist"?
+SRelationsNewsPush)
+info (2.PRelations.PNewsInfoRinfo"W
+SRelationsInitStaff
+
+appealList (R
+appealList 
+revengeList (RrevengeList"C
+SRelationOnekey0
+list (2.PRelations.SRelationsReportRlist"à
+SShopBuy
+index (Rindex
+goodid (Rgoodid
+buyCount (RbuyCount
+	costpoint (R	costpoint
+point (RpointBH

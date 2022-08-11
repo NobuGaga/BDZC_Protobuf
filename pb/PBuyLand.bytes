@@ -1,0 +1,44 @@
+
+è
+PBuyLand.protoPBuyLandPCommon.proto"0
+CBuyLand
+id (Rid
+index (Rindex"1
+CBuyLandTotal
+id (Rid
+num (Rnum"
+SBuyLandAttr"®
+SBuyLandInit;
+landInfo (2.PBuyLand.SBuyLandInit.CBuyLandRlandInfo
+isOpen (RisOpenÈ
+CBuyLand
+id (Rid
+index (Rindex
+power (Rpower
+money (Rmoney&
+
+randReward (2.PItemR
+randReward
+name (	Rname.
+attr (2.PBuyLand.SBuyLandAttrTypeRattr"L
+SBuyLandAttrType
+id (Rid
+value (Rvalue
+type (Rtype"Œ
+SBuyLandResult
+id (Rid
+index (Rindex
+name (	Rname
+type (Rtype
+isSuc (RisSuc
+money (Rmoney"
+itemList (2.PItemRitemList
+landNum (RlandNum"
+companyScore	 (RcompanyScore
+	boosBlood
+ (R	boosBlood.
+attr (2.PBuyLand.SBuyLandAttrTypeRattr8
+nextChapter (2.PBuyLand.SBuyLandInitRnextChapter
+isOpen (RisOpen"6
+SBuyLandList&
+	chapterId (2.PIntIntR	chapterIdBH

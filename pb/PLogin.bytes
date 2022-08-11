@@ -1,0 +1,92 @@
+
+™
+PLogin.protoPLoginPCommon.proto"½
+	PCharDesc
+id (Rid
+name (	Rname
+level (Rlevel
+job (Rjob
+genber (Rgenber
+wState (RwState
+vipLv (RvipLv
+
+fightPower (R
+fightPower"¸
+CLogin
+account (	Raccount
+password (	Rpassword
+serverid (Rserverid$
+clientVersion (	RclientVersion
+platform (Rplatform
+sbid (	Rsbid
+mac (	Rmac 
+equipmentid (	Requipmentid
+moblie	 (	Rmoblie
+
+cdnVersion
+ (	R
+cdnVersion
+clientip (	Rclientip"”
+
+CEnterGame
+playerid (Rplayerid
+
+playername (	R
+playername
+netmode (	Rnetmode
+mac (	Rmac 
+equipmentid (	Requipmentid
+moblie (	Rmoblie
+sbid (	Rsbid
+appid (	Rappid
+
+cdnVersion	 (	R
+cdnVersion
+clientip
+ (	Rclientip"%
+CRandomName
+gender (Rgender"ë
+CCreateChar
+
+playername (	R
+playername
+job (Rjob
+genber (Rgenber
+headid (Rheadid
+sbid (	Rsbid
+mac (	Rmac 
+equipmentid (	Requipmentid
+moblie (	Rmoblie
+clientip	 (	Rclientip")
+CDeleteChar
+playerid (Rplayerid"]
+SQueryCharList
+	charCount (R	charCount-
+charList (2.PLogin.PCharDescRcharList"¡
+	SLoginRet
+	errorCode (R	errorCode
+userId (RuserId
+serverId (RserverId"
+openRecharge (RopenRecharge
+
+newAccount (R
+newAccount"„
+
+SEnterGame
+	errorCode (R	errorCode
+
+createTime (R
+createTime
+servTime (RservTime
+	debugMode (R	debugMode"C
+SGetCharNameRet
+	errorCode (R	errorCode
+name (	Rname"Z
+SCreateChar
+	errorCode (R	errorCode-
+chardesc (2.PLogin.PCharDescRchardesc"G
+SDeleteChar
+	errorCode (R	errorCode
+playerid (Rplayerid"(
+SReadyForRun
+isFirst (RisFirstBH

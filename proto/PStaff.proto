@@ -1,0 +1,281 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+// enum StaffCmd
+// {
+// 	cStaffLevelUp						=	2,//升级 PStaff.CLevelUp
+// 	cStaffColorUp						=	3,//进阶 PStaff.CColorUp
+// 	cStaffBookLvUp						=	4,//升级书籍 PStaff.CBookUp
+// 	cStaffSkillLvUp						=	5,//技能升级 PStaff.CSkillUp
+// 	cStaffAureoleLvUp					=	6,//光环升阶 PStaff.CAureoleUp
+//	cStaffRename						= 	7,//员工改名 PStaff.CStaffRename
+//	cStaffRework						= 	8,//员工重铸 PStaff.CStaffRework --真正的员工重铸, 需要重新刷新员工信息等
+//	cStaffRefineUp						= 	9,//员工升级精修等级 PStaff.CStaffRefine
+//	cStaffRefineType					= 	10,//员工专精类型升级 PStaff.CStaffRefine
+
+// 	sStaffInit							=	1,//初始化 PStaff.SInit
+// 	sStaffLevelUp						=	2,//升级 PStaff.SLevelUp
+// 	sStaffColorUp						=	3,//进阶 PStaff.SColorUp
+// 	sStaffBookLvUp						=	4,//升级书籍 PStaff.SBookLvUp
+// 	sStaffSkillLvUp						=	5,//技能升级 PStaff.SSkillUp
+// 	sStaffAureoleLvUp					=	6,//光环升阶 PStaff.SAureoleLvUp
+// 	sStaffAureoleActive					=	7,//激活员工光环 PStaff.SAureoleActive
+// 	sStaffNewStaff						=	8,//新激活员工 PStaff.PStaffInfo
+// 	sStaffUpdateBookExp					=	9,//获得书籍经验 PStaff.SUpdateBookExp
+// 	sStaffAddItemAttr					=	10,//增加道具经验 PStaff.SAddItemAttr
+// 	sStaffUpdateSkillExp				=	11,//更新技能经验 PStaff.SUpdateSkillExp
+// 	sStaffUpdate						=	12,//更新员工属性 PStaff.SStaffChange
+//  sStaffRename						=	13,//员工改名 PStaff.SStaffRename
+//  sStaffReworkInfo					=	14,//员工重铸 PStaff.SStaffReworkInfo --当使用员工重铸按钮时返回
+//	sStaffRestSuccessful				= 	15,//员工重铸成功 PStaff.SStaffReworkSuccess
+//  sStaffsLineup						= 	16,//更新阵容员工属性 PStaff.SStaffsLineup
+//  sStaffUpdateRefine					= 	17,//更新员工精修数据 PStaff.SStaffRefine
+//  sStaffRefineReset					=	18,//专精重置 PStaff.SStaffRefineReset
+// };
+
+
+package PStaff;
+
+// common message
+message PAureole
+{
+	required int32 id = 1;//光环id
+	required int32 level = 2;//等级
+	required bool open = 3;//是否已开启
+}
+
+//员工精修数据结构
+message PStaffRefine
+{
+	required int32 level = 1;			//精修等级
+	required int32 refinePoint = 2;		//精修点（剩余没用）
+	required int32 power = 3;			//公关战力精修等级
+	required int32 attribute = 4;		//属性精修等级
+	required bool isOpen = 5;			//是否已开启
+}
+
+//单个员工数据结构
+message PStaffInfo
+{
+	required int32 id = 1;		//员工id
+	required int32 level = 2;	//等级
+	required int64 levelexp = 3;//等级经验
+	required int32 color = 4;	//品阶
+	required int64 skillexp = 5;//技能经验
+	required int64 bookexp = 6;//书籍经验
+	repeated PIntInt book = 7;	//书籍
+	repeated PIntInt skill = 8;	//技能
+	repeated PAureole aureole = 9;	//光环
+
+	required PAttribute originAttr = 10;	//原始属性
+	required PAttribute itemAttr = 11;		//吞噬道具加成
+	required PAttribute girlAttr = 12;		//美女加成
+	required PAttribute aureoleAttr = 13;	//光环加成
+	required PAttribute allAttr = 14;		//全部属性
+	required int64 power = 15;				//战力
+	optional PAttribute carAttr = 16;		//座驾属性
+	optional string name = 17;				//员工名称
+	repeated int32 link = 18;				//羁绊
+	repeated PEquipInfo equips = 19;		//装备列表
+	optional PStaffRefine refine = 20;		//精修数据
+	optional int64 carPower = 21;			//座驾公关战力
+	optional int64 equiprPower = 22;		//装备公关战力
+}
+
+// Client -> Server
+message CLevelUp
+{
+	required int32 staffid = 1;//员工id
+	required int32 type = 2;//1：普通升级, 2:升十级
+}
+
+message CColorUp
+{
+	required int32 staffid = 1;//员工id
+}
+
+message CBookUp
+{
+	required int32 staffid = 1;//员工id
+	required int32 bookid = 2;//书籍id
+	required int32 type = 3;//升级消耗类型，1为道具，2为书籍经验
+}
+
+message CSkillUp
+{
+	required int32 staffid = 1;//员工id
+	required int32 skillid = 2;//技能id
+}
+
+message CAureoleUp
+{
+    required int32 staffid = 1;//员工id
+    required int32 aureoleid = 2;//光环id
+}
+
+// Server -> Client
+message SInit
+{
+    repeated PStaffInfo stafflist = 1;//员工列表
+}
+
+message SLevelUp
+{
+	required int32 staffid = 1;//员工id
+	required bool success = 2;//是否成功(如果失败仅增加技能经验)
+    optional bool isgod = 3;//是否神迹
+
+    optional int32 level = 4;	//等级
+    required int64 levelexp = 5;//等级经验
+
+    optional PAttribute originAttr = 6;		//原始属性
+	optional PAttribute allAttr = 7;		//全部属性
+	optional int64 power = 8;				//战力
+}
+
+message SColorUp
+{
+	required int32 staffid = 1;//员工id
+	required int32 color = 2;//品阶
+	repeated PIntInt gainItem = 3;//获得物品
+	// TODO : 剩余内容在做表现效果时再添加...
+}
+
+message SBookLvUp
+{
+	required int32 staffid = 1;//员工id
+	required int32 bookid = 2;//书籍id
+	required int32 booklv = 3;//书籍等级
+	required bool success = 4;//是否成功
+
+	optional PAttribute originAttr = 5;		//原始属性(success=true才发)
+	optional PAttribute allAttr = 6;		//全部属性(success=true才发)
+	optional int64 power = 7;				//战力(success=true才发)
+}
+
+message SSkillUp
+{
+	required int32 staffid = 1;//员工id
+	required int32 skillid = 2;//技能id
+	required int32 skilllv = 3;//技能等级
+
+	required PAttribute originAttr = 4;		//原始属性
+	required PAttribute allAttr = 5;		//全部属性
+	required int64 power = 6;				//战力
+}
+
+message SAureoleLvUp
+{
+	required int32 staffid = 1;//员工id
+	required int32 aureoleid = 2;//光环id
+	required int32 aureolelv = 3;//光环等级
+	required bool open = 4;//是否已开启
+
+	required PAttribute aureoleAttr = 5;	//原始属性
+	required PAttribute allAttr = 6;		//全部属性
+	required int64 power = 7;				//战力
+}
+
+message SAureoleActive
+{
+	required int32 staffid = 1;//员工id
+	required int32 aureoleid = 2;//光环id
+}
+
+
+message SStaffChange
+{
+	required PStaffInfo staff = 1;
+}
+
+//更新阵容员工
+message SStaffsLineup
+{
+	repeated PStaffInfo staffList = 1;
+	repeated PIntInt list = 2;//列表 k:index, v:staffid
+	optional int32 size = 3;//格子个数
+}
+
+message SUpdateBookExp
+{
+	required int32 staffid = 1;//员工id
+	required int64 bookexp = 2;//书籍经验
+	required int64 changeexp = 3;//变更经验值(用于做展示表现，负数表示消耗，正数表示获取)
+}
+
+message SAddItemAttr
+{
+	required int32 staffid = 1;//员工id
+	required int64 attrType = 2;//书籍经验
+	required int64 attrValue = 3;//增加的经验值(用于做展示表现)
+	required PAttribute itemAttr = 4;//吞噬道具加成
+	required PAttribute allAttr = 5;//全部属性
+	required int64 power = 6;//战力
+}
+
+message SUpdateSkillExp
+{
+	required int32 staffid = 1;//员工id
+	required int32 skillid = 2;//技能id
+	required int64 skillexp = 3;//值
+	required int64 changeexp = 4;//变更值 负数为消耗，正数为获取
+}
+
+
+//员工改名
+message CStaffRename
+{
+	required int32 staffid = 1;		//员工id
+	required string name = 2;		//员工名称
+	required int32 costItemId = 3;	//消耗道具id
+}
+
+message SStaffRename
+{
+	required int32 staffid = 1;		//员工id
+	required string name = 2;		//员工名称
+}
+
+//员工重铸信息返回
+message SStaffReworkInfo
+{
+	required int32 id = 1;		//员工id
+	required int32 level = 2;	//等级
+	required int32 color = 4;	//品阶
+	required int32 book = 5;	//资质
+	required int64 allAttr = 6;	//总属性
+	required PAttribute attr = 7;//公关/行政/技术/营销
+	repeated PIntInt items = 8;	//获得的物品列表
+}
+
+message SStaffReworkSuccess
+{
+	repeated PIntInt items = 1;	//获得的物品列表
+}
+
+//点击重铸信息界面的重修按钮或者是升级员工精修等级
+message CStaffRework
+{
+	required int32 staffid = 1;		//员工id
+}
+
+message CStaffRefine
+{
+	required int32 staffid = 1;		//员工id
+	optional int32 type = 2;		//精修类型 1 公关战力 2 属性值 不传则为升级专精
+}
+
+message SStaffRefine
+{
+	required int32 staffid = 1;			//员工id
+	required PStaffRefine refine = 2;	//精修数据
+}
+
+//员工专精重修成功
+message SStaffRefineReset
+{
+	required int32 staffid = 1;	//员工id
+	required int32 level = 2;	//重修前专精等级
+}

@@ -1,0 +1,47 @@
+
+ë
+PWelfare.protoPWelfare"7
+	CExchange
+number (Rnumber
+type (Rtype"%
+CGetVipReward
+vipLv (RvipLv"m
+	SInitSign
+day (Rday
+isGet (RisGet
+rewardId (RrewardId
+	rewardNum (R	rewardNum"?
+SSign
+success (Rsuccess
+	rewardNum (R	rewardNum")
+SSignReward
+rewardId (RrewardId"%
+	SExchange
+success (Rsuccess"&
+SFirstRecharge
+state (Rstate"d
+
+SMonthCard
+	productId (R	productId
+leftDays (RleftDays
+	hasReward (R	hasReward"c
+	SYearCard
+	productId (R	productId
+leftDays (RleftDays
+	hasReward (R	hasReward"g
+SLifeLongCard
+	productId (R	productId
+leftDays (RleftDays
+	hasReward (R	hasReward"8
+SVipRewardInfo&
+rewardedLevels (RrewardedLevels"%
+SGetVipReward
+vipLv (RvipLv")
+SVipDailyGift
+viplist (Rviplist"C
+	PGoodluck
+id (Rid
+ncur (Rncur
+nmax (Rnmax"<
+	SGoodLuck/
+goodluck (2.PWelfare.PGoodluckRgoodluckBH

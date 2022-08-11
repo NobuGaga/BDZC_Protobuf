@@ -1,0 +1,133 @@
+
+ì
+PCrossArena.protoPCrossArenaPCommon.proto"@
+CCUArenaReward
+type (Rtype
+playerid (Rplayerid"T
+CCUArenaChip
+playerId (RplayerId
+type (Rtype
+index (Rindex"ƒ
+SCorssArenaInit
+actId (RactId
+state (Rstate
+	starttime (R	starttime
+endtime (Rendtime"
+isScoreMatch (RisScoreMatch
+
+matchCount (R
+matchCount 
+scorereward (Rscorereward
+	topreward (R	topreward
+
+arenaStage	 (R
+arenaStage
+redpoint
+ (Rredpoint
+cantop (Rcantop
+canScore (RcanScore
+canChip (RcanChip"í
+	PRankInfo
+rank (Rrank
+playerid (Rplayerid
+name (	Rname
+value (Rvalue
+level (Rlevel
+titleid (Rtitleid
+headid (Rheadid
+sex (Rsex
+vip	 (Rvip
+serverid
+ (Rserverid"?
+	SRankList2
+rankList (2.PCrossArena.PRankInfoRrankList"f
+PFightPageInfo
+rank (Rrank
+score (Rscore
+power (Rpower
+times (Rtimes"ª
+PCUArenaPlayer
+playerid (Rplayerid
+name (	Rname
+serverid (Rserverid
+power (Rpower
+rank (Rrank
+score (Rscore"
+commercename (	Rcommercename
+title (Rtitle
+sex	 (Rsex
+headid
+ (Rheadid
+	headframe (R	headframe
+body (Rbody
+chip (Rchip
+vsresult (Rvsresult
+vip (Rvip:
+staffs (2".PCrossArena.PCUArenaPlayer.lineupRstaffs"
+showserverid (RshowserveridT
+lineup
+staffid (Rstaffid
+color (Rcolor
+refineLv (RrefineLv"ÿ
+SCUArenaMatchInfo
+power (Rpower
+rank (Rrank
+score (Rscore
+
+matchCount (R
+matchCount1
+other (2.PCrossArena.PCUArenaPlayerRother;
+
+randplayer (2.PCrossArena.PCUArenaPlayerR
+randplayer
+selfname (	Rselfname"{
+SCUArenaFight
+result (Rresult
+score (Rscore
+rank (Rrank(
+	fightInfo (2
+.SFightPVPR	fightInfo":
+SCUArenaReward
+type (Rtype
+index (Rindex"è
+SCUArenaChipInfo
+days (Rdays
+odds (Rodds
+reward (Rreward5
+player1 (2.PCrossArena.PCUArenaPlayerRplayer15
+player2 (2.PCrossArena.PCUArenaPlayerRplayer25
+player3 (2.PCrossArena.PCUArenaPlayerRplayer3
+value1 (Rvalue15
+player4 (2.PCrossArena.PCUArenaPlayerRplayer4
+value2	 (Rvalue2A
+player
+ (2).PCrossArena.SCUArenaChipInfo.matchplayerRplayerC
+mymatch (2).PCrossArena.SCUArenaChipInfo.matchplayerRmymatch
+allinid (Rallinid
+update (RupdateÍ
+matchplayer5
+player1 (2.PCrossArena.PCUArenaPlayerRplayer15
+player2 (2.PCrossArena.PCUArenaPlayerRplayer2
+playerId (RplayerId
+	tickCount (R	tickCount
+gisget (Rgisget"¡
+SCUArenaFightRecordF
+fight16 (2,.PCrossArena.SCUArenaFightRecord.fightdetailRfight16D
+fight8 (2,.PCrossArena.SCUArenaFightRecord.fightdetailRfight8D
+fight4 (2,.PCrossArena.SCUArenaFightRecord.fightdetailRfight4D
+fight2 (2,.PCrossArena.SCUArenaFightRecord.fightdetailRfight2H
+vsplayer (2,.PCrossArena.SCUArenaFightRecord.fightdetailRvsplayer¥
+fightdetail5
+player1 (2.PCrossArena.PCUArenaPlayerRplayer15
+player2 (2.PCrossArena.PCUArenaPlayerRplayer2(
+	fightInfo (2
+.SFightPVPR	fightInfo"Ö
+SCUArenaVsPlayerE
+vsplayer (2).PCrossArena.SCUArenaVsPlayer.fightdetailRvsplayer{
+fightdetail5
+player1 (2.PCrossArena.PCUArenaPlayerRplayer15
+player2 (2.PCrossArena.PCUArenaPlayerRplayer2"0
+SCUArenaMyChip
+
+playerlist (R
+playerlistBH

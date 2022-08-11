@@ -1,0 +1,136 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+package PWelfare;
+
+// enum WelfareCmd
+// {
+//    cSign								=	1,//签到	
+//	  cExchange							=	2,//兑换码兑换	PWelfare.CExchange
+//	  cGetFirstRechargeReward			=	3,//领取首充奖励
+//	  cGetMonthCardReward				=	4,//领取月卡奖励
+//	  cGetYearCardReward				=	5,//领取年卡奖励
+//	  cGetVipReward						=   6,//领取首充奖励
+//    cGetVipDailyGift					=	7,//领取vip每日礼包 PWelfare.CGetVipReward
+//	  cGookLuck							= 	8,//机遇
+//	  cGetSignReward					= 	9,//领取每日签到好感度奖励
+
+//    sWelfareInitSign					=	1,//签到	PWelfare.SInitSign
+//    sWelfareSign						=	2,//签到更新	PWelfare.SSign
+//    sWelfareExchange					=	3,//兑换返回 PWelfare.SExchange
+//    sFirstRecharge					=	4,//首充信息
+//    sMonthCard						=	5,//月卡信息
+//    sYearCard							= 	6,//年卡信息
+//	  sGetFirstRechargeReward			=	7,//领取首充奖励
+//	  sGetMonthCardReward				=	8,//领取月卡奖励
+//	  sGetYearCardReward				=	9,//领取年卡奖励
+//	  sGetVipReward						=	10,//领取vip奖励
+//	  sVipRewardInfo					=	11,//vip奖励信息
+//    sVipDayGiftInfo					= 	12,//vip每日礼包领取信息下发 PWelfare.SVipDailyGift
+//    sLifeLongCard						= 	13,//终身卡信息
+//	  sGoodLuck							=	14,//机遇
+//	  sGetSignReward					=	15,//领取每日签到好感度奖励返回 PWelfare.SSignReward
+// };
+
+
+//Client -> Server
+message CExchange
+{
+	required int32 number = 1;	//兑换码
+	required int32 type = 2;	//类型1：官微；2：QQ群
+}
+
+//领取vip奖励
+message CGetVipReward
+{
+	required int32 vipLv = 1;	//vip等级
+}
+
+//Server -> Client
+message SInitSign
+{
+	required int32 day = 1;   		//第几天
+	required bool isGet = 2; 		//是否已领取签到奖励
+	required int32 rewardId = 3;	//当前好感度奖励档位
+	required int32 rewardNum = 4;	//当前好感度
+}
+
+message SSign
+{
+	required bool success = 1;   //是否签到成功
+	required int32 rewardNum = 2;//当前好感度
+}
+
+message SSignReward
+{
+	required int32 rewardId = 1;	//当前好感度奖励档位
+}
+
+message SExchange
+{
+	required bool success = 1;   //是否兑换成功
+}
+
+//首充信息
+message SFirstRecharge
+{
+	required int32 state = 1;		//0未充值 1可领奖 2已领奖
+}
+
+//月卡信息
+message SMonthCard
+{
+	required int32 productId = 1;	//商品ID
+	required int32 leftDays = 2;	//剩余天数
+	required bool hasReward = 3;	//是否可领取
+}
+
+//月卡信息
+message SYearCard
+{
+	required int32 productId = 1;	//商品ID
+	required int32 leftDays = 2;	//剩余天数
+	required bool hasReward = 3;	//是否可领取
+}
+
+//终身卡信息（考虑将月卡、年卡、终身卡合并）
+message SLifeLongCard
+{
+	required int32 productId = 1;	//商品ID
+	required int32 leftDays = 2;	//剩余天数 -1表示永久
+	required bool hasReward = 3;	//是否可领取
+}
+
+//vip奖励信息
+message SVipRewardInfo
+{
+	repeated int32 rewardedLevels = 1;//已领奖的vip等级
+}
+
+//领取vip奖励
+message SGetVipReward
+{
+	required int32 vipLv = 1;		//vip等级
+}
+
+//领取vip每日礼包
+message SVipDailyGift
+{
+	repeated int32 viplist = 1;		//其领取vip等级列表
+}
+
+
+//机遇
+message PGoodluck
+{
+	required int32 id = 1;
+	required int32 ncur = 2;
+	required int32 nmax = 3;
+}
+
+
+//机遇相遇次数
+message SGoodLuck
+{
+	repeated PGoodluck goodluck = 1;//
+}

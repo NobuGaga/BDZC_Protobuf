@@ -1,0 +1,184 @@
+
+ê
+PPlayer.protoPPlayerPCommon.proto"6
+PDress
+sysId (RsysId
+itemId (RitemId"9
+CLookPlayer
+id (Rid
+serverid (Rserverid"D
+
+CHeartBeat
+sendTime (RsendTime
+servTime (RservTime"5
+CRename
+itemid (Ritemid
+name (	Rname""
+CGetGift
+giftid (	Rgiftid"<
+CChangeDress
+sysId (RsysId
+itemId (RitemId"
+
+CSecretary
+id (Rid"ñ
+SCommonError
+right (Rright
+	errorcode (	R	errorcode&
+params (2.PStringStringRparams
+sysId (RsysId
+msgId (RmsgId"É
+SNotice
+str (	Rstr
+level (Rlevel
+	hierarchy (R	hierarchy
+
+effectType (R
+effectType
+loop (Rloop"C
+	SNoticeID
+id (Rid&
+params (2.PStringStringRparams"ü
+SPlayer
+id (Rid
+name (	Rname
+power (Rpower
+vip (Rvip
+level (Rlevel
+exp (Rexp 
+avatar (2.PAvatarRavatar
+attr (2.PAttributeRattr
+sex	 (Rsex
+battleId
+ (RbattleId
+intimacy (Rintimacy
+serverId (RserverId&
+	titleList (2.PIntIntR	titleList&
+lastOnlineTime (RlastOnlineTime
+titleId (RtitleId
+
+commerceId (R
+commerceId"
+commerceName (	RcommerceName%
+dress (2.PPlayer.PDressRdress
+chatBg (RchatBg
+	getChatBg (R	getChatBg&
+originServerId (RoriginServerId"
+highestPower (RhighestPower 
+cabinetList (RcabinetList"à
+SUpdateAttr
+attr (2.PAttributeRattr
+
+fightpower (R
+fightpower
+sysid (Rsysid"
+highestPower (RhighestPower"4
+
+SUpdateExp
+level (Rlevel
+exp (Rexp"
+SRename
+name (	Rname"!
+SUpdateName
+name (	Rname"
+
+SUpdateVip
+vip (Rvip"d
+
+SHeartBeat
+sendTime (RsendTime
+servTime (RservTime
+
+forcereset (R
+forcereset")
+	SQuitGame
+	errorCode (R	errorCode"D
+SGetGift
+errCode (RerrCode
+items (2.PIntIntRitems"9
+STest
+index (Rindex
+servTime (RservTime"5
+SChangeDress%
+dress (2.PPlayer.PDressRdress"9
+SDisconnect
+reason (Rreason
+desc (	Rdesc"î
+PRedPacketReceiver
+playerId (RplayerId
+
+playerName (	R
+playerName
+head (2.PHeadRhead
+gold (Rgold
+time (Rtime"—
+
+PRedPacket
+id (Rid
+senderId (RsenderId
+
+senderName (	R
+senderName&
+
+senderHead (2.PHeadR
+senderHead
+sendTime (RsendTime
+type (Rtype
+gold (Rgold
+leftGold (RleftGold
+	packetNum	 (R	packetNum 
+receivedNum
+ (RreceivedNum?
+receiverList (2.PPlayer.PRedPacketReceiverRreceiverList
+
+expireTime (R
+expireTime 
+talkChannel (RtalkChannel
+titleid (Rtitleid
+tips (	Rtips"V
+CSendRedPacket
+gold (Rgold
+type (Rtype
+	packetNum (R	packetNum".
+SSendRedPacket
+	isSuccess (R	isSuccess" 
+COpenRedPacket
+id (Rid"k
+SOpenRedPacket
+id (Rid
+result (Rresult1
+	redPacket (2.PPlayer.PRedPacketR	redPacket"9
+SRedPacketList'
+list (2.PPlayer.PRedPacketRlist"B
+SNewRedPacket1
+	redPacket (2.PPlayer.PRedPacketR	redPacket"'
+SRedPacketAllReceived
+id (Rid"9
+	CLiveHead
+headid (Rheadid
+actid (Ractid"F
+SOpenChangeHead
+list (Rlist
+attr (2.PAttributeRattr"D
+	SLiveHead
+headid (Rheadid
+attr (2.PAttributeRattr"%
+SChangeHead
+headid (Rheadid"%
+	SCrossSrv
+iscross (Riscross"
+CChatBGPutOn
+id (Rid"
+SChatBGPutOn
+id (Rid"
+
+SChangeSex
+sex (Rsex"§
+
+SSecretary
+id (Rid5
+idlist (2.PPlayer.SSecretary.DressInfoRidlist
+status (Rstatus7
+	DressInfo
+id (Rid
+lefttime (RlefttimeBH

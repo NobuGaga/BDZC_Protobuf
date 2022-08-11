@@ -1,0 +1,268 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PVote;
+
+//系统ID: Vote = 169,
+
+// enum VoteCmd
+// {
+//----------------主界面---------------
+// 	cReqVoteInit		= 1,--请求初始化数据
+// 	cReqVoteJoin		= 2,--请求参加竞选 PVote.CJoin
+// 	cReqVoteTicket		= 3,--请求投票 PVote.CTicket
+// 	cReqVoteTicketRef	= 4,--请求某个职位投票信息 PVote.CTicketRef
+//	cReqVoteJoinRef		= 5,--请求某个职位参选信息 PVote.CTicketRef
+//----------------职位特权---------------
+//	cReqVoteParInit		= 6,--请求初始化数据PVote.CParInit
+//  cVoteSendRedPacket	= 7,--发红包 PVote.CSendRedPacket
+//  cVoteOpenInstance	= 8,--开启副本 PVote.COpenInstance
+//  cVoteGetGift		= 9,--领取礼包 PVote.CGetGift
+//  cVoteOpenStudy		= 10,--开启商会学习 PVote.COpenStudy
+//----------------商会学习---------------
+//  cVoteStudyInit		= 11,--商会学习
+//  cVoteStudyUp		= 12,--商会学习员工上场 PVote.CStudyUp
+//----------------选举信息---------------
+//  cVoteOpen			= 13,--打开选举信息推送接口
+//  cVoteClose			= 14,--关闭选举信息推送接口
+
+
+
+//----------------主界面---------------
+// 	sRepVoteInit		= 1,--初始化竞选数据 PVote.SInit
+// 	sRepVoteJoin		= 2,--返回参加竞选(发送给所有玩家) PVote.SJoin
+// 	sRepVoteTicket		= 3,--返回请求投票数据 PVote.STicket
+// 	sVoteStateChange	= 4,--竞选状态变更 PVote.SStateChange
+//----------------职位特权---------------
+// 	sRepVoteParInit		= 5,--请求参加竞选 PVote.SVoteParInit
+//  sVoteSendRedPacket	= 6,--发红包 PVote.SSendRedPacket
+//  sVoteOpenInstance	= 7,--开启副本 PVote.SOpenInstance
+//  sVoteGetGift		= 8,--领取礼包 PVote.SGetGift
+//  sVoteOpenStudy		= 9,--开启商会学习 PVote.SOpenStudy
+//----------------商会学习---------------
+//  sVoteStudyInit		= 10,--商会学习 PVote.SVoteStudyInit
+//  sVoteStudyUp		= 11,--商会学习员工上场 PVote.SVoteStudyInit
+//----------------选举信息---------------
+//  sVoteOpen			= 12,--打开选举信息 PVote.SVoteOpen
+//  sVoteMessageUpdate	= 13,--选举信息推送 PVote.SVoteMessageUpdate
+// };
+
+//通用协议
+
+//竞选位置信息
+message PPosInfo
+{
+	required int32 playerid = 1;//角色id
+	required string playername = 2;//角色名称
+	required PAvatar avatar = 3;//外观
+	required int32 sex = 4;//性别
+}
+
+
+//选票信息
+message PPlayerVoteInfo
+{
+	required int32 playerid = 1;//角色id
+	required string playername = 2;//角色名称
+	required int32 viplv = 3;//vip等级
+	required string commercename = 4;//商会名
+	required int64 fightpower = 5;//战力
+	required PAvatar avatar = 6;//外观
+	required int32 sex = 7;//性别
+	required bool currflag = 8;//是否现任标记
+	optional int32 ticketcount = 9;//选票数量(仅当投票中才会有效)
+	optional int32 chatBg = 10;   //聊天和头像框ID
+}
+
+message PVoteInfo
+{
+	required int32 voteid = 1;//竞选ID
+	optional PPosInfo info = 2;//位置信息
+}
+
+message PVotePar
+{
+	required int32 voteID = 1;			//选举职位id
+	required int32 titleID = 2;			//官职ID
+	optional int32 playerID = 3;		//玩家ID 
+	optional int32 sex = 4;				//性别 1 女 2 男 
+	optional int32 head = 5;			//角色头像 
+	optional string playerName = 6; 	//玩家名
+	optional string commerceName = 7;	//商会名
+	repeated PVoteParInfo parList = 8;		//特权信息列表（key为特权类型（1为开启boss，2为发红包，3为商会进修，4为每日礼包），value为该特权已操作次数） 
+}
+
+message PVoteParInfo
+{
+	required int32 key = 1;			//1为开启boss，2为发红包，3为商会进修，4为每日礼包
+	required int32 value = 2;		//已操作次数
+	optional int64 time = 3;		//下次冷却时间（时间戳）
+}
+
+//Client --> Server
+//竞选职位
+message CJoin
+{
+	required int32 voteid = 1;//竞选职位ID	
+}
+
+//投票职位
+message CTicket
+{
+	required int32 voteid = 1;//竞选职位id
+	required int32 playerid = 2;//投票给指定的角色id
+	required int32 count = 3;//投票数量
+}
+
+//投票（参选）职位数据请求
+message CTicketRef
+{
+	required int32 voteid = 1;//竞选职位id
+}
+
+message CParInit
+{
+	required int32 type = 1;//选举殿堂类型（1为市政厅，2为委员会）
+	required bool isRefresh = 2;//是否为刷新数据
+}
+
+//Server --> Client
+
+//初始化数据
+message SInit
+{
+	repeated PVoteInfo info = 1;		//竞选数据
+	required int32 status = 2;//变更为状态
+	repeated int32 voteids = 3;//我当前竞选中的职位(当参与期，发送当前已参与的职位列表，当投票器，发送当前投票中的职位列表)
+	required int64 time = 4;//下次状态变化刷新时间戳
+}
+
+message SJoin
+{
+	required int32 voteid = 1;			//竞选职位id
+	repeated PPlayerVoteInfo info = 2;		//竞选数据
+	optional bool isRefresh = 3;		//是否为刷新数据所做请求
+}
+
+message STicket
+{
+	required int32 voteid = 1;//竞选职位id
+	repeated PPlayerVoteInfo info = 2;//职位选票信息
+	optional bool isRefresh = 3;		//是否为刷新数据所做请求
+}
+
+message SStateChange
+{
+	required int32 status = 1;//变更为状态
+}
+
+message SVoteParInit
+{
+	repeated PVotePar info = 1;//选举殿堂列表 
+	required bool isRefresh = 2;//是否为刷新数据
+}
+
+
+//-------------------------------- 职位特权 -----------------------------
+//发红包
+message CSendRedPacket
+{
+	required int32 voteid = 1;	//职位id
+    required int32 gold = 2;	//红包钻石数量（玩家部分）
+}
+
+message SSendRedPacket
+{
+	required bool isSuccess = 1;
+	required int32 voteid= 2;
+}
+
+//挑战乔布斯
+message COpenInstance
+{
+	required int32 voteid = 1;	//职位id
+}
+
+message SOpenInstance
+{
+	required bool isSuccess = 1;
+	required int32 voteid= 2;
+}
+
+//领取礼包
+message CGetGift
+{
+	required int32 voteid = 1;
+}
+
+message SGetGift
+{
+	required int32 isSuccess = 1;
+	required int32 voteid= 2;
+}
+
+//商会学习
+message COpenStudy
+{
+	repeated int32 players = 1;	//允许使用学习功能的玩家ID
+	required int32 voteid= 2;
+}
+
+message SOpenStudy
+{
+	required int32 isSuccess = 1;
+	required int32 voteid= 2;
+}
+
+message CStudyUp
+{
+	required int32 index = 1;	//位置
+	required int32 staffid = 2;	//员工id
+}
+
+message SVoteStudyInit
+{
+	repeated PStudyInfo info = 1;	//学习列表
+	required int64 endtime = 2;		//结束时间戳
+	required string playername = 3;	//开启玩家名
+	required int32 voteid = 4;		//开启职位id
+	optional bool isSuccess = 5;	//请求员工上场时才发送的字段
+	required bool isinvited = 6;	//是否被邀请
+}
+
+message PStudyInfo
+{
+	required int32 index = 1;		//位置编号
+	optional int32 playid = 2;		//玩家id
+	optional string playername = 3;	//玩家名
+	optional int32 staffid = 4;		//员工id
+	optional int64 starttime = 5;	//开始学习时间戳
+	optional string staffName = 6;	//员工名字
+}
+
+//选举信息
+
+message PVoteMessage
+{
+	required int32 type = 1;	//信息类型 1.报名 2.投票 3.当选
+	optional string firstname = 2;	//玩家名，当type为2时为投票方
+	optional string secondname = 3;	//玩家名，当type为2时为被投票方
+	optional int32 ticketnum = 4;	//票数
+	required int64 time = 5;		//行为触发时间戳，用于前端排列顺序
+	optional int32 firstid = 6;		//玩家id，当type为2时为投票方
+	optional int32 secondid = 7;		//玩家id，当type为2时为被投票方
+	required int32 voteid = 8;		//职位id
+}
+
+message SVoteOpen
+{
+	repeated PVoteMessage listall = 1;	//信息列表（全部）
+	repeated PVoteMessage listmy = 2;	//信息列表（与我相关）
+}
+
+message SVoteMessageUpdate
+{
+	required PVoteMessage value = 1;	//更新信息
+}

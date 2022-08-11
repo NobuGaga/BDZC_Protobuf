@@ -1,0 +1,149 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PCrossFlower;
+
+//系统id: 跨服鲜花榜 CrossFlower = 147
+// local CMD_ID = 
+// {
+// 	//C --> S
+// 	cGetListByPlayer = 1,	//通过玩家打开鲜花榜界面或列表信息	PCrossFlower.CListByPlayer, 返回sGetList
+// 	cGetListByType = 2,		//通过类型获取鲜花榜列表信息 PCrossFlower.CListByType, 返回sGetList
+// 	cSendListByType = 3,	//通过玩家打开送花榜 PCrossFlower.CListByType, 返回sSendList
+// 	cSendFlower = 4,		//送鲜花 PCrossFlower.CSendFlower, 返回sSendFlower
+// 	cOpenSearch = 5,		//打开搜索界面, 返回参加了的好友和商会列表, 返回sOpenSearch
+// 	cSearch = 6,			//搜索玩家 PCrossFlower.CSearch, 返回sSearch
+// 	cOpenUI = 7,			//打开界面的时候请求(报名处理) 返回sUpdateInfo
+// 	cShopBuy = 9,			//商店购买 PCrossFlower.CShopBuy, 返回sShopBuy
+// 	cSerChat = 10,			//拉票 PCrossFlower.CSerChat, 返回sSerChat
+//  cGetReward = 11,		//领取鲜花榜奖励, 返回sGetReward
+//  cSendReward = 12,		//领取送花榜奖励, 返回sSendReward
+//  cSendListByPlayer = 13,	//通过玩家打开送花榜界面 PCrossFlower.CListByPlayer, 返回sSendList
+// 	//S --> C
+// 	sInit = 1,				//进入游戏初始化 PCrossFlower.SInit, 12点的时候刷新等
+// 	sUpdateState = 2,		//刷新活动状态 PCrossFlower.SState
+// 	sUpdateInfo = 3,		//刷新我的信息 PCrossFlower.SInfo	
+// 	sGetList = 4,			//鲜花榜列表 PCrossFlower.SRankList
+// 	sSendList = 5,			//鲜花榜列表 PCrossFlower.SRankList
+// 	sSendFlower = 6,		//送出鲜花后返回 PCrossFlower.SRankList, 返回被送花者所在的鲜花榜(获得鲜花的榜单)列表
+// 	sOpenSearch = 7,		//打开搜索界面返回 PCrossFlower.SOpenSearch
+// 	sSearch = 8,			//通过id搜索返回 PCrossFlower.SPlayerInfo, 只有报过名的才有效
+// 	sShopBuy = 9,			//商店购买 PIntInt
+// 	sSerChat = 10,			//拉票信息返回 PCrossFlower.SSerChat
+//  sGetReward = 11,		//鲜花榜领取奖励返回 PCrossFlower.SInfo
+//  sSendReward = 12,		//送花榜领取奖励返回 PCrossFlower.SInfo
+//  sDropItem = 13,			//物品掉落 PCrossFlower.SDropItem
+// }
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+
+//通过玩家ID获取鲜花榜
+message CListByPlayer
+{
+	required int32 playerid = 1;	//玩家id
+	required int32 oriServerId = 2; //玩家源服id
+}
+//通过类型获取鲜花榜
+message CListByType
+{
+	required int32 rankType = 1;	//榜单类型
+}
+//送鲜花
+message CSendFlower
+{
+	required int32 playerid = 1;	//玩家id
+	required int32 serverid = 2;	//玩家所在服务器ID
+	required int32 num = 3;			//鲜花索引(从1开始)
+}
+
+//查找玩家
+message CSearch
+{
+	required int32 playerid = 1;	//玩家id
+}
+//商店购买
+message CShopBuy
+{
+	required int32 id = 1;		//商店id
+}
+//拉票
+message CSerChat
+{
+	required int32 type = 1;		//1:本服 2:跨服
+}
+
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+
+//活动状态
+message SState
+{
+	required int32 actId = 1;			//活动id
+	required int32 state = 2;			//活动状态 2进行中 3已结束(领奖中) 4关闭
+	optional int32 starttime = 3;		//开启时间
+	optional int32 endtime = 4;			//结束时间
+	optional int32 closetime = 5;		//关闭时间
+}
+//我的相关信息
+message SInfo
+{
+	required int32 Rank = 1;		//花榜
+	required int32 RankType = 2;	//花榜类型
+	required int32 RewardState = 3;	//1:可领取 2:已领取 3:未参与 4:不可领取 -- 进行中时不可以领取
+	required int32 type = 4;		//1:鲜花  2:送花
+}
+
+message SSerChat
+{
+	required int32 mySerChatNum = 1;	//本服拉票数
+	required int32 corssSerChatNum = 2;	//跨服拉票数
+}
+//初始化信息
+message SInit
+{
+	required SState state = 1;			//活动状态
+	repeated PIntInt shop = 2;			//购买商店列表
+	optional SSerChat serChat = 3;		//拉票信息
+}
+//玩家信息
+message SPlayerInfo 
+{
+	required int32 id = 1;		//玩家id
+	required int32 oriServerId = 2;//源服id
+	required string name = 3;	//名称
+	required int32 head = 4;    //头部
+	optional int32 chatBg = 5; 	//聊天和头像框ID
+	optional int32 vip = 6;		//VIP值
+	required int32 sex = 7;		//性别
+	optional int32 rank = 8;    //排名
+	optional int32 rankType = 9;//排名类型
+	optional int32 getNum = 10;	//获得的鲜花数
+	optional int32 sendNum = 11;//送出的鲜花数
+	optional int32 body = 12;	//身体
+	optional int32 level = 13;	//等级
+	optional int32 title = 14;	//称号
+	optional int64 force = 15;	//战力
+}
+//打开搜索界面
+message SOpenSearch
+{
+	repeated SPlayerInfo commerce = 1;	//商会列表, 有报名的玩家才有效
+	repeated SPlayerInfo friend = 2;	//好友列表, 有报名的玩家才有效
+}
+//排行列表, 前100名 + 目标玩家 + 自己
+message SRankList
+{
+	repeated SPlayerInfo list = 1;	//玩家列表
+	required int32 rankType = 2;	//排名类型
+	optional int32 playerid = 3;	//选中的玩家id, 从点击玩家进来时, 或者送花返回时有效
+	optional int32 oriServerId = 4;	//选中的玩家服务器id, 从点击玩家进来时, 或者送花返回时有效
+}
+//物品掉落
+message SDropItem
+{
+	required int32 index = 1;			//送出鲜花的索引
+	repeated PIntInt list = 2;			//掉落的物品列表
+}

@@ -1,0 +1,61 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+package PMain;
+
+// enum SysOpenCmd
+// {		
+//     cGuideDone							=	1,//增加完成引导ID 	CGuideDone
+//     cStoryDone							=	2,//增加完成剧情ID 	CStoryDone
+//     cWeakGuideDo                         =   3,//增加执行的弱引导ID CWeakGuideDo
+//
+//     sInit					        	=	1,//系统开启初始化 	SInit
+//     sFuncUpdate							=	2,//系统列表 		SFuncUpdate
+//     sWeakGuideDo                         =   3,//弱引导执行记录反馈   SWeakGuideDo
+// };
+
+
+// client -> server
+//通知已完成引导
+message CGuideDone
+{
+    required int32 guideid = 1;
+}
+
+//通知已完成剧情
+message CStoryDone
+{
+    required int32 storyid = 1;
+}
+
+message CWeakGuideDo
+{
+    required int32 weakGuideid = 1;
+}
+
+// server -> client
+
+//功能开放初始化
+message SInit
+{
+	repeated int32 funcList = 1;//系统id
+    repeated int32 guideList = 2;//已完成的引导列表
+    repeated PIntInt weakguideList = 3;//已触发的弱引导（弱引导有次数限制）
+}
+
+//功能开关控制
+message SFuncUpdate
+{
+    message FunInfo
+    {
+        required int32 funcId = 1;
+        required bool isOpen = 2;
+    }
+    repeated FunInfo list = 1;
+}
+
+message SWeakGuideDo
+{
+    required PIntInt weakguide = 1;//弱引导数据更新（弱引导有次数限制）
+}

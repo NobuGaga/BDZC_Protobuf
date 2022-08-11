@@ -1,0 +1,66 @@
+
+ý
+
+PBattle.protoPBattlePCommon.proto"3
+CBattle
+id (Rid
+staffId (RstaffId"#
+CUnlock
+staffId (RstaffId" 
+CSeckillBattle
+id (Rid"
+
+CMapOneGet
+id (Rid"Þ
+
+PMapUpdate
+curMapId (RcurMapId8
+mapList (2.PBattle.PMapUpdate.OneMapInfoRmapList
+	startTime (R	startTime 
+rewards (2.PItemRrewards:
+
+OneMapInfo
+id (Rid
+	startTime (R	startTime"Ð
+SInit
+id (Rid
+blood (Rblood
+
+lockStaffs (R
+lockStaffs*
+staffLifeNum (2.PItemRstaffLifeNum&
+fightBossTimes (RfightBossTimes-
+mapInfo (2.PBattle.PMapUpdateRmapInfo"í
+SResult
+id (Rid
+state (Rstate
+hurt (Rhurt
+blood (Rblood
+nextId (RnextId
+	lockStaff (R	lockStaff
+money (Rmoney
+selfcost (Rselfcost*
+staffLifeNum	 (2.PItemRstaffLifeNum"O
+SUnlock
+staffId (RstaffId*
+staffLifeNum (2.PItemRstaffLifeNum"d
+SSeckillBattle
+curId (RcurId
+lastId (RlastId$
+list (2.PBattle.SResultRlist"4
+PAcquisition$
+list (2.PBattle.SResultRlist"k
+SAcquisition
+curId (RcurId
+lastId (RlastId-
+battle (2.PBattle.PAcquisitionRbattle"Z
+
+SBossReset
+id (Rid
+blood (Rblood&
+fightBossTimes (RfightBossTimes"\
+
+SMapOneGet
+id (Rid
+	startTime (R	startTime 
+rewards (2.PItemRrewardsBH

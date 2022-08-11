@@ -1,0 +1,183 @@
+
+†
+PCrossCommerce.protoPCrossCommercePCommon.proto"'
+CAFightMyBoss
+bossid (Rbossid"f
+CAFightOtherBoss
+
+commerceId (R
+commerceId
+serverId (RserverId
+bossid (Rbossid"
+	CAShopBuy
+id (Rid";
+	CBBuyBuff
+playerId (RplayerId
+type (Rtype"2
+CBChangeSort
+id1 (Rid1
+id2 (Rid2"E
+CBFight
+
+commerceId (R
+commerceId
+serverId (RserverId"
+CBLook
+id (Rid"ç
+	SActivity
+actId (RactId
+state (Rstate
+	starttime (R	starttime
+endtime (Rendtime
+	closetime (R	closetime"
+SStage
+stage (Rstage"¶
+SAInfo
+
+fightTimes (R
+fightTimes
+fightMax (RfightMax
+fightBuy (RfightBuy 
+fightBuyMax (RfightBuyMax"
+fightBuyCost (RfightBuyCost"8
+SAMyBoss
+bossId (RbossId
+blood (Rblood"¶
+
+SABossList7
+list (2#.PCrossCommerce.SABossList.BossInfoRlistﬁ
+BossInfo
+bossId (RbossId
+blood (Rblood
+
+commerceId (R
+commerceId"
+commerceName (	RcommerceName$
+commerceLevel (RcommerceLevel
+
+ladderName (	R
+ladderName
+serverId (RserverId"ê
+SAFightMyBoss
+fight (2.SFightRfight0
+myBoss (2.PCrossCommerce.SAMyBossRmyBoss.
+myInfo (2.PCrossCommerce.SAInfoRmyInfo"a
+SAFightOtherBoss
+fight (2.SFightRfight.
+myInfo (2.PCrossCommerce.SAInfoRmyInfo"d
+SAShop
+shop (2.PIntIntRshop
+myScore (RmyScore"
+commerceGold (RcommerceGold"C
+	SAShopBuy
+info (2.PIntIntRinfo
+myScore (RmyScore"Ü
+SARank5
+list (2!.PCrossCommerce.SARank.PlayerInfoRlist
+myHurt (RmyHurt
+myRank (RmyRankî
+
+PlayerInfo
+id (Rid
+name (	Rname
+
+commerceId (R
+commerceId
+hurt (Rhurt
+rank (Rrank
+serverId (RserverId"*
+SBLadderInfo
+ladderId (RladderId"J
+SBFightTimes
+
+fightTimes (R
+fightTimes
+fightMax (RfightMax"˝
+SPlayerInfo
+id (Rid
+name (	Rname
+head (Rhead
+chatBg (RchatBg
+vip (Rvip
+sex (Rsex
+force (Rforce=
+staffs (2%.PCrossCommerce.SPlayerInfo.StaffInfoRstaffs
+forcePer	 (RforcePer
+forceAdd
+ (RforceAdd
+titleid (RtitleidS
+	StaffInfo
+id (Rid
+color (Rcolor 
+refineLevel (RrefineLevel"i
+SBInfo
+score (Rscore
+gold (Rgold5
+players (2.PCrossCommerce.SPlayerInfoRplayers"}
+	SBBuyBuff
+id (Rid
+forcePer (RforcePer
+forceAdd (RforceAdd
+score (Rscore
+gold (Rgold"*
+SBChangeSort
+sortList (RsortList"À
+SBFightList<
+list (2(.PCrossCommerce.SBFightList.CommerceInfoRlist˝
+CommerceInfo
+
+commerceId (R
+commerceId"
+commerceName (	RcommerceName$
+commerceLevel (RcommerceLevel
+serverId (RserverId5
+players (2.PCrossCommerce.SPlayerInfoRplayers
+allForce (RallForce
+score (Rscore";
+SBCommerceScore
+score (Rscore
+gold (Rgold"Ç
+SBFight
+score (Rscore
+gold (Rgold
+
+commerceId (R
+commerceId"
+commerceName (	RcommerceName
+serverId (RserverId5
+list (2!.PCrossCommerce.SBFight.FightTeamRlist
+result (Rresult
+socreAdd (RsocreAddÅ
+	FightTeam/
+that (2.PCrossCommerce.SPlayerInfoRthat+
+my (2.PCrossCommerce.SPlayerInfoRmy
+result (Rresult"*
+SBLook 
+fight (2
+.SFightPVPRfight"—
+SBRank3
+list (2.PCrossCommerce.SBRank.RankInfoRlist
+myRank (RmyRank
+score (Rscored
+RankInfo
+rank (Rrank
+name (	Rname
+score (Rscore
+serverId (RserverId"@
+SBReward
+state (Rstate
+items (2.PIntIntRitems"û
+SBRecord7
+list (2#.PCrossCommerce.SBRecord.RecordInfoRlistÿ
+
+RecordInfo
+name (	Rname
+score (Rscore
+level (Rlevel
+force (Rforce
+result (Rresult 
+socreChange (RsocreChange
+serverId (RserverId
+
+commerceid (R
+commerceidBH

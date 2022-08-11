@@ -1,0 +1,89 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PMeeting;
+
+//系统id: 远征会议 Meeting = 143,
+
+// local CMD_ID = 
+// {
+//	cMeetingBossInfo				= 2,//请求关卡boss 数据
+//	cMeetingFight					= 3,//点击战斗按钮
+//	cMeetingShopInfo				= 4,//请求兑换商店  PMeeting.CMeetingShop
+//	cMettingExchange				= 5,//请求兑换物品 PMeeting.CMeetingExchange
+//	cMeetingReset					= 6,//重置
+//	cMeetingReward					= 7,//领奖励	PMeeting.CMeetingReward
+
+//	sMeetingInit					= 1,//初始化信息 PMeeting.SAMeetingInIt
+//	sMeetingBossInfo				= 2,//关卡boss 数据 PMeeting.SMeetingBossInfo
+//	sMeetingFight					= 3,//点击战斗按钮 PMeeting.SMeetingFight
+//	sMeetingShopInfo				= 4,//请求兑换商店PMeeting.SMeetingShopInfo
+//	sMettingExchange				= 5,//请求兑换物品 PMeeting.SMeetingShopInfo
+//	sMeetingReset					= 6,//重置 Pmeeting.SMettingInit
+//	sMeetingReward					= 7,//领奖励	PMeeting.SMeetingReward
+
+// }
+
+
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+
+message CMeetingExchange
+{
+	required int32 id = 1;
+}
+
+message CMeetingReward
+{
+	required int32 id = 1;		//玩家id
+}
+
+message CMeetingShop
+{
+	required bool refresh = 1; //是否刷新 true：刷新
+}
+
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+message SMettingInit
+{
+	required int32 floodId = 1; //当前层数
+	required int32 currID = 2;	//当前关卡id 
+	required int32 score  = 3;	//当前积分
+	required int32 resetTimes = 4;//今日重置次数	(应该是总次数，每日增加一点重置点，有最大值)
+	repeated int32 getRewards = 5;//已领取奖励id
+	repeated PIntInt power = 6;		//关卡战力
+}
+
+message SMeetingBossInfo
+{
+	required int32 id = 1;	//当前关卡id 
+	required int32 bossid = 2;
+	required int64 power = 3;//总战力
+	repeated PIntInt staffPower = 4;//员工战力
+}
+
+message SMeetingFight
+{
+	required bool result = 1;	//战斗结果
+	required int32 id = 2;		//关卡id 
+	required SFightPVP fightInfo = 3; //战斗信息
+	repeated PItem award = 4;
+	required int32 score  = 5;	//当前积分
+	required int32 addscore = 6;//胜利获得积分
+}
+
+message SMeetingShopInfo
+{
+	repeated PIntInt times = 1;//当前显示兑换物品购买次数
+	required int32 score = 2;	//当前积分
+}
+
+message SMeetingReward
+{
+	required int32 id = 1; //id
+	repeated PItem reward = 2; //奖励物品
+}

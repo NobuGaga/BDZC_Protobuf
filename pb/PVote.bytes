@@ -1,0 +1,136 @@
+
+§
+PVote.protoPVotePCommon.proto"z
+PPosInfo
+playerid (Rplayerid
+
+playername (	R
+playername 
+avatar (2.PAvatarRavatar
+sex (Rsex"±
+PPlayerVoteInfo
+playerid (Rplayerid
+
+playername (	R
+playername
+viplv (Rviplv"
+commercename (	Rcommercename
+
+fightpower (R
+fightpower 
+avatar (2.PAvatarRavatar
+sex (Rsex
+currflag (Rcurrflag 
+ticketcount	 (Rticketcount
+chatBg
+ (RchatBg"H
+	PVoteInfo
+voteid (Rvoteid#
+info (2.PVote.PPosInfoRinfo"ñ
+PVotePar
+voteID (RvoteID
+titleID (RtitleID
+playerID (RplayerID
+sex (Rsex
+head (Rhead
+
+playerName (	R
+playerName"
+commerceName (	RcommerceName-
+parList (2.PVote.PVoteParInfoRparList"J
+PVoteParInfo
+key (Rkey
+value (Rvalue
+time (Rtime"
+CJoin
+voteid (Rvoteid"S
+CTicket
+voteid (Rvoteid
+playerid (Rplayerid
+count (Rcount"$
+
+CTicketRef
+voteid (Rvoteid"<
+CParInit
+type (Rtype
+	isRefresh (R	isRefresh"s
+SInit$
+info (2.PVote.PVoteInfoRinfo
+status (Rstatus
+voteids (Rvoteids
+time (Rtime"i
+SJoin
+voteid (Rvoteid*
+info (2.PVote.PPlayerVoteInfoRinfo
+	isRefresh (R	isRefresh"k
+STicket
+voteid (Rvoteid*
+info (2.PVote.PPlayerVoteInfoRinfo
+	isRefresh (R	isRefresh"&
+SStateChange
+status (Rstatus"Q
+SVoteParInit#
+info (2.PVote.PVoteParRinfo
+	isRefresh (R	isRefresh"<
+CSendRedPacket
+voteid (Rvoteid
+gold (Rgold"F
+SSendRedPacket
+	isSuccess (R	isSuccess
+voteid (Rvoteid"'
+COpenInstance
+voteid (Rvoteid"E
+SOpenInstance
+	isSuccess (R	isSuccess
+voteid (Rvoteid""
+CGetGift
+voteid (Rvoteid"@
+SGetGift
+	isSuccess (R	isSuccess
+voteid (Rvoteid">
+
+COpenStudy
+players (Rplayers
+voteid (Rvoteid"B
+
+SOpenStudy
+	isSuccess (R	isSuccess
+voteid (Rvoteid":
+CStudyUp
+index (Rindex
+staffid (Rstaffid"Å
+SVoteStudyInit%
+info (2.PVote.PStudyInfoRinfo
+endtime (Rendtime
+
+playername (	R
+playername
+voteid (Rvoteid
+	isSuccess (R	isSuccess
+	isinvited (R	isinvited"°
+
+PStudyInfo
+index (Rindex
+playid (Rplayid
+
+playername (	R
+playername
+staffid (Rstaffid
+	starttime (R	starttime
+	staffName (	R	staffName"à
+PVoteMessage
+type (Rtype
+	firstname (	R	firstname
+
+secondname (	R
+secondname
+	ticketnum (R	ticketnum
+time (Rtime
+firstid (Rfirstid
+secondid (Rsecondid
+voteid (Rvoteid"g
+	SVoteOpen-
+listall (2.PVote.PVoteMessageRlistall+
+listmy (2.PVote.PVoteMessageRlistmy"?
+SVoteMessageUpdate)
+value (2.PVote.PVoteMessageRvalueBH

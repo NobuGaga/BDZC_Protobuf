@@ -1,0 +1,61 @@
+
+ù
+
+PCrossActivity.protoPCrossActivityPCommon.proto"z
+PActivityState
+state (Rstate
+	startTime (R	startTime
+endTime (RendTime
+lefttime (Rlefttime"Z
+SUpdateState
+actId (RactId4
+state (2.PCrossActivity.PActivityStateRstate"À
+PLottery
+actId (RactId4
+state (2.PCrossActivity.PActivityStateRstate
+totalNum (RtotalNum
+isFree (RisFree
+numGets (RnumGets
+poolGold (RpoolGold">
+PLotteryReward
+id (Rid
+item (2.PIntIntRitem"
+CLottery
+num (Rnum"¼
+SLottery
+actId (RactId
+totalNum (RtotalNum
+isFree (RisFree>
+
+rewardList (2.PCrossActivity.PLotteryRewardR
+rewardList&
+poolGoldBefore (RpoolGoldBefore"j
+SLotteryNumGet
+actId (RactId
+numGets (RnumGets(
+
+getRewards (2.PIntIntR
+getRewards"£
+SLotteryMessage
+actId (RactId
+
+playerName (	R
+playerName
+itemId (RitemId
+	itemCount (R	itemCount$
+lotteryItemId (RlotteryItemId"ô
+SLotteryMsgList
+actId (RactId?
+list (2+.PCrossActivity.SLotteryMsgList.MessageInfoRlist‰
+MessageInfo
+
+playerName (	R
+playerName
+itemId (RitemId
+	itemCount (R	itemCount$
+lotteryItemId (RlotteryItemId"<
+SLotteryPoolGold
+actId (RactId
+gold (Rgold"?
+	SActivity2
+lottery (2.PCrossActivity.PLotteryRlotteryBH

@@ -1,0 +1,133 @@
+
+Ó
+PClub.protoPClubPCommon.proto"U
+	PShopItem
+index (Rindex
+goodid (Rgoodid
+buyCount (RbuyCount"«
+PShop0
+nextRefreshLeftTime (RnextRefreshLeftTime,
+todayRefreshCount (RtodayRefreshCount
+point (Rpoint,
+itemList (2.PClub.PShopItemRitemList"ˆ
+PMessage
+index (Rindex
+	enterTime (R	enterTime
+playerid (Rplayerid
+name (	Rname
+score (Rscore
+headid (Rheadid
+joinType (RjoinType
+newFlag (RnewFlag
+sex	 (Rsex"
+ownJoinState
+ (RownJoinState"Ä
+PHostHistory
+	startTime (R	startTime
+clubtype (Rclubtype
+	joinCount (R	joinCount
+	jokeCount (R	jokeCount
+
+totalScore (R
+totalScore
+
+totalPoint (R
+totalPoint"¤
+
+PJokerInfo
+playerid (Rplayerid
+
+fightpower (R
+fightpower
+level (Rlevel
+name (	Rname
+score (Rscore
+joinTime (RjoinTime"?
+CHost
+clubtype (Rclubtype
+openClub (RopenClub"]
+CJoin
+playerid (Rplayerid
+	seatindex (R	seatindex
+joinType (RjoinType"$
+CEnter
+playerid (Rplayerid" 
+CRefreshShop
+pay (Rpay"6
+CShopBuy
+index (Rindex
+count (Rcount"$
+CRefer
+playerid (Rplayerid"
+CInvite
+msg (	Rmsg"ù
+SInit 
+shop (2.PClub.PShopRshop
+	joinCount (R	joinCount7
+hostHistList (2.PClub.PHostHistoryRhostHistList/
+	jokerList (2.PClub.PJokerInfoR	jokerList
+score (Rscore
+point (Rpoint
+leftTime (RleftTime"Ý
+SJoin
+playerid (Rplayerid
+clubtype (Rclubtype
+	gainPoint (R	gainPoint
+	gainScore (R	gainScore
+joinType (RjoinType
+	seatIndex (R	seatIndex&
+	gainItems (2.PIntIntR	gainItems"“
+SEnter
+errcode (Rerrcode
+leftTime (RleftTime
+playerid (Rplayerid
+name (	Rname
+
+totalScore (R
+totalScore)
+msgList (2.PClub.PMessageRmsgList
+clubtype (Rclubtype
+
+inviteTime (R
+inviteTime
+	inviteNum	 (R	inviteNum"€
+SClubFinish)
+msgList (2.PClub.PMessageRmsgList
+score (Rscore
+point (Rpoint
+totalNum (RtotalNum"A
+SHost
+clubtype (Rclubtype
+	leftTimer (R	leftTimer"ˆ
+SShopBuy
+index (Rindex
+goodid (Rgoodid
+buyCount (RbuyCount
+	costpoint (R	costpoint
+point (Rpoint"i
+PShip
+index (Rindex
+playerid (Rplayerid
+name (	Rname
+clubtype (Rclubtype"Û
+SSRefreshList(
+shipList (2.PClub.PShipRshipList
+openFlag (RopenFlag7
+hostHistList (2.PClub.PHostHistoryRhostHistList/
+	jokerList (2.PClub.PJokerInfoR	jokerList
+clubtype (Rclubtype"I
+SGainAaward
+	gainScore (R	gainScore
+	gainPoint (R	gainPoint"¨
+SRefer
+hasFlag (RhasFlag
+playerid (Rplayerid
+name (	Rname
+clubtype (Rclubtype
+	joinCount (R	joinCount
+leftTime (RleftTime"G
+SInvite
+
+inviteTime (R
+inviteTime
+	inviteNum (R	inviteNumBH

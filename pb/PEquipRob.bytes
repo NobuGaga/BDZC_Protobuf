@@ -1,0 +1,74 @@
+
+¦
+PEquipRob.proto	PEquipRobPCommon.proto"Y
+PRecordInfo
+name (	Rname
+time (Rtime"
+loseItem (2.PItemRloseItem"¦
+
+PEnemyInfo
+index (Rindex
+playerid (Rplayerid
+name (	Rname
+power (Rpower
+level (Rlevel
+headId (RheadId
+sex (Rsex
+vip (Rvip
+
+getProType	 (R
+getProType
+isRobed
+ (RisRobed
+isRobot (RisRobot
+chatBg (RchatBg"$
+
+PEquipData
+itemId (RitemId"'
+CEnterChipRob
+chipId (RchipId"T
+CChipRob
+chipId (RchipId
+index (Rindex
+playerid (Rplayerid"=
+CRefreshEnemy
+isBuy (RisBuy
+chipId (RchipId"·
+SInit*
+leftRefreshCount (RleftRefreshCount*
+buyRefereshCount (RbuyRefereshCount"
+leftRobCount (RleftRobCount"
+recoveryTime (RrecoveryTime 
+protectTime (RprotectTime(
+buyProtectCount (RbuyProtectCount 
+activeLists (RactiveLists 
+buyRobCount (RbuyRobCount"G
+SBattleRecord6
+
+recordList (2.PEquipRob.PRecordInfoR
+recordList"X
+SEnterChipRob
+chipId (RchipId/
+robList (2.PEquipRob.PEnemyInfoRrobList"Ã
+SChipRob
+index (Rindex
+isRobed (RisRobed 
+getList (2.PItemRgetList 
+protectTime (RprotectTime(
+	fightInfo (2
+.SFightPVPR	fightInfo"
+leftRobCount (RleftRobCount"
+recoveryTime (RrecoveryTime 
+buyRobCount (RbuyRobCount/
+robList	 (2.PEquipRob.PEnemyInfoRrobList"t
+SRobTime"
+leftRobCount (RleftRobCount"
+recoveryTime (RrecoveryTime 
+buyRobCount (RbuyRobCount"˜
+SRefreshEnemy*
+leftRefreshCount (RleftRefreshCount*
+buyRefereshCount (RbuyRefereshCount/
+robList (2.PEquipRob.PEnemyInfoRrobList"Y
+SBuyProtect 
+protectTime (RprotectTime(
+buyProtectCount (RbuyProtectCountBH

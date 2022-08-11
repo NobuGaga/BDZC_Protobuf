@@ -1,0 +1,103 @@
+
+æ
+
+PCar.protoPCarPCommon.proto"Å
+PCarInfo
+id (Rid
+carid (Rcarid
+level (Rlevel
+color (Rcolor
+star (Rstar
+Attr (2.PAttributeRAttr
+isequip (Risequip 
+staffs (2.PIntIntRstaffs&
+	breakdown	 (2.PIntIntR	breakdown 
+recast
+ (2.PIntIntRrecast 
+intensifylv (Rintensifylv
+upresult (Rupresult*
+	skillList (2.PCar.PSkillR	skillList"
+CCar
+id (Rid"/
+CCarAdd
+index (Rindex
+id (Rid"T
+CCarAddStaff
+carid (Rcarid
+staffid (Rstaffid
+index (Rindex"?
+CCarHandsel
+playerid (Rplayerid
+carid (Rcarid".
+CCarTotalBreakDown
+carlist (Rcarlist")
+CCarTotalSell
+matlist (Rmatlist"9
+CCarIntensify
+type (Rtype
+carid (Rcarid"I
+CCarItemBreakDown
+itemid (Ritemid
+	itemCount (R	itemCount"#
+	CCarMerge
+itemid (Ritemid"`
+SCarInit"
+carlist (2.PIntIntRcarlist0
+carinfolist (2.PCar.PCarInfoRcarinfolist"6
+
+SCarUpdate(
+carinfo (2.PCar.PCarInfoRcarinfo"#
+SAddParking
+index (Rindex"I
+SCarAdd
+index (Rindex(
+carinfo (2.PCar.PCarInfoRcarinfo"ì
+SCarAddStaff
+id (Rid
+seatid (Rseatid
+staffid (Rstaffid
+oldcarid (Roldcarid%
+addAttr (2.PAttributeRaddAttr"s
+SCarBreakDown
+carid (Rcarid"
+getlist (2.PIntIntRgetlist(
+carinfo (2.PCar.PCarInfoRcarinfo"#
+SCarHandsel
+carid (Rcarid"R
+SCarTotalBreakDown
+carlist (Rcarlist"
+getlist (2.PIntIntRgetlist"M
+SCarTotalSell
+matlist (Rmatlist"
+getlist (2.PIntIntRgetlist"Y
+	SCarMerge(
+carinfo (2.PCar.PCarInfoRcarinfo"
+iteminfo (2.PItemRiteminfo"r
+PSkill
+attrType (RattrType
+attrVal (RattrVal
+valType (RvalType
+skillId (RskillId"$
+CExtendSkill
+carId (RcarId"\
+SExtendSkill
+carId (RcarId
+grid (Rgrid"
+skill (2.PCar.PSkillRskill"8
+CChangeSkill
+carId (RcarId
+grid (Rgrid"\
+SChangeSkill
+carId (RcarId
+grid (Rgrid"
+skill (2.PCar.PSkillRskill"9
+CReplaceSkill
+carId (RcarId
+grid (Rgrid"]
+SReplaceSkill
+carId (RcarId
+grid (Rgrid"
+skill (2.PCar.PSkillRskill"K
+SUpdateSkills
+carId (RcarId$
+skills (2.PCar.PSkillRskillsBH

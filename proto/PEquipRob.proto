@@ -1,0 +1,148 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+//enum EquipRobCmd
+//{
+//	cEquipRobBattleRecord				=	1,//战斗记录
+//	cEquipRobEnterChipRob				=	2,//进入碎片抢夺					PEquipRob.CEnterChipRob
+//	cEquipRobChipRob					=	3,//碎片抢夺						PEquipRob.CChipRob
+//	cEquipRobBuyRobTime					=	4,//购买抢夺次数
+//	cEquipRobRefreshEnemy				=	5,//刷新抢夺目标					PEquipRob.CRefreshEnemy
+//  cEquipRobBuyProtect					=	6,//购买保护时间
+//  cEquipRobCompound					=	7,//装备合成						PEquipRob.PEquipData
+//  cEquipRobGetRobTime					=	8,//获取抢夺次数（恢复时间为0时）
+//	
+//	sEquipRobInit						=	1, //初始化		    				PEquipRob.SInit
+//	sEquipRobBattleRecord				=	2, //战斗记录						PEquipRob.SBattleRecord
+//  sEquipRobEnterChipRob				=	3, //进入碎片抢夺					PEquipRob.SEnterChipRob
+//	sEquipRobChipRob					=	4, //碎片抢夺						PEquipRob.SChipRob
+//	sEquipRobBuyRobTime					=	5, //购买抢夺次数					PEquipRob.SRobTime
+//	sEquipRobGetRobTime					=	6, //获取抢夺次数返回				PEquipRob.SRobTime
+//	sEquipRobRefreshEnemy				=	7, //刷新抢夺目标					PEquipRob.SRefreshEnemy
+//  sEquipRobBuyProtect					=	8, //购买保护时间					PEquipRob.SBuyProtect
+//  sEquipRobCompound					=	9, //装备合成						PEquipRob.PEquipData
+//  sEquipRobProtectPush				=	10,//保护时间推送			 		PEquipRob.SBuyProtect
+//	sEquipRobActiveListPush				=	11,//激活装备id推送					PEquipRob.PEquipData
+//};
+
+
+package PEquipRob;
+
+// common message
+message PRecordInfo
+{
+	required string name = 1;   //玩家名
+	required int32 time = 2;    //挑战时间
+	required PItem loseItem = 3;//损失的碎片道具
+}
+
+
+message PEnemyInfo
+{
+	required int32 index = 1;
+	required int32 playerid = 2;  //玩家id(若是机器人传机器人id)
+	required string name = 3;	  //玩家名
+	required int64 power = 4;	  //战力
+	required int32 level = 5;	  //等级
+	optional int32 headId = 6;	  //头像id
+	optional int32 sex = 7;	      //性别
+	optional int32 vip = 8;	      //vip等级
+	required int32 getProType = 9;//概率获得类型(1:低 2:中 3:高)
+	required bool isRobed = 10;	  //是否已经被抢夺
+	required bool isRobot = 11;   //是否是机器人
+	optional int32 chatBg = 12;   //聊天和头像框ID
+}
+
+
+message PEquipData
+{
+	required int32 itemId = 1;  //道具id
+}
+
+
+//Client -> Server
+message CEnterChipRob
+{
+	required int32 chipId = 1;//碎片id
+}
+
+
+message CChipRob
+{
+	required int32 chipId = 1;	//碎片id
+	required int32 index = 2;
+	required int32 playerid = 3;//玩家id
+}
+
+
+message CRefreshEnemy
+{
+	required bool isBuy = 1;  //是否购买刷新
+	required int32 chipId = 2;//碎片id
+}
+
+
+// Server -> Client
+message SInit
+{
+	required int32 leftRefreshCount = 1;//剩余刷新抢夺对手列表次数
+	required int32 buyRefereshCount = 2;//购买刷新抢夺对手列表次数
+	required int32 leftRobCount = 3;	//剩余抢夺次数
+	required int32 recoveryTime = 4;    //抢夺恢复时间(单位：秒)
+	required int32 protectTime = 5;	    //保护时间(单位：秒)
+	required int32 buyProtectCount = 6; //当日购买保护时间次数
+	repeated int32 activeLists = 7;		//激活装备id数组
+	required int32 buyRobCount = 8;		//购买抢夺次数
+}
+
+
+message SBattleRecord
+{
+	repeated PRecordInfo recordList = 1;//战斗记录
+}
+
+
+message SEnterChipRob
+{
+	required int32 chipId = 1;		//碎片id
+	repeated PEnemyInfo robList = 2;//抢夺对手数据
+}
+
+
+message SChipRob
+{
+	required int32 index = 1;
+	required bool isRobed = 2;			//是否被抢夺		
+	repeated PItem getList = 3;			//获得道具数组
+	required int32 protectTime = 4;	    //保护时间(单位：秒),抢夺会结束保护时间
+	required SFightPVP fightInfo = 5;   //战斗信息
+	required int32 leftRobCount = 6;	//剩余抢夺次数
+	optional int32 recoveryTime = 7;	//抢夺恢复时间(单位：秒)
+	required int32 buyRobCount = 8;		//购买抢夺次数
+	repeated PEnemyInfo robList = 9;    //抢夺对手数据
+}
+
+
+message SRobTime
+{
+	required int32 leftRobCount = 1;	//剩余抢夺次数
+	optional int32 recoveryTime = 2;	//抢夺恢复时间(单位：秒)
+	required int32 buyRobCount = 3;		//购买抢夺次数
+}
+
+
+message SRefreshEnemy
+{
+	required int32 leftRefreshCount = 1;	//刷新抢夺对手列表次数
+	required int32 buyRefereshCount = 2;    //购买刷新抢夺对手列表次数
+	repeated PEnemyInfo robList = 3;        //抢夺对手数据
+}
+
+
+message SBuyProtect
+{
+	required int32 protectTime = 1;	    //保护时间(单位：秒)
+	optional int32 buyProtectCount = 2; //当日购买保护时间次数
+}

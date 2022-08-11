@@ -1,0 +1,93 @@
+
+¿
+PCrossOccupy.protoPCrossOccupyPCommon.proto"f
+CFight
+
+buildingId (R
+buildingId
+playerid (Rplayerid 
+oriServerId (RoriServerId"/
+COpenBuilding
+
+buildingId (R
+buildingId"
+	CExchange
+id (Rid"1
+COccupyBuilding
+
+buildingId (R
+buildingId"l
+SState
+actId (RactId
+state (Rstate
+	starttime (R	starttime
+endtime (Rendtime"
+SInfo
+
+fightTimes (R
+fightTimes
+buyTimes (RbuyTimes 
+refreshTime (RrefreshTime
+myBuild (RmyBuild"”
+PPlayerInfo
+id (Rid
+name (	Rname
+head (Rhead
+body (Rbody
+sex (Rsex
+force (Rforce
+level (Rlevel
+chatBg (RchatBg
+title	 (Rtitle
+building
+ (Rbuilding
+
+occupyTime (R
+occupyTime
+	fightTime (R	fightTime
+vip (Rvip 
+oriServerId (RoriServerId"}
+PGoodBuilding
+id (Rid
+playerId (RplayerId
+
+playerName (	R
+playerName 
+playerTitle (RplayerTitle"3
+PCommonBuilding
+id (Rid
+num (Rnum"Ä
+SInit
+
+isShopOpen (R
+isShopOpen*
+state (2.PCrossOccupy.SStateRstate+
+myInfo (2.PCrossOccupy.SInfoRmyInfo"Å
+SOpenUI7
+goodList (2.PCrossOccupy.PGoodBuildingRgoodList=
+
+commonList (2.PCrossOccupy.PCommonBuildingR
+commonList"6
+SList-
+list (2.PCrossOccupy.PPlayerInfoRlist"J
+	SBuilding
+id (Rid-
+list (2.PCrossOccupy.PPlayerInfoRlist"π
+SShop
+score (Rscore
+shop (2.PIntIntRshop
+	shopTimes (R	shopTimes 
+refreshTime (RrefreshTime 
+refreshCost (RrefreshCost
+maxTimes (RmaxTimes"O
+	SExchange
+id (Rid
+	lessTimes (R	lessTimes
+socre (Rsocre"j
+SFight
+	isSuccess (R	isSuccess(
+	fightInfo (2
+.SFightPVPR	fightInfo
+buildId (RbuildId"#
+SOccupy
+myBuild (RmyBuildBH

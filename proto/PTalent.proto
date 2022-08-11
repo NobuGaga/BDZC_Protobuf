@@ -1,0 +1,25 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+package PTalent;
+
+//enum cmd
+//{
+//	cTalentLevelUp			= 1,//升级天赋
+
+//  sTalentInit				= 1,//初始化
+//  sTalentLevelUp			= 2,//升级天赋
+//}
+
+message SInit
+{
+	required int32 level = 1;		//天赋等级
+	required int32 addSuccProb = 2;	//额外成功率
+}
+
+message SLevelUp
+{
+	required bool isSuccess = 1;	//是否成功
+	required int32 level = 2;		//天赋等级
+	required int32 addSuccProb = 3;	//额外成功率
+}

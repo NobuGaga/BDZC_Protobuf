@@ -1,0 +1,67 @@
+
+×	
+PInsideLog.proto
+PInsideLog"4
+PIntKeyValue
+id (Rid
+value (Rvalue"ð
+CLogin
+account (	Raccount
+playerid (Rplayerid
+name (	Rname
+platform (	Rplatform
+mac (	Rmac
+ipaddr (Ripaddr
+isnew (Risnew
+sbid (	Rsbid
+time	 (Rtime
+version
+ (Rversion"›
+CLogout
+account (	Raccount
+playerid (Rplayerid
+name (	Rname
+sbid (	Rsbid
+time (Rtime
+
+onlinetime (R
+onlinetime"§
+CChat
+account (	Raccount
+playerid (Rplayerid
+name (	Rname
+
+recordtype (	R
+recordtype
+content (	Rcontent
+viplevel (Rviplevel"
+COnline
+count (Rcount"›
+CCash
+account (	Raccount
+playerid (Rplayerid
+name (	Rname
+
+costitemid (R
+costitemid
+costitem (	Rcostitem
+	costcount (R	costcount
+	getitemid (R	getitemid
+getitem (	Rgetitem
+getcount	 (Rgetcount
+viplevel
+ (Rviplevel"¢
+CPay
+amount (Ramount
+paytimes (Rpaytimes
+
+createtime (R
+createtime
+	amountcnt (R	amountcnt
+pauId (	RpauId
+type (Rtype"	
+CCreate"S
+	CPrintLog
+type (Rtype
+content (	Rcontent
+account (	RaccountBH

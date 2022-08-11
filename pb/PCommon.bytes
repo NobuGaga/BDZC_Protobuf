@@ -1,0 +1,122 @@
+
+œ
+PCommon.proto"1
+PIntInt
+key (Rkey
+value (Rvalue"4
+
+PIntString
+key (Rkey
+value (	Rvalue"7
+PStringString
+key (	Rkey
+value (	Rvalue"4
+
+PStringInt
+key (	Rkey
+value (Rvalue"&
+PVector2
+x (Rx
+y (Ry"4
+PVector3
+x (Rx
+y (Ry
+z (Rz"h
+
+PAttribute
+Wuli (RWuli
+Zhili (RZhili
+Zhengzhi (RZhengzhi
+Meili (RMeili"0
+PBiInt
+ncur (Rncur
+nmax (Rnmax"E
+PItem
+id (Rid
+count (Rcount
+params (Rparams"5
+PInt64Int64
+ncur (Rncur
+nmax (Rnmax"1
+PAvatar
+head (Rhead
+body (Rbody"7
+PHead
+gender (Rgender
+headid (Rheadid"S
+PBuff
+skillid (Rskillid
+buffid (Rbuffid
+staffid (Rstaffid"ª
+PFightDetail
+index (Rindex
+result (Rresult
+staffid (Rstaffid
+	baseblood (R	baseblood
+	initblood (R	initblood
+	laveblood (R	laveblood
+
+rinitblood (R
+rinitblood
+
+rlaveblood (R
+rlaveblood
+buffs	 (2.PBuffRbuffs
+rstaffid
+ (Rrstaffid"E
+SFight
+result (Rresult#
+fight (2.PFightDetailRfight"Æ
+PBuffPVP
+source (Rsource
+skillid (Rskillid-
+buffs (2.PBuffPVP.PBuffSkillPVPRbuffsY
+PBuffSkillPVP
+buffid (Rbuffid
+target (Rtarget
+staffid (Rstaffid"û
+PFightDetailPVP
+index (Rindex
+result (Rresult
+staffid (Rstaffid
+	baseblood (R	baseblood
+	initblood (R	initblood
+	laveblood (R	laveblood
+rstaffid (Rrstaffid
+
+rbaseblood (R
+rbaseblood
+
+rinitblood	 (R
+rinitblood
+
+rlaveblood
+ (R
+rlaveblood
+buffs (2	.PBuffPVPRbuffs)
+passBuff (2.PPassiveBuffRpassBuff"t
+PPassiveBuff
+buffid (Rbuffid
+target (Rtarget
+staffid (Rstaffid
+addblood (Raddblood"â
+	SFightPVP
+result (Rresult&
+fight (2.PFightDetailPVPRfight1
+staffs (2.SFightPVP.PFightStaffPVPRstaffs3
+rstaffs (2.SFightPVP.PFightStaffPVPRrstaffs
+name (	Rname
+rname (	Rrname‚
+PFightStaffPVP
+staffid (Rstaffid
+
+staffcolor (R
+staffcolor
+power (Rpower 
+refineLevel (RrefineLevel"`
+
+PEquipInfo
+id (Rid
+equipId (RequipId
+level (Rlevel
+star (RstarBH

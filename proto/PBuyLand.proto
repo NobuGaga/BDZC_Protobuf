@@ -1,0 +1,94 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PBuyLand;
+
+// local CMD_ID = 
+// {
+//	cBuyLandBattle 				= 1;//竞标 PBuyLand.CBuyLand
+//	cBuyLandTotalBattle			= 2,//一键竞标 PBuyLand.CBuyLandTotal
+//	cBuyLandOpen				= 3,//打开一键竞标界面
+// 	
+// 	sBuyLandInit				= 1;//竞标地皮初始化PBuyLand.SBuyLandInit
+//	sBuyLandResult				= 2;//演讲返回结果 PBuyLand.SBuyLandResult
+//  sBuyLandReset				= 3;//零点重置PBuyLand.SBuyLandInit
+//	sButLandOpen				= 4;//打开一键竞标界面返回PBuyLand.SBuyLandList
+// }
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+
+
+// 开始竞标
+message CBuyLand
+{
+	required int32 id = 1;//关卡ID
+	required int32 index = 2;//竞标地块id	
+}
+
+// 一键竞标
+message CBuyLandTotal
+{
+	required int32 id = 1;//竞标地块id
+	required int32 num = 2;//一键竞标多少关卡	
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////
+// Server -> Client
+// 查询竞标地皮界面返回
+
+message SBuyLandAttr
+{
+	
+}
+
+message SBuyLandInit
+{
+	message CBuyLand
+	{
+		required int32 id = 1; //当前关卡id
+		required int32 index = 2;
+		required int64 power = 3; // 公关实力
+		required int64 money = 4; // 金钱		
+		repeated PItem randReward = 5;//随机奖励
+		required string name = 6; //名称
+		repeated SBuyLandAttrType attr = 7;
+	}
+	repeated CBuyLand landInfo = 1;
+	required bool isOpen	= 2;//是否开启一键演讲
+}
+	
+
+message SBuyLandAttrType
+{
+	optional int32 id = 1;//美女或员工id
+	optional int32 value = 2;
+	optional int32 type = 3;//1:美女, 2:员工技能经验，3员工资质经验
+}
+
+//竞标结果
+message SBuyLandResult
+{
+	required int32 id = 1; //当前关卡id
+	required int32 index = 2;//
+	required string name = 3;//名称
+	required int32 type = 4;//1：竞标, 10:一键竞标
+	required bool isSuc = 5; //true胜利, false失败
+	required int64 money = 6; //竞标消耗的金钱 
+	repeated PItem itemList = 7; // 竞标奖励物品
+	required int32 landNum	= 8;//获得地皮数量
+	required int32 companyScore = 9;//获得公司资产
+	optional int64 boosBlood = 10;//Boss血量
+	repeated SBuyLandAttrType attr = 11;
+	optional SBuyLandInit  nextChapter= 12;//下一关的数据
+	required bool isOpen = 13;//是否开启一键竞标
+}
+
+message SBuyLandList
+{
+	repeated PIntInt  chapterId = 1; //key:关卡id,value:经验金钱
+}

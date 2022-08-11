@@ -1,0 +1,73 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PFriendInvitation;
+
+// local CMD_ID = 
+// {
+//		cInPutInvitationCode	= 1;//输入邀请码 PFriendInvitation.CInvitationCode
+//		cGetReward	= 2;//领取奖励	PFriendInvitation.CGetReward
+
+
+
+//		sInit = 1; //初始化 PFriendInvitation.SInvitationInit
+//		sInPutResult = 2;//输入结果 PFriendInvitation.SInputResult
+//		sGetReward = 3;//领奖返回 PFriendInvitation.SGetReward
+// }
+
+
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+message CInvitationCode
+{
+	required string code = 1;//邀请码
+}
+
+message CGetReward
+{
+	required int32 type = 1;
+	required int32 index = 2;
+}
+
+ 
+
+///////////////////////////////////////////////////////////////////////////
+// Server -> Client
+message SInvitationInit
+{
+	message SRewardGainInfo//奖励领取情况
+	{
+		required int32 type = 1;//类型(1:邀请奖励,2:实力奖励,3:充值奖励)
+		repeated PIntInt gainTimes = 2;//(索引,已领取次数)
+	}
+	required string code = 1;//自己的邀请码
+	required bool IsInvitation = 2;//是否已被邀请
+	repeated SInvitationInfo invitationList = 3;//邀请列表
+	repeated SRewardGainInfo gainInfo = 4;//奖励领取情况
+}
+
+message SInvitationInfo
+{
+	required int32 playerId = 1; //玩家ID
+	required int32 level = 2;	//玩家等级
+	required int64 power = 3;//玩家实力 
+	required int32 recharge = 4;//玩家充值金额
+	required PHead head = 5;//玩家头像
+}
+
+
+message SGetReward
+{
+	required int32 type = 1;//1:邀请奖励,2:实力奖励,3:充值奖励
+	required int32 index = 2;
+	repeated PIntInt reward = 3;
+}
+
+message SInputResult
+{
+	required bool result = 1;//false:失败(验证码无效),true:成功
+	required bool IsInvitation = 2;//是否已被邀请
+	repeated PIntInt reward = 3;//奖励(失败时为空)
+	optional int32 extraParam = 4;//预留额外参数(暂时没用到)
+}

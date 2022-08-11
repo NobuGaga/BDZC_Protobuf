@@ -1,0 +1,117 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+
+// enum CompanyCmd
+// {
+//		cCompanyUseItem					    =	1,//使用道具 PCompany.CUseItem
+//		cCompanyManage						=	2,//经营 PCompany.CManage
+//		cCompanyVerdict						=	3,//决策 PCompany.CVerdict
+//		cCompanyVerdict						=	4,//巡视 PCompany.CPatrol
+//		cCompanyVerdictReq					=	5,//决策请求数据 PCompany.CVerdictReq
+//		cCompanyManageRefresh				=	6,//经营 PCompany.CManageRefresh
+//
+//		sCompanyInitManage					=	1,//初始化 PCompany.SInitManage
+//		sCompanyInitVerdict				    =	2,//初始化 PCompany.SInitVerdict
+//		sCompanyInitPatrol					=	3,//初始化 PCompany.SPatrol
+//		sCompanyManage						=	4,//经营结果 PCompany.SManage
+//		sCompanyVerdict						=	5,//决策结果 PCompany.SVerdict
+//		sCompanyPatrol						=	6,//巡视结果 PCompany.SPatrol
+//		sCompanyPrestige					= 	7,//威望 PCompany.SPrestige
+//		sVerdictRefresh						= 	8,//决策刷新 PCompany.SVerdictRefresh
+// };
+
+
+package PCompany;
+
+// common message
+message PResult
+{
+	required int32 id		= 1;		//经营或决策ID 
+	required int32 times	= 2;		//剩余次数
+	required int32 time		= 3;		//剩余倒计时
+	optional bool  isgod	= 4;		//是否多倍业绩
+	optional int64 recovery	= 5;		//恢复时间间隔
+	optional int64 count	= 6;		//决策奖励额数量
+	optional int32 scale  	= 7;		//经营规模
+	optional int64 scaleExp	= 8;		//规模总经验
+}
+
+
+// Client -> Server
+
+// 经营
+message CManage
+{
+	required int32 id = 1;	//经营ID
+	required bool isOne = 2;//是否为一键经营
+}
+
+// 经营刷新CD
+message CManageRefresh
+{
+	required int32 id = 1;	//经营ID
+}
+ 
+// 决策
+message CVerdict
+{
+	required int32 type = 1;	//类型 1、2 
+}
+// 决策请求数据
+message CVerdictReq
+{
+
+}
+
+// 巡视
+message CPatrol
+{
+	required bool onekey = 1;//是否一键操作
+}
+
+
+// Server -> Client
+
+// 经营
+message SInitManage
+{
+    repeated PResult managelist = 1;	//经营信息列表
+}
+
+message SManage
+{
+	required PResult result = 1;	//结果
+}
+
+// 决策
+message SInitVerdict
+{
+    required PResult result	= 1;
+}
+
+message SVerdict
+{
+	required PResult result = 1;	//结果
+	optional PIntInt reward = 2;	//奖励
+}
+
+message SVerdictRefresh
+{
+	required PResult result = 1;	//结果
+}
+
+// 巡视
+message SPatrol
+{
+	required int32 id		= 1;   //ID 
+	required int32 times	= 2;   //被训次数
+}
+
+// 威望
+message SPrestige
+{
+	required int64 currpres		= 1;	//当前威望 
+	required int64 dailypres	= 2;	//每日产出
+	required int64 limitpres	= 3;	//威望上限
+}

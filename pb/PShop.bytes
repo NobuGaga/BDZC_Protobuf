@@ -1,0 +1,15 @@
+
+²
+PShop.protoPShopPCommon.proto"4
+CShopBuy
+type (Rtype
+index (Rindex"g
+PResult
+type (Rtype
+index (Rindex
+times (Rtimes
+	closetime (R	closetime"3
+	SShopInit&
+result (2.PShop.PResultRresult"5
+SShopResult&
+result (2.PShop.PResultRresultBH

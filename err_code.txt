@@ -1,0 +1,96 @@
+﻿##通用
+err_item_not_enought 道具不足
+err_player_not_found 玩家不存在
+err_gold_not_enough 钻石不足
+err_staff_not_found 员工不存在（正常情况下用不到）
+err_staff_locked 员工已锁定（出战过需要恢复，正常情况下用不到）
+err_staff_unlocked 员工未锁定（未出战过无需恢复，正常情况下用不到）
+err_staff_no_times 员工恢复每日次数限制
+err_name_invalid 无效的名字
+err_name_used 名字已被使用
+err_name_cannot_empty 名字不能为空
+err_avatar_head_invalid 无效的头像（上）
+err_avatar_body_invalid 无效的头像（下）
+
+##商会
+err_commerce_not_join_yet 未加入商会
+err_commerce_permission_denied 权限不足
+err_commerce_joined_already 已加入商会
+err_commerce_next_jointime 退出商会24小时内不可加入新商会
+err_commerce_name_invalid 无效的名字（创建和修改商会名字）
+err_commerce_name_used 名字已被使用（创建和修改商会名字）
+err_commerce_passwd_invalid 无效的密码（创建设置密码）
+err_commerce_passwd_error 密码错误（解散时输入密码）
+err_commerce_player_joined_other 玩家已加入其它商会
+err_commerce_money_not_enough 商会财富不足
+err_commerce_member_not_found 商会成员不存在
+err_commerce_job_not_match 成员职位不满足条件（转让）
+err_commerce_offline_too_long 成员离线时间太长（转让）
+err_commerce_member_max 成员数量达到上限（入会）
+err_commerce_elite_max 精英数量达到上限（任命）
+err_commerce_vice_president_max 副会长数量达到上限（任命）
+err_commerce_no_joinable_commerce 没有可加入的商会（随机入会）
+err_commerce_already_applied 已申请过（申请入会）
+err_commerce_president_can_not_quit 会长不可退出（先转让，正常情况下用不到）
+err_commerce_build_already 已建设过（商会建设，正常情况下用不到）
+err_commerce_build_times_limit 商会建设次数已满
+err_commerce_item_unlock 商品未解锁（商品兑换）
+err_commerce_contribution_not_enough 贡献不足
+err_commerce_exchange_count_limit 每日兑换数量限制（商品兑换）
+err_commerce_battle_opened 副本已开启（正常情况下用不到）
+err_commerce_battle_killed 副本boss已被击杀
+err_commerce_battle_not_found 找不到要进入的副本（正常情况下用不到）
+err_commerce_battle_not_open 副本未开启（正常情况下用不到）
+err_commerce_battle_closed 副本已关闭（23:30后战斗，00:00重置）
+
+##宝宝
+err_baby_not_found 宝宝不存在（异常）
+err_baby_teckonekey_not_open 一键教育未开启
+err_baby_seats_max 席位已达到上限
+err_baby_cannot_graduate 不可毕业（异常）
+err_baby_is_tiqin 正在提亲
+err_baby_not_graduate 尚未毕业
+err_baby_tiqin_invalid_itemid 提亲使用了无效的道具（异常）
+err_baby_not_tiqin 未提亲
+err_baby_marry_self 不可跟自己结婚
+err_baby_tiqin_terminated 已终止提亲
+err_baby_marry_brothers_and_sisters 不可与兄弟姐妹结婚
+err_baby_marry_same_sex 不可同性结婚
+err_baby_marry_different_degree 不可与不同学历的宝宝结婚
+err_baby_marry_invalid_itemid 结婚使用了无效的道具（异常）
+
+##寻访
+err_visit_luck_threshold_exceed 运势上限超过了最大值（自动消灾）
+err_visit_energy_not_enough 体力不足
+err_production_not_enough 业绩不足
+err_goods_not_enough 商品不足
+err_visit_luck_not_enough 运势不足
+err_luck_full 运势已满（消灾）
+
+##金融机构
+err_finance_not_open 副本未开启
+err_finance_no_reward 无奖励（领取世界BOSS排名奖励，异常）
+err_finance_wave_over 已击杀完所有波数boss
+err_finance_boss_dead boss已被击杀
+err_finance_item_not_found 物品不存在
+err_finance_score_not_enough 积分不足
+err_finance_exchange_count_limit 兑换次数限制
+
+##排行榜
+err_rank_worshiped 已膜拜
+err_rank_invalid_rankid 无效的排行榜id
+
+##好友
+tip_friend_apply_ok 成功发送好友请求
+err_friend_not_found 你查找的玩家不存在或不在线
+err_friend_max_of_you 你的好友数量已满，无法继续添加
+err_friend_max_of_target 对方好友已满，无法继续添加
+err_blacklist_max 你的黑名单数量已满，无法继续添加
+err_player_offline 玩家不在线
+err_friend_blacked 你已将该玩家加入黑名单，无法添加好友
+err_friend_black_you 你已被拉入黑名单，无法添加好友
+err_friend_already 你与对方已是好友
+
+##聊天
+err_talk_target_blacked,你已将该玩家加入黑名单，无法私聊
+err_talk_target_black_you,你已被拉入黑名单，无法私聊

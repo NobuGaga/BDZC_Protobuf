@@ -1,0 +1,78 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+// enum SchoolCmd
+// {
+//		cSchoolUp       	=	1,//选人 		  PSchool.CSchoolUp
+//		cSchoolStart        =	2,//开始    	  PSchool.CSchoolStart
+//		cSchoolAdd       	=	3,//加钟		  PSchool.CSchoolAdd
+//		cSchoolGetAward     =	4,//完成    	  PSchool.CSchoolGetAward
+//		cSchoolAddSeat     =	5,//开启位置    PSchool.CSchoolAddSeat
+//
+//		sSchoolInit       	=	1,//初始化列表 	PSchool.SSchoolSeats
+//		sSchoolUp        	=	2,//选人     	  PSchool.PSchoolSeat
+//		sSchoolStart       	=	3,//开始 		  PSchool.SSchoolUp
+//		sSchoolAdd        	=	4,//加钟     	   PSchool.SSchoolUp
+//		sSchoolGetAward     =	5,//完成 		   PSchool.SSchoolGetAward
+//		sSchoolAddSeat     =	6,//开启位置     PSchool.SSchoolUp
+// };
+
+package PSchool;
+
+// common message
+message PSchoolInfo
+{
+	required int32 index = 1;		//位置编号
+	required int32 state = 2;		//位置状态（0为空位，1为有人但未开始，2为CD中，3为已完成）
+    optional int32 staffid = 3;     //员工id（位置为空时不传）
+    optional int32 time = 4;		//剩余时间（单位为秒，state为2时才传值）
+    optional int32 times = 5;		//加钟次数（位置为2时）
+}
+
+// Client -> Server
+message CSchoolUp
+{
+	required int32 index = 1;		//位置编号
+	required int32 staffid = 2;		//员工ID
+}
+
+message CSchoolStart
+{
+	optional int32 index = 1;		//位置编号（不传值则为一键开始）
+}
+
+message CSchoolAdd
+{
+	required int32 index = 1;		//位置编号
+	required int32 times = 2;		//加钟次数
+}
+
+message CSchoolGetAward
+{
+	optional int32 index = 1;		//位置编号（不传值则为一键完成）
+}
+
+message CSchoolAddSeat
+{
+}
+
+// Server -> Client
+
+message SSchoolInit
+{
+	repeated PSchoolInfo list = 1;	//初始化学院列表信息
+}
+
+message SSchoolUp
+{
+	required PSchoolInfo result = 1;
+}
+
+message SSchoolGetAward
+{	
+	required PSchoolInfo result = 1;
+	required int32 skillexp = 2;
+	required int32 bookexp = 3;
+	optional bool isGod = 4;
+}
+

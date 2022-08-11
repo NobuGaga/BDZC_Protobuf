@@ -1,0 +1,35 @@
+
+Ò
+PFriendInvitation.protoPFriendInvitationPCommon.proto"%
+CInvitationCode
+code (	Rcode"6
+
+CGetReward
+type (Rtype
+index (Rindex"´
+SInvitationInit
+code (	Rcode"
+IsInvitation (RIsInvitationJ
+invitationList (2".PFriendInvitation.SInvitationInfoRinvitationListN
+gainInfo (22.PFriendInvitation.SInvitationInit.SRewardGainInfoRgainInfoM
+SRewardGainInfo
+type (Rtype&
+	gainTimes (2.PIntIntR	gainTimes"‘
+SInvitationInfo
+playerId (RplayerId
+level (Rlevel
+power (Rpower
+recharge (Rrecharge
+head (2.PHeadRhead"X
+
+SGetReward
+type (Rtype
+index (Rindex 
+reward (2.PIntIntRreward"Œ
+SInputResult
+result (Rresult"
+IsInvitation (RIsInvitation 
+reward (2.PIntIntRreward
+
+extraParam (R
+extraParamBH

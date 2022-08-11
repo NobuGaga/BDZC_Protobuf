@@ -1,0 +1,15 @@
+
+¾
+PQuestionnaire.protoPQuestionnairePCommon.proto"‹
+
+CGetReward5
+list (2!.PQuestionnaire.CGetReward.AnswerRlistF
+Answer
+id (Rid
+choosed (Rchoosed
+text (	Rtext"u
+SUpdateSate
+state (Rstate
+version (Rversion
+endTime (RendTime
+list (2.PIntIntRlistBH

@@ -1,0 +1,42 @@
+
+ò
+PCompany.protoPCompanyPCommon.proto"½
+PResult
+id (Rid
+times (Rtimes
+time (Rtime
+isgod (Risgod
+recovery (Rrecovery
+count (Rcount
+scale (Rscale
+scaleExp (RscaleExp"/
+CManage
+id (Rid
+isOne (RisOne" 
+CManageRefresh
+id (Rid"
+CVerdict
+type (Rtype"
+CVerdictReq"!
+CPatrol
+onekey (Ronekey"@
+SInitManage1
+
+managelist (2.PCompany.PResultR
+managelist"4
+SManage)
+result (2.PCompany.PResultRresult"9
+SInitVerdict)
+result (2.PCompany.PResultRresult"W
+SVerdict)
+result (2.PCompany.PResultRresult 
+reward (2.PIntIntRreward"<
+SVerdictRefresh)
+result (2.PCompany.PResultRresult"/
+SPatrol
+id (Rid
+times (Rtimes"c
+	SPrestige
+currpres (Rcurrpres
+	dailypres (R	dailypres
+	limitpres (R	limitpresBH

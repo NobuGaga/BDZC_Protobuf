@@ -1,0 +1,153 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PLogin;
+
+// enum LoginCmd
+// {
+// 	cRequestLogin	= 1,//请求登陆 PLogin.CLogin
+// 	cQueryCharList	= 2,//查询角色列表
+// 	cCreateChar		= 3,//创建新角色 PLogin.CCreateChar
+// 	cDeleteChar		= 4,//删除角色 PLogin.CDeleteChar
+// 	cEnterGame		= 5,//请求进入游戏 PLogin.CEnterGame
+// 	cGetCharName    = 6,//请求随机角色名 PLogin.CRandomName
+
+// 	sLoginRet		= 1,//返回登陆请求 PLogin.SLoginRet
+// 	sSendCharList	= 2,//返回角色列表 PLogin.SQueryCharList
+// 	sCreateCharRet	= 3,//创建角色返回 PLogin.SCreateChar
+// 	sDeleteCharRet	= 4,//返回删除角色 PLogin.SDeleteChar
+// 	sEnterGameRet	= 5,//返回进入游戏请求 PLogin.SEnterGame
+// 	sGetCharNameRet = 6,//返回随机角色名 PLogin.SGetCharNameRet
+// 	sReadyForRun	= 7,//所有客户端关心的数据发送完毕，玩家进入游戏状态 PLogin.SReadyForRun
+// };
+
+
+//////////////////////////////////////////////////////////////////////////
+// 通用部分数据
+
+//角色数据
+message PCharDesc {
+	required int64 id = 1;
+	required string name = 2;
+	required int32 level = 3;
+	required int32 job = 4;
+	required int32 genber = 5;
+	required int32 wState = 6;
+	required int32 vipLv = 7;
+	required int64 fightPower = 8;
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+
+//服务器验证登录
+message CLogin
+{
+	required string account = 1;
+	required string password = 2;
+	required int32 serverid = 3;
+	required string clientVersion = 4;
+	required int32 platform = 5;
+	optional string sbid = 6;	//子渠道ID
+	optional string mac = 7;	//mac地址 无法获取不传
+	optional string equipmentid = 8;	//设备唯一ID
+	optional string moblie = 9;		//手机型号， 小米、vivo等等
+	optional string cdnVersion = 10;//热更新资源版本号
+	optional string clientip = 11;//客户端ip信息
+
+}
+
+//请求进入游戏
+message CEnterGame
+{
+	required int64 playerid = 1;
+	required string playername = 2;
+	optional string netmode = 3;	//wifi，3G4G
+	optional string mac = 4;	//mac地址 无法获取不传
+	optional string equipmentid = 5;	//设备唯一ID
+	optional string moblie = 6;		//手机型号， 小米、vivo等等
+	optional string sbid = 7;	//子渠道ID
+	required string appid = 8;		//包appid
+	optional string cdnVersion = 9;//热更新资源版本号
+	optional string clientip = 10;//客户端ip信息
+}
+
+//请求随机角色名称
+message CRandomName
+{
+	required int32 gender = 1;	//性别
+}
+
+//请求创建角色
+message CCreateChar
+{
+	required string playername = 1;
+	required int32 job = 2;	//职业
+	required int32 genber = 3; //性别
+	required int32 headid = 4;//头像id
+	optional string sbid = 5;	//子渠道ID
+	optional string mac = 6;	//mac地址 无法获取不传
+	optional string equipmentid = 7;	//设备唯一ID
+	optional string moblie = 8;		//手机型号， 小米、vivo等等
+	optional string clientip = 9;//客户端ip信息
+}
+
+//请求删除角色
+message CDeleteChar
+{
+	required int64 playerid = 1;
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Server -> Client
+
+//请求账号信息
+message SQueryCharList
+{
+	required int32 charCount = 1;
+	repeated PCharDesc charList = 2;
+}
+
+//服务器验证登录
+message SLoginRet
+{
+	required int32 errorCode = 1; //0表示登陆成功,其他返回错误码
+	required int32 userId = 2;
+	required int32 serverId = 3;
+	required bool openRecharge = 4;
+	required bool newAccount = 5;
+}
+
+message SEnterGame
+{
+	required int32 errorCode = 1; //0表示登陆成功,其他返回错误码
+	required int32 createTime = 2;
+	required int64 servTime = 3;	//发送前端的服务器时间
+	required bool debugMode = 4;	//是否调试模式(调试模式下不检查心跳包)
+}
+
+message SGetCharNameRet
+{
+	required int32 errorCode = 1; //0表示登陆成功,其他返回错误码
+	required string name = 2;
+}
+
+//创角信息
+message SCreateChar
+{
+	required int32 errorCode = 1; //0表示登陆成功,其他返回错误码
+	optional PCharDesc chardesc = 2;
+}
+
+message SDeleteChar
+{
+	required int32 errorCode = 1; //0表示登陆成功,其他返回错误码
+	required int64 playerid = 2;
+}
+
+message SReadyForRun
+{
+	required bool isFirst = 1;
+}

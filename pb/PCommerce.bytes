@@ -1,0 +1,240 @@
+
+ (
+PCommerce.proto	PCommercePCommon.proto"
+PID
+id (Rid"õ
+CCreate
+name (	Rname
+password (	Rpassword
+isAuto (RisAuto
+weixin (	Rweixin
+qq (	Rqq 
+declaration (	Rdeclaration"É
+CUpdateInfo
+name (	Rname
+weixin (	Rweixin
+qq (	Rqq 
+declaration (	Rdeclaration
+notice (	Rnotice",
+CAppoint
+id (Rid
+job (Rjob"&
+CDisband
+password (	Rpassword"E
+COperateApply
+playerId (RplayerId
+isAllow (RisAllow"(
+CAllowAutoJoin
+isAuto (RisAuto"E
+COpenBattle
+battleId (RbattleId
+openType (RopenType"3
+CBattle
+id (Rid
+staffId (RstaffId"&
+CRankReq
+lastTime (RlastTime"y
+SInit
+id (Rid
+joinTime (RjoinTime
+name (	Rname
+studyRed (RstudyRed
+level (Rlevel"-
+SUpdateStudyRed
+studyRed (RstudyRed"è
+	SDynamics
+type (Rtype
+name (	Rname
+time (Rtime
+param1 (Rparam1
+param2 (	Rparam2
+param3 (Rparam3"æ
+SMyInfo
+job (Rjob
+build (Rbuild0
+contribution (2.PInt64Int64Rcontribution,
+exchangeList (2.PIntIntRexchangeList"
+lockedStaffs (RlockedStaffs*
+staffLifeNum (2.PItemRstaffLifeNum
+
+hasBattled (R
+hasBattled-
+produce (2.PCommerce.PProduceRproduce-
+donate	 (2.PCommerce.PPriDonateRdonate(
+investItemTimes
+ (RinvestItemTimes3
+showItem (2.PCommerce.PPriShowItemRshowItem"E
+PDonate
+score (Rscore$
+commerceLevel (RcommerceLevel"£
+SInfo
+id (Rid
+name (	Rname
+level (Rlevel
+exp (Rexp
+money (Rmoney
+notice (	Rnotice
+	memberNum (R	memberNum*
+myInfo (2.PCommerce.SMyInfoRmyInfo
+canFight	 (RcanFight0
+dynamics
+ (2.PCommerce.SDynamicsRdynamics
+power (Rpower
+qq (	Rqq 
+declaration (	Rdeclaration
+leader (	Rleader
+rank (Rrank
+weixin (	Rweixin
+	allowAuto (R	allowAuto
+	haveApply (R	haveApply
+
+buildTimes (R
+buildTimes 
+isOpenStudy (RisOpenStudy 
+disbandTime (RdisbandTime*
+donate (2.PCommerce.PDonateRdonate0
+showItem (2.PCommerce.PShowItemRshowItem"ß
+SPlayer
+name (	Rname
+id (Rid
+level (Rlevel0
+contribution (2.PInt64Int64Rcontribution
+lastTime (RlastTime
+job (Rjob
+buildId (RbuildId
+power (Rpower
+headId	 (RheadId
+sex
+ (Rsex
+vip (Rvip
+chatBg (RchatBg"5
+SPlayerList&
+list (2.PCommerce.SPlayerRlist"G
+	STransfer
+playerid (Rplayerid
+
+playerName (	R
+playerName"í
+SOut
+coName (	RcoName
+outType (RoutType
+
+leaderName (	R
+leaderName
+	leaderJob (R	leaderJob
+joinTime (RjoinTime"\
+SQuery$
+info (2.PCommerce.SInfoRinfo,
+players (2.PCommerce.SPlayerRplayers"]
+SRank$
+list (2.PCommerce.SInfoRlist
+myRank (RmyRank
+myName (	RmyName"-
+	SExchange
+id (Rid
+num (Rnum"Ö
+SBattleInfo
+id (Rid
+state (Rstate
+blood (Rblood
+killerId (RkillerId
+
+killerName (	R
+killerName"9
+SBattleList*
+list (2.PCommerce.SBattleInfoRlist"}
+SReportInfo
+name (	Rname
+hurt (Rhurt"
+contribution (Rcontribution
+rank (Rrank
+id (Rid"S
+SBattleReport
+killer (	Rkiller*
+rank (2.PCommerce.SReportInfoRrank"ú
+SHurtMessage
+attacker (	Rattacker
+hurt (Rhurt
+time (Rtime
+staffId (RstaffId
+job (Rjob
+	staffName (	R	staffName"n
+SBattleBattle*
+info (2.PCommerce.SBattleInfoRinfo1
+message (2.PCommerce.SHurtMessageRmessage"‹
+SBattleResult*
+info (2.PCommerce.SBattleInfoRinfo
+hurt (Rhurt
+	lockStaff (R	lockStaff"
+contribution (Rcontribution*
+staffLifeNum (2.PItemRstaffLifeNum
+fight (2.SFightRfight"O
+SUnlock
+staffId (RstaffId*
+staffLifeNum (2.PItemRstaffLifeNum"H
+PProduce
+
+stockCount (R
+stockCount
+	startTime (R	startTime"z
+
+PPriDonate&
+timesByProduct (RtimesByProduct 
+timesByGold (RtimesByGold"
+rewardedList (RrewardedList"é
+
+PDonateLog
+
+playerName (	R
+playerName
+type (Rtype
+score (Rscore"
+contribution (Rcontribution
+time (Rtime"
+CDonate
+type (Rtype"W
+SDonate
+type (Rtype
+score (Rscore"
+contribution (Rcontribution"O
+SGetProduceReward
+	itemCount (R	itemCount
+	startTime (R	startTime"(
+CGetDonateReward
+index (Rindex"(
+SGetDonateReward
+index (Rindex"=
+
+SDonateLog/
+logList (2.PCommerce.PDonateLogRlogList"C
+	PShowItem
+itemId (RitemId
+
+expireTime (R
+expireTime"#
+	CShowItem
+itemId (RitemId"C
+	SShowItem
+itemId (RitemId
+
+expireTime (R
+expireTime"F
+PPriShowItem
+itemId (RitemId
+
+finishTime (R
+finishTime"'
+CResearchItem
+itemId (RitemId"G
+SResearchItem
+itemId (RitemId
+
+finishTime (R
+finishTime"%
+CInvestItem
+itemId (RitemId"E
+SInvestItem
+itemId (RitemId
+
+finishTime (R
+finishTimeBH

@@ -1,0 +1,227 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+//enum ClubCmd
+//{
+//	cClubHost							=	1,//举办宴会			PClub.CHost
+//	cClubJoin							=	2,//参与他人宴会		PClub.CJoin
+//	cClubRefreshList					=	3,//刷新宴会列表
+//	cClubEnter							=	4,//进入宴会			PClub.CEnter
+//	cClubShopRefresh					=	5,//刷新商城			PClub.CRefreshShop
+//	cClubShopBuy						=	6,//宴会商城购买（兑换）		PClub.CShopBuy
+//	cClubGainAward						=	7,//领取宴会结算奖励
+//  cClubRefer							=	8,//根据编号查询宴会信息		PClub.CRefer
+//  cClubSendInvite						=	9,//发送邀请信息 PClub.CInvite
+//	
+//	sClubInit							=	1,//宴会初始化		PClub.SInit
+//	sClubJoin							=	2,//参加宴会			PClub.SJoin
+//	sClubEnter							=	3,//进入宴会			PClub.SEnter
+//	sClubFinish							=	4,//宴会完成			PClub.SClubFinish
+//	sClubHost							=	5,//举办宴会			PClub.SHost
+//	sClubShopRefresh					=	6,//刷新宴会商城		PClub.PShop
+//	sClubShopBuy						=	7,//宴会商城购买		PClub.SShopBuy
+//	sClubRefreshList					=	8,//刷新宴会列表		PClub.SSRefreshList
+//	sClubGainAward						=	9,//宴会领取奖励		PClub.SGainAaward
+//	sClubRefer							= 	10,//查询返回		PClub.SRefer
+//  sClubSendInvite						=	11,//发送邀请信息返回 PClub.SInvite
+//};
+
+
+
+package PClub;
+
+// common message
+message PShopItem
+{
+	required int32 index = 1;   // 商品位置（用于购买协议中定位用）
+	required int32 goodid = 2;  // 对应商城表中的id
+	required int32 buyCount = 3;// 当前购买次数（客户端需判定是否允许继续购买）
+}
+
+message PShop
+{
+	required int32 nextRefreshLeftTime = 1; // 下一次刷新剩余时间（秒）
+	required int32 todayRefreshCount = 2;   // 当天刷新次数
+	required int32 point = 3;               // 当前积分
+	repeated PShopItem itemList = 4;        // 商品列表
+}
+
+message PMessage
+{
+	required int32 index = 1;    	 // 座位位置
+	required int64 enterTime = 2;	 // 进入时间
+	required int64 playerid = 3; 	 // 角色id
+	required string name = 4;    	 // 名称
+	required int32 score = 5;    	 // 积分
+	required int32 headid = 6;   	 // 头像id
+	required int32 joinType = 7; 	 // 参与类型
+	required bool newFlag = 8;   	 // 是否新消息
+	required int32 sex = 9;      	 // 性别
+	optional int32 ownJoinState = 10;// 玩家参与目标游艇会状态 0：目标无游艇会 1：目标开启但玩家未参加 2：目标开启且玩家已参与
+}
+
+message PHostHistory
+{
+	required int64 startTime = 1;	// 开始时间
+	required int32 clubtype = 2;	// 举办类型
+	required int32 joinCount = 3;	// 参与者数量
+	required int32 jokeCount = 4;	// 捣乱者数量
+	required int32 totalScore = 5;	// 总积分
+	required int32 totalPoint = 6;	// 总分数
+}
+
+message PJokerInfo
+{
+	required int64 playerid = 1;	//角色id
+	required int64 fightpower = 2;	//势力
+	required int32 level = 3;		//等级
+	required string name = 4;		//姓名
+	required int32 score = 5;		//积分
+	required int64 joinTime = 6;	//加入时间（秒）
+}
+
+// Client -> Server
+message CHost
+{
+	required int32 clubtype = 1;	// 宴会ID
+	required bool openClub = 2;		// 是否开放宴会
+}
+
+message CJoin
+{
+	required int64 playerid = 1; // 宴会的角色id
+	required int32 seatindex = 2;// 座位位置
+	required int32 joinType = 3; // 参与类型
+}
+
+message CEnter
+{
+	required int64 playerid = 1;// 进入宴会
+}
+
+message CRefreshShop
+{
+	required bool pay = 1; // 是否付费刷新
+}
+
+message CShopBuy
+{
+	required int32 index = 1;// 商品位置
+	required int32 count = 2;// 购买数量
+}
+
+
+message CRefer
+{
+	required int64 playerid = 1; // 宴会角色编号id
+}
+
+message CInvite
+{
+	required string msg = 1;// 邀请信息
+}
+
+
+// Server -> Client
+
+message SInit
+{
+	required PShop shop = 1;	 // 商城数据
+	required int32 joinCount = 2;// 当前参加次数(跨天客户端需自动刷新)
+	repeated PHostHistory hostHistList = 3;//历史举办记录
+	repeated PJokerInfo jokerList = 4;//捣乱者记录
+	required int32 score = 5;//当前分数
+	required int32 point = 6;//当前积分
+	optional int32 leftTime = 7;  // 剩余时间（秒）
+}
+
+message SJoin
+{
+	required int64 playerid = 1;   // 参与宴会id
+	required int32 clubtype = 2;   // 当前宴会类型
+	required int32 gainPoint = 3;  // 获取的积分
+	required int32 gainScore = 4;  // 获取的分数
+	required int32 joinType = 5;   // 参与类型
+	required int32 seatIndex = 6;  // 座位编号
+	repeated PIntInt gainItems = 7;// 获取的物品奖励（宝箱特效)
+}
+
+message SEnter
+{
+	required int32 errcode = 1;   // 错误码		1-宴会已结束		2-网络超时-请稍后再试
+
+	optional int32 leftTime = 2;  // 剩余时间（秒）
+	optional int64 playerid = 3;  // 宴会id
+	optional string name = 4;     // 举办者姓名
+	optional int32 totalScore = 5;// 当前总积分
+	repeated PMessage msgList = 6;// 历史消息
+	optional int32 clubtype = 7;  //宴会类型
+	required int32 inviteTime = 8; //邀请剩余时间
+	required int32 inviteNum = 9; //邀请次数
+}
+
+message SClubFinish
+{
+	repeated PMessage msgList = 1;// 历史消息
+	required int32 score = 2;     // 积分
+	required int32 point = 3;     // 奖励
+	required int32 totalNum = 4;  // party总参与人数
+}
+
+message SHost
+{
+	required int32 clubtype = 1; // 宴会id
+	required int32 leftTimer = 2;// 宴会结束剩余时间
+}
+
+message SShopBuy
+{
+	required int32 index = 1;    // 商品位置
+	required int32 goodid = 2;   // 商品id
+	required int32 buyCount = 3; // 购买数量
+	required int32 costpoint = 4;// 消耗积分
+	required int32 point = 5;    // 剩余积分
+}
+
+message PShip
+{
+	required int32 index = 1;   // 游艇位置
+	required int64 playerid = 2;// 宴会编号
+	required string name = 3;   // 名字
+	required int32 clubtype = 4;// 宴会类型
+}
+
+message SSRefreshList
+{
+	repeated PShip shipList = 1;
+	required bool openFlag = 2; // 当前是否开启宴会
+	repeated PHostHistory hostHistList = 3;//历史举办记录
+	repeated PJokerInfo jokerList = 4;//捣乱者记录
+	required int32 clubtype = 5;// 自己宴会类型
+}
+
+message SGainAaward
+{
+	required int32 gainScore = 1;//领取分数
+	required int32 gainPoint = 2;//领取积分
+}
+
+
+message SRefer
+{
+	required bool hasFlag = 1; 
+	optional int64 playerid = 2;  // 宴会角色id
+	optional string name = 3;     // 举办者姓名
+	optional int32 clubtype = 4;  // 宴会类型
+	optional int32 joinCount = 5; // 参与总数量
+	optional int32 leftTime = 6;  // 宴会剩余时间（秒）
+}
+
+
+message SInvite
+{
+	required int32 inviteTime = 1; //邀请剩余时间
+	required int32 inviteNum = 2;  //邀请次数
+}

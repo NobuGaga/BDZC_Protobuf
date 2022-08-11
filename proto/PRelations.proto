@@ -1,0 +1,346 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+package PRelations;
+
+// 协议描述
+// enum RelationsCmd
+// {
+// 	cRelationsMain								=	1,//获取主界面状态 PRelations.CRelationsMain
+//  cRelationsDaily								=	2,//日常  PRelations.CRelationsMain
+//  cRelationsFight								=	3,//进入战斗选人界面(日常)  PRelations.CRelationsSelectStaff
+//  cRelationsBuyAdd							=	4,//战前购买加成  PRelations.CRelationsBuyAdd
+//  cRelationsReport							=	5,//请求战报  PRelations.CRelationsReport
+//  cRelationsAdver								=	6,//请求上诉列表  PRelations.CRelationsMain
+//  cRelationsDefense							=	7,//请求防守信息列表  PRelations.CRelationsMain
+//  cRelationsRank								=	8,//请求排行榜信息列表  PRelations.CRelationsMain  (废弃)
+//  cRelationsLog								=	9,//请求追诉列表  PRelations.CRelationsMain  
+//  cRelationsFind								=	10,//查找玩家  PRelations.CRelationsFind
+//  cRelationsNews								=	11,//请求新闻界面信息  PRelations.CRelationsMain
+//  cRelationsFightRefresh						=	12,//战斗选人界面刷新  PRelations.CRelationsMain
+//  cRelationsFightNormal						=	13,//进入战斗选人界面(上诉)  PRelations.CRelationsFight
+//  cRelationsFightSuper						=	14,//进入战斗选人界面(追诉)  PRelations.CRelationsFight
+//  cRelationsIn								=	15,//进入律所主界面（开启新闻推送）  PRelations.CRelationsMain
+//  cRelationsOut								=	16,//退出律所主界面(关闭新闻推送)  PRelations.CRelationsMain
+//  cRelationsClearCD							=	17,//清除下一轮战斗等待CD
+//	cRelationOnekey								=	18,//一键诉讼 PRelations.CRelationOnekey
+//	cRelationShopRefresh						=	19,//刷新商城			PRelations.CRefreshShop
+//	cRelationShopBuy							=	20,//宴会商城购买（兑换）		PRelations.CShopBuy
+
+// 	sRelationsMain								=	1,//主界面初始化	PRelations.SRelationsMain
+//  sRelationsDaily								=	2,//日常  PRelations.SRelationsDaily
+//  sRelationsFight								=	3,//进入战斗选人界面  PRelations.SRelationsFight
+//  sRelationsBuyAdd							=	4,//战前购买加成  PRelations.SRelationsBuyAdd
+//  sRelationsReport							=	5,//战报  PRelations.SRelationsReport
+//  sRelationsAdver								=	6,//请求上诉列表  PRelations.SRelationsAdver
+//  sRelationsDefense							=	7,//请求防守信息列表  PRelations.SRelationsDefense
+//  sRelationsRank								=	8,//请求排行榜信息列表  PRelations.SRelationsRank  (废弃)
+//  sRelationsLog								=	9,//请求追诉列表  PRelations.SRelationsLog
+//  sRelationsFind								=	10,//查找玩家  PRelations.SRelationFind
+//  sRelationsNews								=	11,//请求新闻界面信息  PRelations.SRelationsNews
+//  sRelationsInitStaff							=	12,//初始化员工挑战信息  PRelations.SRelationsInitStaff
+//  sRelationsNewsPush							=	13,//新闻推送  PRelations.SRelationsNewsPush
+//	sRelationOnekey								=	14,//一键诉讼 PRelations.SRelationOnekey
+//	sRelationShopRefresh						=	15,//刷新律所商城		PRelations.PShop
+//	sRelationShopBuy							=	16,//律所商城购买		PRelations.SShopBuy
+//  sRelationShop								= 	17,//律所商城 PRelation.PShop
+// };
+
+//////////////////////////////////////////////////////////////////////////
+// Common message
+message PRelationsInfo
+{
+	optional int32 staffid = 1; //员工id（没有员工满足条件时传空）
+	required int32 state = 2;	//new:0普通状态（有次数未选择员工），1挑战中（已选人），2无次数，3无员工 //old:当前状态（0为普通状态，1为挑战中，2为冷却中，3为免费次数用完，4为额外次数用完，5为无员工）
+	
+	//////////////////已废弃///////////////////
+	optional int32 time = 3;	//冷却时间
+	optional int32 exnum = 4;	//剩余额外次数
+	optional int32 maxnum = 5;	//总额外次数
+	required int32 freenum = 6;	//剩余游说免费次数
+	optional int32 cdnum = 7;	//剩余vip消除cd次数
+	required int32 maxcdnum = 8;//总vip消除cd次数
+	//////////////////已废弃////////////////////
+
+	optional string staffName = 9;//员工名字
+	optional string name = 10;//敌方玩家
+	optional int32 recoveTime = 11;//下一次体力恢复时间
+	optional PBiInt action = 12;//体力 当前值/最大值
+	repeated int32 staffs = 13;//已使用过员工列表
+	optional int32 leftRecoveryCount = 14;//剩余可恢复体力数
+}
+
+message PRelationsStaff
+{
+	required int32 staffid = 1;//员工id
+	required int32 color = 2;//员工品质
+	optional int32 level = 3;//等级
+	optional int32 staffattr = 4;//工综合素质
+	optional string staffName = 5;//员工名字
+}
+
+message PRelationsBlood
+{
+	required int64 blood = 1;		//剩余血量
+	required int64 maxblood = 2;	//总血量
+}
+
+message PRelationsReport
+{
+	required int32 attack = 1;//攻击方，1为我方，2为敌方
+	required int64 oleftblood = 2;//敌方剩余血量
+	required int64 mleftblood = 3;//我方剩余血量
+	required int32 index = 4;//回合索引
+	required bool iscrit = 5;//是否暴击
+}
+
+message PAdverInfo
+{
+	required string name = 1;//玩家名
+	required int32 point = 2;//积分
+	required int32 level = 3;//等级
+	required int64 power = 4;//战力
+	required int32 time = 5;//时间
+	required int32 playerid = 6;//玩家id
+}
+
+message PDefenseInfo
+{
+	required string name = 1;//玩家名
+	required int32 allpoint = 2;//积分总数
+	required int32 point = 3;//我方扣除的积分
+	required int32 num = 4;//打败我方员工数
+	required int64 power = 5;//势力
+	required int32 time = 6;//时间
+	required int32 staffid = 7;//员工id
+	required int32 playerid = 8;//敌方玩家id
+	optional string staffName = 9;//员工名字
+}
+
+message PLogInfo
+{
+	required int32 index = 1;//排序
+	required int32 playerid = 2;//玩家id
+	required string name = 3;//玩家名
+	required int32 point = 4;//玩家积分
+	required int32 level = 5;//公司规模（等级）
+}
+
+message PNewsInfo
+{
+	required int32 index = 1;//排序
+	required int32 playerid = 2;//玩家id
+	required string name = 3;//玩家名
+	required int32 staffid = 4;//出战员工id
+	required string failname = 5;//被击败方玩家名
+	required int32 time = 6;//时间
+	required int32 num = 7;//打败敌方员工数
+	required int32 type = 8;//新闻类型（1为玩家普通挑战击败20名以上员工，但没有全灭对方员工
+							//			2为玩家普通挑战，全灭对方员工
+							//			3为玩家人肉搜索追杀另一个玩家，击败20名以上员工，但没有全灭对方员工
+							//			4为玩家人肉搜索追杀另一个玩家，全灭对方员工
+							//			5为玩家一天内连续3次击败（包括全灭）另一位玩家20名以上员工
+							//			6为玩家一天内连续N（N大于等于4）次以上击败另一个玩家
+	optional int32 times = 9;//击败次数
+	optional string staffName = 10;//员工名字
+}
+
+message PNewsOnekey
+{
+	required int32 index = 1;//排序
+	required int32 staffid = 2;//对方员工id
+	required int32 buyAddId = 3;//购买属性id
+	required bool isWin = 4;//胜利时报
+	required int64 blood = 5;//自身员工消耗血量
+	optional PIntInt reward = 6;//奖励
+}
+
+message PShopItem
+{
+	required int32 index = 1;   // 商品位置（用于购买协议中定位用）
+	required int32 goodid = 2;  // 对应商城表中的id
+	required int32 buyCount = 3;// 当前购买次数（客户端需判定是否允许继续购买）
+}
+
+message PShop
+{
+	required int32 nextRefreshLeftTime = 1; // 下一次刷新剩余时间（秒）
+	required int32 todayRefreshCount = 2;   // 当天刷新次数
+	required int32 point = 3;               // 当前积分
+	repeated PShopItem itemList = 4;        // 商品列表
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+message CRelationsMain
+{
+
+}
+
+message CRelationsSelectStaff
+{
+	required int32 staffid = 1; //员工ID
+}
+
+message CRelationsFight
+{
+	required int32 playerid = 1;//玩家id
+	required int32 staffid = 2; //员工ID
+	required int32 fighttype = 3;//进入挑战的界面（1为上诉界面，2为搜索追诉，3为新闻栏上诉）
+}
+
+message CRelationsFind
+{
+	required int32 id = 1;//玩家编号
+}
+// 此时服务端现下发随机可购买道具
+message CRelationsBuyAdd
+{
+	required int32 id = 1;		//购买id
+}
+//
+message CRelationsReport
+{
+	required int32 staffid = 1;		//敌方员工id
+}
+
+message CRelationOnekey
+{
+	required int32 id = 1; //购买id 0无消耗 1消耗1点积分 2消耗2点积分 3消耗50钻石
+}
+
+message CRefreshShop
+{
+	required bool pay = 1; // 是否付费刷新
+}
+
+message CShopBuy
+{
+	required int32 index = 1;// 商品位置
+	required int32 count = 2;// 购买数量
+}
+
+// Server -> Client
+message SRelationsMain
+{
+	required PRelationsInfo info = 1;
+	required PShop shop = 2;	 // 商城数据
+}
+
+message SRelationsDaily
+{
+	required string name = 1;	//玩家名字
+}
+
+message SRelationsFight
+{
+	required string name = 1;	//敌方玩家名字
+	repeated PRelationsStaff staffs = 2;	//敌方当前员工列表
+	required int32 otherpoint = 3;	//敌方积分
+	required int32 staffnum = 4;	//敌方员工总数
+	required int32 surnum = 5;		//敌方已被打败员工数
+	required PRelationsStaff mstaffinfo = 6;   //我方员工
+	required int32 mypoint = 7;		//我方积分
+	required int32 attackadd = 8;	//我方攻击加成
+	required int32 skilladd = 9;	//我方技能加成
+	required PRelationsBlood blood = 10; //我方血量
+	repeated PIntInt adds = 11;		//加成列表（key为id，value为购买次数）
+	required int32 type = 12;		//战斗类型1：日常，2：挑战，3：复仇
+}
+
+message SRelationsBuyAdd
+{
+	required int32 id = 1;		//购买id
+	required int32 attackadd = 2;	//我方攻击加成
+	required int32 skilladd = 3;	//我方技能加成
+	required PRelationsBlood blood = 4; //我方血量
+}
+
+message SRelationsReport
+{
+	required int32 state = 1;	//胜负状态，0为失败，1为胜利
+	required int32 point = 2;	//结束时增加/扣除积分（失败时该数值为负数）
+	required PRelationsBlood blood = 3; //我方血量
+	required PRelationsBlood oblood = 4; //敌方血量
+	required int32 liansheng = 5;	//连胜场数
+	repeated PIntInt award = 6;	//奖励id（单次战斗）
+	repeated PRelationsReport reports = 7;//战报
+	required PRelationsStaff ostaffinfo = 8;  //敌方员工
+	required PRelationsStaff mstaffinfo = 9;  //我方员工
+	repeated PIntInt allaward = 10;	//奖励（总结算）
+	optional int32 allpoint = 11;	//总积分
+	optional string name = 12;	//对手玩家名字
+	optional PIntInt exaward = 13;//每三关额外奖励
+	optional int32 shopPoint = 14;//获得商店积分（失败时为0）
+	optional int32 allshopPoint = 15;	//总积分
+	optional int64 leftblood = 16; 	//我方剩余血量 
+}
+
+message SRelationsAdver
+{
+	repeated PAdverInfo list = 1;//上诉（仇人）列表
+}
+
+message SRelationsDefense
+{
+	repeated PDefenseInfo list = 1;//防守信息列表
+}
+
+message SRelationsLog
+{
+	repeated PLogInfo list = 1;//追诉记录列表
+}
+
+message SRelationsFind
+{
+	required PAvatar avatar = 1;//头像信息
+	required int32 playerid = 2;//玩家id
+	required string name = 3;//玩家名
+	required int32 level = 4;//公司规模（等级）
+	required int32 point = 5;//玩家积分
+	required int32 rank = 6;//玩家排名
+	required int64 power = 7;//玩家战斗力
+	required int32 staffnum = 8;//玩家拥有员工数
+	required int32 sex = 9;//玩家性别（2为男，1为女）
+}
+
+message SRelationsNews
+{
+	optional string attackname = 1;//号外攻击方名字
+	optional string failname = 2;//号外被击败方名字
+	optional int32 times = 3;//号外攻击方攻击次数
+	optional string lastname = 4;//上次挑战玩家名字
+	optional int32 lastid = 5;//上次挑战玩家id
+	repeated PNewsInfo list = 6;//新闻列表
+}
+
+message SRelationsNewsPush
+{
+	required PNewsInfo info = 1;//新闻推送内容
+}
+
+message SRelationsInitStaff
+{
+	repeated int32 appealList = 1;//今天用过的员工id（上诉）
+	repeated int32 revengeList = 2;//今天用过的员工id（追诉）
+}
+
+
+message SRelationOnekey
+{
+	repeated SRelationsReport list = 1;//一键战报
+}
+
+message SShopBuy
+{
+	required int32 index = 1;    // 商品位置
+	required int32 goodid = 2;   // 商品id
+	required int32 buyCount = 3; // 购买数量
+	required int32 costpoint = 4;// 消耗积分
+	required int32 point = 5;    // 剩余积分
+}
+
+
+

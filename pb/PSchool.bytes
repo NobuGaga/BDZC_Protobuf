@@ -1,0 +1,30 @@
+
+õ
+PSchool.protoPSchool"}
+PSchoolInfo
+index (Rindex
+state (Rstate
+staffid (Rstaffid
+time (Rtime
+times (Rtimes";
+	CSchoolUp
+index (Rindex
+staffid (Rstaffid"$
+CSchoolStart
+index (Rindex"8
+
+CSchoolAdd
+index (Rindex
+times (Rtimes"'
+CSchoolGetAward
+index (Rindex"
+CSchoolAddSeat"7
+SSchoolInit(
+list (2.PSchool.PSchoolInfoRlist"9
+	SSchoolUp,
+result (2.PSchool.PSchoolInfoRresult"‹
+SSchoolGetAward,
+result (2.PSchool.PSchoolInfoRresult
+skillexp (Rskillexp
+bookexp (Rbookexp
+isGod (RisGodBH

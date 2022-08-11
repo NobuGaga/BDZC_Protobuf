@@ -1,0 +1,75 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PYacht;
+
+//enum cmd
+//{
+//	cYachtTour				= 1,// 请求出巡 	 PYacht.CYachtTour
+// 	cYachtFinishTour		= 2,// 请求完成出巡	 PYacht.CYachtTour
+//	cYachtUpSkin			= 3,// 升级游艇皮肤  PYacht.CYachtSkin
+//	cYachtDressSkin			= 4,// 应用游艇皮肤  PYacht.CYachtSkin
+//  cYachtGetTourReward		= 5,// 领取出巡奖励
+//  cYachtActivate			= 6,// 激活游艇		PYacht.CYachtSkin
+
+
+//  sYachtInit				= 1,// 初始化		PYacht.SInit
+//	sYachtTour				= 2,// 请求出巡		PYacht.PTourInfo
+//	sYachtFinishTour		= 3,// 请求出巡		PYacht.PTourInfo
+//	sYachtUpSkin			= 4,// 升级游艇皮肤 PYacht.PSkinInfo
+//	sYachtDressSkin			= 5,// 应用游艇皮肤	PYacht.CYachtSkin
+//  sYachtGetTourReward		= 6,// 领取出巡奖励 PYacht.STourReward
+//  sYachtActivate			= 7,// 激活游艇		PYacht.PSkinInfo
+//  sYachtOpenTask			= 8,// 开启任务		PYacht.PTouring
+//  sYachtCloseTask			= 9,// 关闭任务		PYacht.CYachtTour
+//  sYachtNewSkin			= 10,// 获得新皮肤	PYacht.PSkinInfo
+//  sYachtUpdate			= 11,// 更新系统数据 PYacht.SUpdate
+//}
+
+
+message CYachtTour
+{
+	required int32 id = 1;		// 出巡任务id
+}
+
+message CYachtSkin
+{
+	required int32 id = 1;		// 游艇皮肤id
+}
+
+message PSkinInfo
+{
+	required int32 id = 1;			// 皮肤id
+	required int32 level = 2;		// 皮肤等级
+}
+
+message PTourInfo
+{
+	required int32 id = 1;			// 出巡任务id
+	required int64 endTime = 2; 	// 结束时间戳
+}
+
+message PTouring
+{
+	required int32 id = 1;			// 出巡任务id
+	optional int64 endTime = 2; 	// 活动结束时间戳
+}
+
+message STourReward
+{
+	repeated PIntInt getlist = 1;	// 出巡获得的奖励
+}
+
+message SInit
+{
+	required int32 tourCount = 1;		// 今日出巡次数
+	required int32 curSkinId = 2;		// 当前别墅游艇皮肤（默认要给个皮肤）
+	repeated PTouring tourList = 3;		// 出巡列表
+	optional PTourInfo curTour = 4;		// 当前出巡任务
+	repeated PSkinInfo skinList = 5;	// 玩家当前拥有的皮肤列表（图鉴）
+}
+
+message SUpdate
+{
+	required int32 tourCount = 1;		// 今日出巡次数
+}

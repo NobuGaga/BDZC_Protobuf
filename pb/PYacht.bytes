@@ -1,0 +1,28 @@
+
+±
+PYacht.protoPYachtPCommon.proto"
+
+CYachtTour
+id (Rid"
+
+CYachtSkin
+id (Rid"1
+	PSkinInfo
+id (Rid
+level (Rlevel"5
+	PTourInfo
+id (Rid
+endTime (RendTime"4
+PTouring
+id (Rid
+endTime (RendTime"1
+STourReward"
+getlist (2.PIntIntRgetlist"Í
+SInit
+	tourCount (R	tourCount
+	curSkinId (R	curSkinId,
+tourList (2.PYacht.PTouringRtourList+
+curTour (2.PYacht.PTourInfoRcurTour-
+skinList (2.PYacht.PSkinInfoRskinList"'
+SUpdate
+	tourCount (R	tourCountBH

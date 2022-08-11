@@ -1,0 +1,126 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+// enum RankCmd
+// {
+//		cRankList               =	1,//获取列表    PRank.CGetList
+//		cWorship                =	2,//膜拜        PRank.CWorship
+//      cCrossCommerceList      =   4,//获取跨服商会榜单 
+//
+//		sRankList               =	1,//获取列表 PRank.SGetList
+//		sWorship                =	2,//膜拜     PRank.SWorship
+//      sWorshipState           =   3,//膜拜状态     PRank.SWorshipState
+//      sCrossCommerceList      =   4,//获取跨服商会榜单 PRank.SCrossRankList
+// };
+
+import "PCommon.proto";
+
+package PRank;
+
+////////////////////////////////////////
+// server only (for db)
+// 玩家排行数据
+message SRankData
+{
+    required int64 playerId = 1;	// 玩家ID
+    required int64 value = 2;		// 排行关键值（财势榜-势力，关卡榜-关卡，亲密榜-亲密度）
+    required int32 extraVal = 3;	// 排行额外参考值（财势榜-等级，关卡榜-通关时间，亲密榜-无）
+    required int32 rank = 4;		// 排名
+}
+
+// 榜单
+message SRankList
+{
+    repeated SRankData rankList = 1;
+}
+////////////////////////////////////////
+
+// common message
+message PRankInfo
+{
+    required int32 rank = 1;     //排名
+    required int64 playerid = 2; //玩家ID
+    required string name = 3;    //玩家名
+    required int64 value = 4;    //数值
+    required int32 level = 5;    //公司规模（财势榜特有）
+    optional int32 titleid = 6;//称号id
+    optional int32 headid = 7;//头像id
+    optional int32 sex = 8;     //性别
+    optional int32 vip = 9;     //vip等级
+    optional int32 serverid = 10;    //区服ID
+}
+
+message PCrossCommerceRank
+{
+    required int32 rank = 1;        //排名
+    required string commername = 2; //商会名称
+    required string playername = 3;  //玩家名
+    required int64 exp = 4;   
+    required int32 level = 5;    
+    required int32 joinMum = 6;     //商户加入人数
+    optional int32 totalMum = 7;    //商户容纳总人数
+    optional int32 serverid = 9;    //区服ID
+    optional int32 titleid = 10;//称号id
+    optional int32 headid = 11;//头像id
+    optional int32 sex = 12;     //性别
+    optional int32 vip = 13;     //vip等级
+}
+
+// Client -> Server
+message CGetList
+{
+    required bool islocal = 1;      //是否为本服排行榜
+    required int32 rankid = 2;      //排行榜id，1为财势榜 2为关卡榜 3为亲密榜 4游艇会
+}
+
+message CWorship
+{
+    required bool islocal = 1;      //是否为本服排行榜
+    required int32 rankid = 2;      //排行榜id，1为财势榜 2为关卡榜 3为亲密榜 4游艇会
+}
+
+// Server -> Client
+message SGetList
+{
+    required bool islocal = 1;      //是否为本服排行榜
+    required int32 rankid = 2;      //排行榜id，1为财势榜 2为关卡榜 3为亲密榜 4游艇会
+    optional int32 selfrank = 3;    //自己的排名
+    optional int64 selfvalue = 4;   //自己的数值
+    optional bool isworshiped = 5;  //是否膜拜过
+    repeated PRankInfo ranklist = 6;//排行榜列表
+    optional string selfName = 7;   //自己的名字(商会名或者是自己的名称)
+}
+
+message SCrossRankList
+{
+    required int32 rankid = 1;      //排行榜id，1为财势榜 2为关卡榜 3为亲密榜 4游艇会
+    optional bool isworshiped = 2;  //是否膜拜过
+    repeated PCrossCommerceRank ranklist = 3;//排行榜列表
+    optional int32 selfrank = 4;    //自己的排名
+    optional int64 selfvalue = 5;   //自己的数值
+    optional string selfName = 6;   //自己的名字(商会名或者是自己的名称)
+}
+
+message SWorship
+{
+    required bool islocal = 1;      //是否为本服排行榜
+    required int32 rankid = 2;      //排行榜id，1为财势榜 2为关卡榜 3为亲密榜 4游艇会
+    optional string name = 3;       //膜拜对象名
+    optional PAvatar avatar = 4;    //膜拜对象外观
+    optional int32 gold = 5;        //膜拜获得钻石数
+    optional int32 exgold = 6;      //膜拜额外获得钻石数 (大于0表示触发了突飞猛进)
+    optional int32 sex = 7;         //玩家性别（2为男，1为女）
+    optional int32 rank = 8;        //排名
+}
+
+message PWorshipInfo
+{
+    required int32 rankid = 1;        //排行榜ID
+    required bool state = 2;        //是否膜拜过
+    optional bool cross = 3;
+}
+
+message SWorshipState
+{
+    repeated PWorshipInfo list = 1;     //膜拜状态列表
+}

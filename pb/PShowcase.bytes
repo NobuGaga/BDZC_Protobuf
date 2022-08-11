@@ -1,0 +1,29 @@
+
+È
+PShowcase.proto	PShowcasePCommon.proto"“
+	PShowItem
+itemId (RitemId
+
+expireTime (R
+expireTime
+layerId (RlayerId
+gridId (RgridId
+	startTime (R	startTime"9
+SInit0
+itemList (2.PShowcase.PShowItemRitemList""
+SDelItem
+itemId (RitemId"R
+CPutOn
+layerId (RlayerId
+gridId (RgridId
+itemId (RitemId"R
+SPutOn
+layerId (RlayerId
+gridId (RgridId
+itemId (RitemId"<
+CTakeOff
+layerId (RlayerId
+gridId (RgridId"<
+STakeOff
+layerId (RlayerId
+gridId (RgridIdBH

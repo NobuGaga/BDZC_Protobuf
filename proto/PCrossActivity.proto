@@ -1,0 +1,138 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PCrossActivity;
+
+//活动状态定义
+// _M.CUActivityState = 
+// {
+// 	Waiting = 1,	--未开始
+// 	Doing = 2,		--进行中
+// 	Finish = 3,		--已结束(结算中)
+//	Close = 4,		--关闭（消失）
+// }
+
+//enum
+//{
+//  cCrossActGet = 1,      				//领取奖励 PCrossActivity.CGet
+//	cCrossActInfo = 2,			  		//获取活动消息，为一些打开窗口要请求内容的协议设计 PCrossActivity.CGetActivityInfo
+//  -------------------------------------------------------------------------
+//  cLottery = 3,						//(抽奖)请求抽奖	PCrossActivity.CLottery
+//  cLotteryNumGet = 4,	    			//(抽奖)请求次数奖励 PCrossActivity.CLottery
+//  cLotteryOpen = 5,					//(抽奖)打开界面 - 返回历史消息(最近20条)
+//  cLotteryClose = 6,					//(抽奖)关闭界面 - 在打开过程中, 实时推送新的历史消息
+
+// 	sCrossActInit = 1,			  		//初始化 PCrossActivity.SActivity
+// 	sCrossActUpdate = 2,		  		//更新 PCrossActivity.SActivity
+//  sCrossActGetReward = 3,				//获取/操作成功反馈 PCrossActivity.SActivityGeted
+//  sCrossActUpdateState= 4,	  		//更新状态 PCrossActivity.SUpdateState
+//  sCrossActUpdatePro = 5, 	  		//更新进度 PCrossActivity.SUpdatePro
+//  -------------------------------------------------------------------------
+//  sLotteryPoolGold = 6,				//(抽奖)奖池同步 PCrossActivity.SLotteryPoolGold
+//  sLottery = 7,						//(抽奖)抽奖返回 PCrossActivity.SLottery
+//  sLotteryNumGet = 8,					//(抽奖)次数奖励返回 PCrossActivity.SLotteryNumGet
+//  sLotteryMessage = 9,				//(抽奖)消息刷新 PCrossActivity.SLotteryMessage
+//  sLotteryMsgList = 10,				//(抽奖)历史消息列表 PCrossActivity.SLotteryMsgList
+//}
+
+//活动状态
+message PActivityState
+{
+	required int32 state = 1;		//活动状态 see : ActivityState
+	optional int64 startTime = 2;	//开始时间
+	optional int64 endTime = 3;		//结束时间
+	optional int32 lefttime = 4;	//结算倒计时
+}
+
+//状态刷新
+message SUpdateState
+{
+	required int32 actId = 1;				//活动id
+	required PActivityState state = 2;		//活动状态
+}
+
+
+//抽奖活动
+message PLottery
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 totalNum = 3;		//累计抽奖次数
+	required bool isFree = 4;			//是否已经可以免费
+	repeated int32 numGets = 5;			//已经领取了奖励的次数列表
+	optional int32 poolGold = 6;		//奖池钻石数
+}
+
+message PLotteryReward
+{
+	required int32 id = 1;				//抽到的抽奖物品表id  LotteryItem的id
+	required PIntInt item = 2;			//钻石转盘活动时返回具体奖励（因为要按奖池计算钻石）
+}
+
+//请求抽奖
+//请求领取次数奖励
+message CLottery
+{
+	//抽奖:1-->1次  10-->10次 过滤掉其他的
+	//领取次数奖励: 次数
+	required int32 num = 1;
+}
+
+//抽奖返回
+message SLottery
+{
+	required int32 actId = 1;			//活动id
+	required int32 totalNum = 2;		//累计抽奖次数
+	required bool isFree = 3;			//是否已经可以免费
+	repeated PLotteryReward rewardList = 4;//奖励列表
+	required int32 poolGoldBefore = 5;	//抽奖前奖池钻石数
+}
+
+//次数奖励返回
+message SLotteryNumGet
+{
+	required int32 actId = 1;			//活动id
+	repeated int32 numGets = 2;			//已经领取了奖励的次数列表
+	repeated PIntInt getRewards = 3;    //获取奖励列表
+}
+
+//更新消息
+message SLotteryMessage
+{
+	required int32 actId = 1;			//活动id
+	required string playerName = 2;    	//玩家名
+	required int32 itemId = 3;			//物品ID
+	required int32 itemCount = 4;		//物品数量（获得钻石时显示数量）
+	required int32 lotteryItemId = 5;	//抽到的抽奖物品表id  LotteryItem的id
+}
+
+//获取消息列表
+message SLotteryMsgList
+{
+	message MessageInfo
+	{
+		required string playerName = 1; //玩家名
+		required int32 itemId = 2;		//物品ID
+		required int32 itemCount = 3;	//物品数量（获得钻石时显示数量）
+		required int32 lotteryItemId = 4;//抽到的抽奖物品表id  LotteryItem的id
+	}
+	required int32 actId = 1;			//活动id
+	repeated MessageInfo list = 2;		//消息列表
+}
+
+//同步奖池钻石
+message SLotteryPoolGold
+{
+	required int32 actId = 1;			//活动id
+	required int32 gold = 2;			//奖池钻石数
+}
+
+
+//整个活动刷新/初始化
+message SActivity
+{
+	//钻石转盘
+	optional PLottery lottery = 1;	
+}

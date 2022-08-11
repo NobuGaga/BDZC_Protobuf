@@ -1,0 +1,46 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+package PTarget;
+
+//系统id: 商城
+//Target = 130,
+// local CMD_ID = 
+// {
+// 	cReqTargetDone 	= 1, //PTarget::CTargetDone
+
+// 	sTargetInit 	= 1, //上线、PTarget::STargetInit
+// 	sTargetDone 	= 2,//领取之后PTarget::STargetDone
+// }
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+
+message PResult
+{
+	required int32 type		= 1;	//类型 1:等级2:势力3:特权
+	required int32 index	= 2;	//索引
+}
+//请求购买
+message CTargetDone
+{
+	required PResult target = 1;
+}
+
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+
+//初始化
+message STargetInit
+{
+	repeated PResult target = 1;	//当前进度
+}
+
+
+//完成
+message STargetDone
+{
+	required PResult target = 1;	//当前进度
+}
+

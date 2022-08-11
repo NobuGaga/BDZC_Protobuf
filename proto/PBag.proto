@@ -1,0 +1,116 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+// enum BagCmd
+// {
+//		cBagUseItem							=	1,//使用道具 PBag.CUseItem
+//		cBagMergeItem						=	2,//合成道具 PBag.CMergeItem
+//      cBagExchangeItem                    =   3,//兑换物品 PBag.CExchangeItem
+//
+//		sBagInit							=	1,//初始化 PBag.SInit
+//		sBagGainItem						=	2,//获取道具 PBag.SGainItem
+//		sBagDelItem							=	3,//删除道具 PBag.SDelItem
+//		sBagMergeItem						=	4,//合成道具 PBag.SMergeRet
+//      sBagStaffChange                     =   5,//使用道具后员工数据变化 PBag.SStaffChange
+//      sBagPackage                         =   6,//使用礼包类物品后返回   PBag.SUsePackage
+//      sBagGirlChange                      =   7,//使用道具后美女亲密度变化 PBag.SGirlChange
+//      sBagExchangeItem                    =   8,//兑换物品反馈 PBag.SExchangeItem
+// };
+
+
+package PBag;
+
+// common message
+message PBagItem
+{
+    required int32 itemid = 1;   //道具ID
+    required int64 itemcount = 2;    //道具数量
+}
+
+message MergeInfo
+{
+    repeated int32 mergeid = 1;//合成id
+    repeated int32 count = 2;//数量
+}
+
+message PStaffInfo
+{
+    required int32 staffid = 1;//员工id
+    optional int32 attrtype = 2;//变化属性类型（1为公关，2为行政，3为技术，4为营销）
+    optional int32 attrvalue = 3;//属性变化数值
+    optional int32 addskillexp = 4;//技能经验变化值
+    optional int32 skillexp = 5;//技能经验最终值
+    optional int32 addbookexp = 6;//书籍经验变化值
+    optional int32 bookexp = 7;//书籍经验最终值
+    optional int64 power = 8;
+}
+
+message PGirlInfo
+{
+    required int32 girlid = 1;//美女id
+    required int32 type = 2;//美女增加类型（1为亲密度，2为魅力值，3为友谊值）
+    required int32 add = 3;//美女增加数值
+}
+
+// Client -> Server
+message CUseItem
+{
+    required int32 itemid = 1;//道具id
+    required int64 itemcount = 2;//道具数量
+    repeated int64 params = 3;//拓展参数(如果书籍指定使用者等)
+}
+
+message CMergeItem
+{
+    required int32 mergeid = 1;//合成id
+    required int32 mergecount = 2;//合成数量
+}
+
+message CExchangeItem
+{
+    required int32 itemid = 1;//使用兑换道具id
+    required int32 exchangeId = 2;//兑换目标道具id
+}
+
+// Server -> Client
+message SInit
+{
+    repeated PBagItem itemlist = 1;//道具列表
+    repeated MergeInfo merge = 2;//合成信息
+}
+
+message SGainItem
+{
+    required PBagItem item = 1;
+}
+
+message SDelItem
+{
+    required PBagItem item = 1;
+}
+
+message SMergeRet
+{
+    required int32 mergeid = 1;//合成id
+    required int32 mergecount = 2;//合成数量
+}
+
+message SStaffChange
+{
+    repeated PStaffInfo list = 1;//员工变化列表
+}
+
+message SUsePackage
+{
+    repeated PBagItem list = 1;//使用礼包后获得的道具
+}
+
+message SGirlChange
+{
+    repeated PGirlInfo list = 1;//美女变化列表
+}
+
+message SExchangeItem
+{
+    required int32 itemId = 1;//兑换成功道具id
+}

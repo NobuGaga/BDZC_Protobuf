@@ -1,0 +1,155 @@
+
+æ
+PStaff.protoPStaffPCommon.proto"D
+PAureole
+id (Rid
+level (Rlevel
+open (Ropen"’
+PStaffRefine
+level (Rlevel 
+refinePoint (RrefinePoint
+power (Rpower
+	attribute (R	attribute
+isOpen (RisOpen"Ï
+
+PStaffInfo
+id (Rid
+level (Rlevel
+levelexp (Rlevelexp
+color (Rcolor
+skillexp (Rskillexp
+bookexp (Rbookexp
+book (2.PIntIntRbook
+skill (2.PIntIntRskill*
+aureole	 (2.PStaff.PAureoleRaureole+
+
+originAttr
+ (2.PAttributeR
+originAttr'
+itemAttr (2.PAttributeRitemAttr'
+girlAttr (2.PAttributeRgirlAttr-
+aureoleAttr (2.PAttributeRaureoleAttr%
+allAttr (2.PAttributeRallAttr
+power (Rpower%
+carAttr (2.PAttributeRcarAttr
+name (	Rname
+link (Rlink#
+equips (2.PEquipInfoRequips,
+refine (2.PStaff.PStaffRefineRrefine
+carPower (RcarPower 
+equiprPower (RequiprPower"8
+CLevelUp
+staffid (Rstaffid
+type (Rtype"$
+CColorUp
+staffid (Rstaffid"O
+CBookUp
+staffid (Rstaffid
+bookid (Rbookid
+type (Rtype">
+CSkillUp
+staffid (Rstaffid
+skillid (Rskillid"D
+
+CAureoleUp
+staffid (Rstaffid
+	aureoleid (R	aureoleid"9
+SInit0
+	stafflist (2.PStaff.PStaffInfoR	stafflist"ð
+SLevelUp
+staffid (Rstaffid
+success (Rsuccess
+isgod (Risgod
+level (Rlevel
+levelexp (Rlevelexp+
+
+originAttr (2.PAttributeR
+originAttr%
+allAttr (2.PAttributeRallAttr
+power (Rpower"`
+SColorUp
+staffid (Rstaffid
+color (Rcolor$
+gainItem (2.PIntIntRgainItem"Ù
+	SBookLvUp
+staffid (Rstaffid
+bookid (Rbookid
+booklv (Rbooklv
+success (Rsuccess+
+
+originAttr (2.PAttributeR
+originAttr%
+allAttr (2.PAttributeRallAttr
+power (Rpower"Â
+SSkillUp
+staffid (Rstaffid
+skillid (Rskillid
+skilllv (Rskilllv+
+
+originAttr (2.PAttributeR
+originAttr%
+allAttr (2.PAttributeRallAttr
+power (Rpower"ä
+SAureoleLvUp
+staffid (Rstaffid
+	aureoleid (R	aureoleid
+	aureolelv (R	aureolelv
+open (Ropen-
+aureoleAttr (2.PAttributeRaureoleAttr%
+allAttr (2.PAttributeRallAttr
+power (Rpower"H
+SAureoleActive
+staffid (Rstaffid
+	aureoleid (R	aureoleid"8
+SStaffChange(
+staff (2.PStaff.PStaffInfoRstaff"s
+SStaffsLineup0
+	staffList (2.PStaff.PStaffInfoR	staffList
+list (2.PIntIntRlist
+size (Rsize"b
+SUpdateBookExp
+staffid (Rstaffid
+bookexp (Rbookexp
+	changeexp (R	changeexp"È
+SAddItemAttr
+staffid (Rstaffid
+attrType (RattrType
+	attrValue (R	attrValue'
+itemAttr (2.PAttributeRitemAttr%
+allAttr (2.PAttributeRallAttr
+power (Rpower"
+SUpdateSkillExp
+staffid (Rstaffid
+skillid (Rskillid
+skillexp (Rskillexp
+	changeexp (R	changeexp"\
+CStaffRename
+staffid (Rstaffid
+name (	Rname
+
+costItemId (R
+costItemId"<
+SStaffRename
+staffid (Rstaffid
+name (	Rname"½
+SStaffReworkInfo
+id (Rid
+level (Rlevel
+color (Rcolor
+book (Rbook
+allAttr (RallAttr
+attr (2.PAttributeRattr
+items (2.PIntIntRitems"5
+SStaffReworkSuccess
+items (2.PIntIntRitems"(
+CStaffRework
+staffid (Rstaffid"<
+CStaffRefine
+staffid (Rstaffid
+type (Rtype"V
+SStaffRefine
+staffid (Rstaffid,
+refine (2.PStaff.PStaffRefineRrefine"C
+SStaffRefineReset
+staffid (Rstaffid
+level (RlevelBH

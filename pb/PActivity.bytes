@@ -1,0 +1,753 @@
+
+ì›
+PActivity.proto	PActivityPCommon.proto"z
+PActivityState
+state (Rstate
+	startTime (R	startTime
+endTime (RendTime
+lefttime (Rlefttime"2
+CGet
+actId (RactId
+index (Rindex">
+CGetActivityInfo
+actId (RactId
+index (Rindex"@
+CUpdateNewFlag
+actId (RactId
+newFlag (RnewFlag"C
+PReward
+title (	Rtitle"
+rewards (2.PIntIntRrewards"Œ
+PRankReward
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+selfRank (RselfRank
+GetState (RGetState"R
+	PJianChen
+actId (RactId/
+state (2.PActivity.PActivityStateRstate"S
+
+PSuperGirl
+actId (RactId/
+state (2.PActivity.PActivityStateRstate"
+
+PTimeLimit
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+rewards (Rrewards
+pro (Rpro";
+PRechargeReward
+id (Rid
+isGeted (RisGeted"ž
+PRechargeReward_Day
+actId (RactId/
+state (2.PActivity.PActivityStateRstate.
+list (2.PActivity.PRechargeRewardRlist
+num (Rnum" 
+PRechargeReward_Total
+actId (RactId/
+state (2.PActivity.PActivityStateRstate.
+list (2.PActivity.PRechargeRewardRlist
+num (Rnum"£
+PRechargeReward_TotalDay
+actId (RactId/
+state (2.PActivity.PActivityStateRstate.
+list (2.PActivity.PRechargeRewardRlist
+num (Rnum"Â
+PCommerceRecharge
+actId (RactId/
+state (2.PActivity.PActivityStateRstate4
+list (2 .PActivity.PCommerceRechargeInfoRlist
+num (Rnum
+
+isRecharge (R
+isRecharge"]
+PCommerceRechargeInfo
+id (Rid
+isGeted (RisGeted
+isCanGet (RisCanGet"9
+PCommerceMember
+name (	Rname
+time (Rtime"K
+PCommerceInfo
+name (	Rname
+job (Rjob
+money (Rmoney"k
+PShopPackage
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+times (Rtimes"l
+PShopLimitBuy
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+times (Rtimes"“
+PXinGuan
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+point (Rpoint0
+itemList (2.PActivity.PShopItemRitemList0
+shopList (2.PActivity.PShopItemRshopList"
+selfGetState (RselfGetState"
+gangGetState (RgangGetState"U
+	PShopItem
+index (Rindex
+goodId (RgoodId
+buyCount (RbuyCount"_
+PNoticeInfo
+name (	Rname
+goodId (RgoodId$
+gainItem (2.PIntIntRgainItem"J
+PMessage
+index (Rindex
+name (	Rname
+score (Rscore"!
+	CNewEnter
+actId (RactId":
+CNewBuyGoods
+actId (RactId
+index (Rindex"?
+CNewExchangeGoods
+actId (RactId
+index (Rindex"T
+CNewUseGoods
+actId (RactId
+index (Rindex
+isBatch (RisBatch"'
+CNewRefreshInfo
+actId (RactId"&
+CCommerceGeted
+index (Rindex"(
+CSevenDayGetRank
+actId (RactId""
+CChairtyDrow
+type (Rtype"W
+PChairtyAct
+actId (RactId
+item (2.PItemRitem
+params (Rparams"V
+SActivityGeted
+actId (RactId
+index (Rindex
+isGeted (RisGeted"U
+SUpdateState
+actId (RactId/
+state (2.PActivity.PActivityStateRstate"J
+
+SUpdatePro
+actId (RactId
+index (Rindex
+pro (Rpro"µ
+	SNewEnter
+	bossBlood (R	bossBlood6
+
+noticeData (2.PActivity.PNoticeInfoR
+noticeData7
+selfRankList (2.PActivity.PMessageRselfRankList7
+gangRankList (2.PActivity.PMessageRgangRankList/
+selfRank (2.PActivity.PMessageRselfRank/
+gangRank (2.PActivity.PMessageRgangRank"V
+SNewBuyGoods
+actId (RactId
+index (Rindex
+buyCount (RbuyCount"q
+SNewExchangeGoods
+actId (RactId
+point (Rpoint
+index (Rindex
+buyCount (RbuyCount"ì
+SNewUseGoods
+actId (RactId
+	bossBlood (R	bossBlood7
+selfRankList (2.PActivity.PMessageRselfRankList7
+gangRankList (2.PActivity.PMessageRgangRankList/
+selfRank (2.PActivity.PMessageRselfRank/
+gangRank (2.PActivity.PMessageRgangRank
+index (Rindex
+point (Rpoint(
+
+getRewards	 (2.PIntIntR
+getRewards"I
+SNewRefreshInfo6
+
+noticeData (2.PActivity.PNoticeInfoR
+noticeData">
+
+SNewStatus
+actId (RactId
+isInTime (RisInTime">
+SNewRest
+actId (RactId
+	bossBlood (R	bossBlood"a
+SCommerceMember 
+rechargeNum (RrechargeNum,
+list (2.PActivity.PCommerceInfoRlist"@
+SCommerceGeted.
+list (2.PActivity.PCommerceMemberRlist"¤
+SLotteryState
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+todayNum (RtodayNum
+isFree (RisFree
+numGets (RnumGets"
+CLottery
+num (Rnum"p
+SLottery
+actId (RactId
+todayNum (RtodayNum
+isFree (RisFree
+itemList (RitemList"j
+SLotteryNumGet
+actId (RactId
+numGets (RnumGets(
+
+getRewards (2.PIntIntR
+getRewards"_
+SLotteryMessage
+actId (RactId
+itemId (RitemId
+
+playerName (	R
+playerName"ª
+SLotteryMsgList
+actId (RactId:
+list (2&.PActivity.SLotteryMsgList.MessageInfoRlistE
+MessageInfo
+itemId (RitemId
+
+playerName (	R
+playerName"Q
+SLotterySuperGetter
+playerId (RplayerId
+
+playerName (	R
+playerName"‰
+PVIPDiscountGift
+list (Rlist
+actid (Ractid/
+state (2.PActivity.PActivityStateRstate
+viplevel (Rviplevel"P
+PDailyGiftInfo
+index (Rindex
+state (Rstate
+time (Rtime"‚
+
+PDailyGift
+actId (RactId/
+state (2.PActivity.PActivityStateRstate-
+list (2.PActivity.PDailyGiftInfoRlist"æ
+PSevenDayTarget
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+selfRank (RselfRank
+rankPro (RrankPro
+getState (RgetState"
+getedRewards (RgetedRewards
+curPro (RcurPro"S
+SSevenDayRank
+actId (RactId
+rank (Rrank
+rankPro (RrankPro"T
+PHeadChange
+actId (RactId/
+state (2.PActivity.PActivityStateRstate"s
+PCharity
+actId (RactId/
+state (2.PActivity.PActivityStateRstate 
+rewardState (RrewardState":
+SCharityDrow
+actId (RactId
+index (Rindex"u
+SCharityMessage
+actId (RactId
+itemId (RitemId
+
+playerName (	R
+playerName
+score (Rscore"Ø
+SCharityMsgList
+actId (RactId:
+list (2&.PActivity.SCharityMsgList.MessageInfoRlist
+params (Rparams[
+MessageInfo
+itemId (RitemId
+
+playerName (	R
+playerName
+score (Rscore"`
+SCharityRank
+actId (RactId
+rank (Rrank
+pro (Rpro
+state (Rstate"â
+
+PAdventure
+actId (RactId/
+state (2.PActivity.PActivityStateRstate0
+personalRewardState (RpersonalRewardState(
+gangrewardState (RgangrewardState@
+personalTasklist (2.PActivity.PTaskInfoRpersonalTasklist
+hotval (Rhotval-
+shop (2.PActivity.PAdventureShopRshop"
+refreshTimes (RrefreshTimes"
+companyLevel	 (RcompanyLevel
+exp
+ (Rexp"
+isSelectDown (RisSelectDown<
+commerBossList (2.PActivity.PTaskInfoRcommerBossList*
+stageRewardGeted (RstageRewardGeted
+
+todayLucky (R
+todayLucky 
+isFirstOpen (RisFirstOpen"-
+PAInt
+id (Rid
+value (Rvalue"]
+SAdventureLucky
+actId (RactId
+lucky (Rlucky
+
+todayLucky (R
+todayLucky"t
+PAdventureShopItem
+actId (RactId
+index (Rindex
+goodId (RgoodId
+buyCount (RbuyCount"Á
+PAdventureShop
+actId (RactId,
+todayRefreshCount (RtodayRefreshCount9
+itemList (2.PActivity.PAdventureShopItemRitemList0
+nextRefreshLeftTime (RnextRefreshLeftTime"]
+CSelectDown"
+isSelectDown (RisSelectDown*
+isLevelUpRefresh (RisLevelUpRefresh"n
+CCompeleteTask
+	taskIndex (R	taskIndex
+staffIds (RstaffIds"
+isSelectDown (RisSelectDown"°
+	PTaskInfo
+	taskIndex (R	taskIndex
+taskId (RtaskId/
+	eventInfo (2.PActivity.PEInfoR	eventInfo
+
+totalBlood (R
+totalBlood
+curblood (Rcurblood 
+bossTriTime (RbossTriTime
+state (Rstate0
+joinInfo (2.PActivity.PJoinInfoRjoinInfo
+isDown	 (RisDown"V
+PComBossInfo
+actId (RactId0
+bossInfo (2.PActivity.PTaskInfoRbossInfo";
+	PJoinInfo
+playerId (RplayerId
+name (	Rname"P
+PEInfo
+index (Rindex0
+attrInfo (2.PActivity.PAttrItemRattrInfo"c
+	PAttrItem
+type (Rtype
+value (Rvalue
+params (Rparams
+extra (Rextra"î
+SAdventureTask
+actId (RactId
+	taskIndex (R	taskIndex$
+compatibility (Rcompatibility
+reward (2.PItemRreward
+hotval (Rhotval
+	randMatch (R	randMatch
+state (Rstate@
+personalTasklist (2.PActivity.PTaskInfoRpersonalTasklist"
+companyLevel	 (RcompanyLevel
+exp
+ (Rexp
+
+todayLucky (R
+todayLucky")
+CAdventureShopRefresh
+pay (Rpay"?
+CAdventureShopBuy
+index (Rindex
+count (Rcount"±
+PCommerceBoss
+actId (RactId
+	taskIndex (R	taskIndex
+reward (2.PItemRreward
+hotval (Rhotval"
+companyLevel (RcompanyLevel
+exp (Rexp"Š
+SEventReward
+actId (RactId
+
+eventIndex (R
+eventIndex
+reward (2.PItemRreward$
+compatibility (Rcompatibility"
+PStageReward
+id (Rid"¶
+STaskRefresh
+actId (RactId"
+refreshTimes (RrefreshTimes@
+personalTasklist (2.PActivity.PTaskInfoRpersonalTasklist*
+isLevelUpRefresh (RisLevelUpRefresh">
+SAdventureOpenRank
+rank (Rrank
+score (Rscore"%
+CFinancingGet
+index (Rindex"£
+
+PFinancing
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+curIndex (RcurIndex2
+getlist (2.PActivity.POneFinancingRgetlist"7
+POneFinancing
+index (Rindex
+pro (Rpro"U
+POneGetInfo
+
+playername (	R
+playername
+pro (Rpro
+index (Rindex"D
+SFinancingInfo2
+infolist (2.PActivity.POneGetInfoRinfolist"_
+SFinancingGet
+curIndex (RcurIndex2
+getlist (2.PActivity.POneFinancingRgetlist"ÿ
+PFutures
+actId (RactId/
+state (2.PActivity.PActivityStateRstate$
+selectedFiles (RselectedFiles(
+obtainedFactors (RobtainedFactors"
+futuresState (RfuturesState
+	curFactor (R	curFactor(
+rechargeAddGold (RrechargeAddGold(
+resetNeedAmount (RresetNeedAmount&
+rechargeAmount	 (RrechargeAmount
+
+resetTimes
+ (R
+resetTimes"&
+CFuturesSelect
+index (Rindex">
+SFuturesSelect
+index (Rindex
+factor (Rfactor"’
+SFuturesNews=
+newsList (2!.PActivity.SFuturesNews.PNewsInfoRnewsListC
+	PNewsInfo
+
+playerName (	R
+playerName
+factor (Rfactor"ë
+PGlobalTraval
+actId (RactId/
+state (2.PActivity.PActivityStateRstate(
+travalLoopCount (RtravalLoopCount
+buyCount (RbuyCount(
+numberCount (2.PItemRnumberCount9
+	posReward (2.PActivity.SGlobalTravalPosR	posReward*
+exchangeShop (2.PItemRexchangeShop
+curPosId (RcurPosId 
+passPosList	 (RpassPosList"4
+CDiceBuy
+type (Rtype
+count (Rcount"V
+SGlobalTravalPos
+posId (RposId
+itemId (RitemId
+count (Rcount"Ã
+sGlobalTravalAdventure
+actId (RactId
+curPosId (RcurPosId(
+travalLoopCount (RtravalLoopCount
+
+diceNumber (R
+diceNumber(
+numberCount (2.PItemRnumberCount9
+	posReward (2.PActivity.SGlobalTravalPosR	posReward 
+passPosList (RpassPosList&
+
+DrowReward (2.PItemR
+DrowReward"X
+sGlobalTravalBuy
+actId (RactId
+buyCount (RbuyCount
+type (Rtype"7
+cGlobalTravalExchange
+
+exchangeId (R
+exchangeId"
+sGlobalTravalExchange
+actId (RactId
+
+exchangeId (R
+exchangeId$
+exchangeCount (RexchangeCount(
+numberCount (2.PItemRnumberCount"e
+PSingleRechargeReward
+id (Rid 
+canGetTimes (RcanGetTimes
+getTimes (RgetTimes"•
+PRechargeReward_Single
+actId (RactId/
+state (2.PActivity.PActivityStateRstate4
+list (2 .PActivity.PSingleRechargeRewardRlist"6
+
+PActReward
+id (Rid
+isGeted (RisGeted"½
+PFund
+actId (RactId/
+state (2.PActivity.PActivityStateRstate5
+
+rewardList (2.PActivity.PActRewardR
+rewardList$
+investEndTime (RinvestEndTime
+day (Rday"V
+PFireworksData
+index (Rindex
+isIgnite (RisIgnite
+type (Rtype"Æ
+
+PFireworks
+actId (RactId/
+state (2.PActivity.PActivityStateRstate$
+leftFreeTimes (RleftFreeTimes 
+igniteTimes (RigniteTimes
+buyTimes (RbuyTimes?
+fireworksList (2.PActivity.PFireworksDataRfireworksList"
+rewardedList (RrewardedList(
+rankRewardState (RrankRewardState"T
+CIgniteFireworks
+actId (RactId
+isTen (RisTen
+index (Rindex"¥
+SIgniteFireworks
+actId (RactId
+isTen (RisTenF
+results (2,.PActivity.SIgniteFireworks.PFireworksResultRresults$
+leftFreeTimes (RleftFreeTimes 
+igniteTimes (RigniteTimes
+buyTimes (RbuyTimes?
+fireworksList (2.PActivity.PFireworksDataRfireworksListx
+PFireworksResult
+index (Rindex
+type (Rtype$
+itemList (2.PIntIntRitemList
+score (Rscore"+
+CFireworksSrvReward
+actId (RactId"¡
+SFireworksSrvReward
+actId (RactId/
+state (2.PActivity.PActivityStateRstate"
+srvPrayTimes (RsrvPrayTimesF
+
+rewardList (2&.PActivity.SFireworksSrvReward.PRewardR
+rewardList 
+myPrayTimes (RmyPrayTimes5
+PReward
+index (Rindex
+state (Rstate"D
+CGetFireworksSrvReward
+actId (RactId
+index (Rindex"D
+SGetFireworksSrvReward
+actId (RactId
+index (Rindex"¸
+PLogin
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+day (Rday7
+lanyernList (2.PActivity.PActRewardRlanyernList
+	isHasShow (R	isHasShow"(
+CLoginSetShowTag
+actId (RactId"†
+	PRecharge
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+day (Rday
+	totalDays (R	totalDays;
+totalDaysList (2.PActivity.PActRewardRtotalDaysList
+num (Rnum3
+	dailylist (2.PActivity.PActRewardR	dailylist"h
+SRechargeDaysGet
+actId (RactId
+index (Rindex(
+
+rewardList (2.PIntIntR
+rewardList"I
+SRechargeUpdateDays
+actId (RactId
+	totalDays (R	totalDays"%
+CConsumeRefresh
+type (Rtype"9
+CConsumeBuy
+type (Rtype
+itemId (RitemId"l
+PConsumeScore
+actId (RactId/
+state (2.PActivity.PActivityStateRstate
+score (Rscore"
+SConsumeShop
+type (Rtype
+stage (Rstage,
+shop (2.PActivity.PConsumeGoodsRshop(
+nextRefreshTime (RnextRefreshTime"_
+PConsumeGoods
+item (2.PIntIntRitem
+	sellCount (R	sellCount
+cost (Rcost"
+SConsumeShopUpdate
+actId (RactId+
+shop (2.PActivity.SConsumeShopRshop&
+isCountRefresh (RisCountRefresh"
+SConsumeShopBuy
+actId (RactId
+type (Rtype.
+goods (2.PActivity.PConsumeGoodsRgoods
+socre (Rsocre"A
+SConsumeScoreUpdate
+actId (RactId
+socre (Rsocre"G
+PSpecialOfferGift
+giftId (RgiftId
+buyCount (RbuyCount"¶
+PSpecialOfferShop
+actId (RactId/
+state (2.PActivity.PActivityStateRstate 
+refreshTime (RrefreshTime8
+giftList (2.PActivity.PSpecialOfferGiftRgiftList"O
+PCard
+id (Rid
+item (2.PIntIntRitem
+quality (Rquality"€
+PFlop
+actId (RactId/
+state (2.PActivity.PActivityStateRstate:
+previewCardList (2.PActivity.PCardRpreviewCardList8
+openedCardList (2.PActivity.PCardRopenedCardList 
+refreshTime (RrefreshTime
+started (Rstarted""
+
+CFlopStart
+actId (RactId""
+
+SFlopStart
+actId (RactId"9
+	COpenCard
+actId (RactId
+cardId (RcardId"ƒ
+	SOpenCard
+actId (RactId$
+card (2.PActivity.PCardRcard:
+previewCardList (2.PActivity.PCardRpreviewCardList"$
+COpenAllCard
+actId (RactId"š
+SOpenAllCard
+actId (RactId8
+openedCardList (2.PActivity.PCardRopenedCardList:
+previewCardList (2.PActivity.PCardRpreviewCardList"%
+CRefreshCards
+actId (RactId"½
+SRefreshCards
+actId (RactId:
+previewCardList (2.PActivity.PCardRpreviewCardList8
+openedCardList (2.PActivity.PCardRopenedCardList 
+refreshTime (RrefreshTime"c
+SRandomDrop
+eventId (ReventId$
+itemList (2.PIntIntRitemList
+actId (RactId"²
+PStone
+type (Rtype"
+needDigTimes (RneedDigTimes
+digTimes (RdigTimes
+stoneId (RstoneId
+bossId (RbossId"
+isDefeatBoss (RisDefeatBoss"H
+PMine
+id (Rid/
+	stoneList (2.PActivity.PStoneR	stoneList"Õ
+PExplore
+actId (RactId/
+state (2.PActivity.PActivityStateRstate$
+mine (2.PActivity.PMineRmine
+	bigReward (R	bigReward 
+buyDigTimes (RbuyDigTimes
+	freeTimes (R	freeTimes".
+CDig
+actId (RactId
+pos (Rpos"Ù
+SDig
+actId (RactId
+pos (Rpos 
+buyDigTimes (RbuyDigTimes'
+stone (2.PActivity.PStoneRstone
+reward (2.PItemRreward 
+isBigReward (RisBigReward
+	freeTimes (R	freeTimes"8
+CFightMineBoss
+actId (RactId
+pos (Rpos"
+SFightMineBoss
+actId (RactId
+pos (Rpos
+fight (2.SFightRfight&
+
+rewardList (2.PItemR
+rewardList"8
+CEnterNextMine
+actId (RactId
+pos (Rpos"L
+SEnterNextMine
+actId (RactId$
+mine (2.PActivity.PMineRmine"·
+	SActivity6
+
+rankReward (2.PActivity.PRankRewardR
+rankReward6
+superStaffs (2.PActivity.PJianChenRsuperStaffs3
+	timeLimit (2.PActivity.PTimeLimitR	timeLimitM
+rechargeReward_Day (2.PActivity.PRechargeReward_DayRrechargeRewardDayS
+rechargeReward_Total (2 .PActivity.PRechargeReward_TotalRrechargeRewardTotal\
+rechargeReward_TotalDay (2#.PActivity.PRechargeReward_TotalDayRrechargeRewardTotalDay/
+xinguan1 (2.PActivity.PXinGuanRxinguan1/
+xinguan2 (2.PActivity.PXinGuanRxinguan2I
+commerce_Recharge	 (2.PActivity.PCommerceRechargeRcommerceRecharge:
+shop_Package
+ (2.PActivity.PShopPackageRshopPackage2
+lottery (2.PActivity.SLotteryStateRlottery>
+vip_Discount (2.PActivity.PVIPDiscountGiftRvipDiscountP
+rechargeReward_DailyGift (2.PActivity.PDailyGiftRrechargeRewardDailyGiftB
+sevenDayTarget (2.PActivity.PSevenDayTargetRsevenDayTarget4
+limitbuy (2.PActivity.PShopLimitBuyRlimitbuy6
+
+headChange (2.PActivity.PHeadChangeR
+headChange-
+charity (2.PActivity.PCharityRcharity3
+	adventure (2.PActivity.PAdventureR	adventure3
+	financing (2.PActivity.PFinancingR	financing-
+futures (2.PActivity.PFuturesRfutures<
+globalTraval (2.PActivity.PGlobalTravalRglobalTravalV
+rechargeReward_Single (2!.PActivity.PRechargeReward_SingleRrechargeRewardSingle$
+fund (2.PActivity.PFundRfund3
+	fireworks (2.PActivity.PFireworksR	fireworks9
+festivalLogins (2.PActivity.PLoginRfestivalLogins@
+festivalRecharge (2.PActivity.PRechargeRfestivalRecharge<
+consumeScore (2.PActivity.PConsumeScoreRconsumeScore5
+
+superGirls (2.PActivity.PSuperGirlR
+superGirls;
+commFireworks (2.PActivity.PFireworksRcommFireworks1
+
+commLogins (2.PActivity.PLoginR
+commLogins8
+commRecharge (2.PActivity.PRechargeRcommRecharge@
+specialOffer  (2.PActivity.PSpecialOfferShopRspecialOffer$
+flop! (2.PActivity.PFlopRflop6
+newSeven" (2.PActivity.PSevenDayTargetRnewSeven-
+explore# (2.PActivity.PExploreRexploreBH

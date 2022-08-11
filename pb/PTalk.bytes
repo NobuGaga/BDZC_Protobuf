@@ -1,0 +1,81 @@
+
+á
+PTalk.protoPTalkPCommon.proto"‘
+PTalkMsg
+index (Rindex
+channel (Rchannel
+sender (Rsender
+
+sendername (	R
+sendername
+time (Rtime
+value (	Rvalue
+viplv (Rviplv
+titleid (Rtitleid
+gender	 (Rgender
+headid
+ (Rheadid 
+commerceJob (RcommerceJob
+from (Rfrom
+
+voiceIndex (R
+voiceIndex
+	voiceTime (R	voiceTime2
+	redPacket (2.PTalk.PRedPacketMsgR	redPacket
+
+noticeType (R
+noticeType+
+notice (2.PTalk.SystemNoticeRnotice
+serverId (RserverId
+param (Rparam
+chatBg (RchatBg
+clubtype (Rclubtype
+married (Rmarried
+
+inviteType (R
+inviteType"©
+PRedPacketMsg
+type (Rtype
+packetId (RpacketId
+state (Rstate
+
+expireTime (R
+expireTime
+
+senderName (	R
+senderName
+tips (	Rtips"F
+SystemNotice
+id (Rid&
+params (2.PStringStringRparams"’
+CTalkReq
+channel (Rchannel
+value (	Rvalue
+
+voiceIndex (R
+voiceIndex
+	voiceTime (R	voiceTime
+recvId (RrecvId
+	valueFlag (R	valueFlag
+oriValue (	RoriValue
+param (Rparam
+	isUseGold	 (R	isUseGold
+sign
+ (	Rsign"K
+CHistoryTalkReq
+channel (Rchannel
+
+startindex (R
+startindex";
+STalkListMsg+
+talkList (2.PTalk.PTalkMsgRtalkList"B
+SDeleteChatCross
+channel (Rchannel
+index (Rindex"'
+STalkDbgMsg
+context (	Rcontext"£
+SOfflineMsg8
+msgList (2.PTalk.SOfflineMsg.POfflineMsgRmsgListZ
+POfflineMsg
+playerId (RplayerId/
+talkList (2.PTalk.STalkListMsgRtalkListBH

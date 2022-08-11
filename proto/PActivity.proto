@@ -1,0 +1,1444 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PActivity;
+
+//Activity = 16,		--活动
+
+//活动状态定义
+// _M.ActivityState = 
+// {
+// 	Waiting = 1,	--未开始
+// 	Doing = 2,		--进行中
+// 	Finish = 3,		--已结束
+//	Close = 4,		--关闭
+// }
+
+// 活动奖励状态码
+// enum RewardState
+// {
+// 	eCanGet = 0,		//可领取
+//  eGeted = 1,			//已领取
+//  eCanNotGet = 2,		//不可领取
+//  eBuying = 3,		//订单处理中
+// }
+
+// local CMD_ID = 
+// {
+//  cActivityGet = 1,      		  	--领取奖励 PActivity.CGet
+//	cActivityInfo = 2,			  	--获取活动消息，为一些打开窗口要请求内容的协议设计 PActivity.CGetActivityInfo
+//	cActivityUpdateNewFlag = 3,	  	--更新新活动状态 PActivity.CUpdateNewFlag
+//  cActivityNewEnter = 4,		  	--(新官上任)进入战斗界面 PActivity.CNewEnter
+//  cActivityNewBuyGoods = 5,     	--(新官上任)购买商城道具 PActivity.CNewBuyGoods
+//  cActivityNewExchangeGoods = 6,	--(新官上任)兑换道具 PActivity.CNewExchangeGoods
+// 	cActivityNewUseGoods = 7,     	--(新官上任)使用道具 PActivity.CNewUseGoods
+// 	cActivityNewRefreshInfo = 8,  	--(新官上任)刷新最新10条公告 PActivity.CNewRefreshInfo
+//  cActivityCommerceMember = 9,  	--(商会充值)获取成员充值信息列表(空结构)
+//  cActivityCommerceGeted = 10,  	--(商会充值)获取已领取该阶段奖励成员信息列表 PActivity.CCommerceGeted
+//  cActivityNewRest = 11,		  	--(新官上任)送去休息请求 PActivity.CNewEnter
+//  cLottery = 12,				  	--(抽奖)请求抽奖	PActivity.CLottery
+//  cLotteryNumGet = 13,	      	--(抽奖)请求次数奖励 PActivity.CLottery
+//  cLotteryOpen = 14,			  	--(抽奖)打开界面 - 返回历史消息(最近20条)
+//  cLotteryClose = 15,			  	--(抽奖)关闭界面 - 在打开过程中, 实时推送新的历史消息
+//  cVipDiscountGet = 19,      	  	--领取奖励 PActivity.CGet
+//  cSevenDayGetRank = 20,		  	--(七日目标)获取自己的排名PActivity.CSevenDayGetRank
+//	cChairtyBuy	= 21,			  	--(慈善)购买捐赠物 Pcommon.PItem(id:道具ID ，count:道具数量)
+//	cChairtyDonation = 22,		  	--(慈善)捐赠 	Pcommon.PItem(id:道具ID ，count:道具数量)
+//	cChairtyDrow = 23,			  	--(慈善)抽奖 	PActivity.CChairtyDrow
+//  cChairtyOpen = 24,			  	--(慈善)打开抽奖界面，推送抽奖公告
+//	cChairtyClose = 25,			  	--(慈善)关闭抽奖界面，不再推送抽奖公告
+//	cChaityGetRank = 26,		  	--(慈善)获取自己的排名和进度
+//	cChaityOpenDonation = 27,	  	--(慈善)打开捐赠界面,推送积分公告
+//	cChaityCloseDonation = 28,	  	--(慈善)关闭捐赠界面，不再推送积分公告
+//  cAdventureTask = 29, 			 --(奇遇)完成个人任务，PActivity.CCompeleteTask
+//  cAdventureCommerceBoss = 30, 	--(奇遇)完成商会Boss事件，PActivity.PCommerceBoss
+//  cAdventureOpenRank = 31,		--(奇遇)打开奇遇排行榜界面，返回PActivity.SAdventureOpenRank
+//	cAdventureGetStageReward = 32,	--(奇遇)领取阶级奖励, PActivity.PStageReward
+//	cAdventureShopRefresh =	33, 	--(奇遇)刷新商城	PActivity.CAdventureShopRefresh
+//	cAdventureShopBuy =	34,			//(奇遇) 商城购买（兑换）		PActivity.CAdventureShopBuy
+//	cAdventureGetEventReward = 35,	-- (奇遇)根据派遣员工获取奖励 PActivity.CCompeleteTask
+//	cFinancingInfo = 36,		  	--(银行理财)请求获取中奖信息
+//	cFinancingGet = 37,			  	--(银行理财)请求投资 PActivity.CFinancingGet
+//  cFuturesSelect = 38,		  	--(操纵期货)抽取文件 PActivity.CFuturesSelect
+//  cFuturesNews = 39,				--(操纵期货)中奖信息
+//  cFuturesReset = 40,				--(操纵期货)重置抽取数据
+//	cGlobalTravalAdventure = 41,	--(全球环行)前进
+//	cGlobalTravalBuy = 42,			--(全球环行)购买骰子 PActivity.CDiceBuy
+// 	cGlobalTravalExchange = 43,		--(全球环行)兑换奖励 PActivity.cGlobalTravalExchange
+//	cAdventureTaskRefresh = 44,		--(奇遇)刷新任务 PActivity.CSelectDown
+//  cGlobalTravalAdventureTen = 45,	--(全球旅行)前进十次
+//	cAdventureCloseFace = 46,		//(奇遇)关闭界面 PActivity.CSelectDown
+//  cIgniteFireworks = 47,			--(烟花) PActivity.CIgniteFireworks
+//  cFireworksSrvReward = 48,		--(烟花)
+//  cGetFireworksSrvReward = 49,	--(烟花) PActivity.CGetFireworksSrvReward
+//  cGetFireworksRankReward = 50,	--(烟花) 领取排行版奖励PActivity.CGet
+//  cFestivalLoginSetShowTag = 51,	--(节日累计登陆)设置打开预览界面标记
+//  cFestivalRechargeDaysGet = 52,	--(节日累计充值)领取累充天数奖励 PActivity.CGet
+//	cAdventureFirstOpen	= 53,		--(奇遇)初次打开奇遇界面
+// 	cConsumeOpenUI	= 54,			//(消费积分)打开购买界面 
+//	cConsumeCloseUI	= 55,			//(消费积分)关闭购买界面
+//	cConsumeRefresh	= 56,			//(消费积分)刷新商品 PActivity.CConsumeRefresh
+//	cConsumeBuy		= 57,			//(消费积分)购买商品 PActivity.CConsumeBuy
+//  cCommIgniteFireworks = 58,		//(通用烟花) PActivity.CIgniteFireworks
+//  cCommFireworksSrvReward = 59,	//(通用烟花) PActivity.CFireworksSrvReward
+//  cCommGetFireworksSrvReward = 60,//(通用烟花) PActivity.CGetFireworksSrvReward
+//  cCommGetFireworksRankReward = 61,//(通用烟花) 领取排行版奖励 PActivity.CGet
+//  cCommLoginSetShowTag = 62,		//(通用累计登陆)设置打开预览界面标记 PActivity.CLoginSetShowTag
+//  cCommRechargeDaysGet = 63,		//(通用累计充值)领取累充天数奖励 PActivity.CGet
+//  cFlopStart = 64,				//(翻牌活动)开局 PActivity.CFlopStart
+//  cOpenCard = 65,					//(翻牌活动)开牌 PActivity.COpenCard
+//  cOpenAllCard = 66,				//(翻牌活动)全开 PActivity.COpenAllCard
+//  cRefreshCards = 67,				//(翻牌活动)刷新卡牌 PActivity.CRefreshCards
+//  cDig = 68,						//(探险)挖矿 PActivity.CDig
+//  cFightMineBoss = 69,			//(探险)挑战boss PActivity.CFightMineBoss
+//  cEnterNextMine = 70,			//(探险)进入下一层 PActivity.CEnterNextMine
+
+// 	sActivityInit = 1,			  	--初始化 PActivity.SActivity
+// 	sActivityUpdate = 2,		  	--更新 PActivity.SActivity
+//  sActivityGetReward = 3,		  	--获取/操作成功反馈 PActivity.SActivityGeted
+//  sActivityUpdateState= 4,	  	--更新状态 PActivity.SUpdateState
+//  sActivityUpdatePro = 5, 	  	--更新进度 PActivity.SUpdatePro
+//  sActivityNewEnter = 6, 		  	--(新官上任)进入战斗界面 PActivity.SNewEnter
+//  sActivityNewBuyGoods = 7, 	  	--(新官上任)购买商城道具 PActivity.SNewBuyGoods
+//  sActivityNewExchangeGoods = 8, 	--(新官上任)兑换道具 PActivity.SNewExchangeGoods
+//  sActivityNewUseGoods = 9,      	--(新官上任)使用道具 PActivity.SNewUseGoods
+// 	sActivityNewRefreshInfo = 10,  	--(新官上任)刷新最新10条公告 PActivity.SNewRefreshInfo
+//	sActivityNewStatus = 11,	   	--(新官上任)活动当日开启、结束推送 PActivity.SNewStatus
+//	sCommerceMember = 12,	   	   	--(商会充值)获取成员充值信息列表	PActivity.SCommerceMember
+//	sCommerceGeted = 13,	       	--(商会充值)获取已领取该阶段奖励成员信息列表 PActivity.SCommerceGeted
+//  sActivityNewRest = 14,         	--(新官上任)送去休息返回 PActivity.SNewRest
+//  sLottery = 15,				   	--(抽奖)抽奖返回 PActivity.SLottery
+//  sLotteryNumGet = 16,		   	--(抽奖)次数奖励返回 PActivity.SLotteryNumGet
+//  sLotteryMessage = 17,		   	--(抽奖)消息刷新 PActivity.SLotteryMessage
+//  sLotteryMsgList = 18,		   	--(抽奖)历史消息列表 PActivity.SLotteryMsgList
+//  sVipDisCountGift = 19,		   	--VIP 折扣礼包领取后状态推送 PActivity.PVIPDiscountGift
+//  sUpdateDailyGift = 20,		   	--更新每日礼包 PActivity.PDailyGiftInfo
+//  sSevenDayRank = 21,			   	--(七日目标)返回排名PActivity.SSevenDayRank
+//	sChairtyBuy	= 22,			   	--(慈善)购买捐赠物返回 PActivity.PChairtyAct
+//	sChairtyDonation = 23,		   	--(慈善)捐赠返回 PActivity.PChairtyAct
+//	sChairtyDrow = 24,			   	--(慈善)抽奖返回 PActivity.SCharityDrow
+//  sChairtyOpen = 25,				--(慈善)打开抽奖界面返回 PActivity.SCharityMsgList
+//  sCharityMessage = 26,			--(慈善)推送公告PActivity.SCharityMessage
+//	sCharityGetRank = 27,			--(慈善)获取排名返回PActivity.SCharityRank
+//	sChaityOpenDonation = 28,		--(慈善)打开捐赠界面返回PActivity.SCharityMsgList
+//  sCharityScoreMessage = 29,		--(慈善)推送积分公告PActivity.SCharityMessage
+//  sAdventureTask = 30,			--(奇遇)完成个人任务,PActivity.SAdventureTask
+//  sAdventureCommerceBoss = 31, 	--(奇遇)完成商会BOSS,PActivity.PCommerceBoss
+//  sAdventureOpenRank = 32,		--(奇遇)打开奇遇排行榜返回 PActivity.SAdventureOpenRank
+//	sAdventureGetStageReward = 33,	--(奇遇)领取阶级奖励, PActivity.PCommerceBoss
+//	sAdventureCommerceBossSend = 35,--(奇遇)商会BOSS推送 PActivity.PComBossInfo
+//	sAdventureShopRefresh =	36,		--(奇遇)刷新商城 PActivity.PAdventureShop
+//	sAdventureShopBuy =	37,			--(奇遇)商城购买 PActivity.PAdventureShopItem
+//	sAdventureGetEventReward = 38,	-- (奇遇)根据派遣员工获取奖励 PActivity.SEventReward
+//	sFinancingInfo = 39,			--(银行理财)请求获取中奖信息返回 PActivity.SFinancingInfo
+//	sFinancingGet = 40,				--(银行理财)请求投资返回 PActivity.SFinancingGet
+//  sNewFinancingInfo = 41,			--(银行理财)中奖信息推送 PActivity.POneGetInfo
+//	sAdventureSendLucky	= 42,		--(奇遇)推送幸运值 PActivity.SAdventureLucky
+//  sFuturesSelect = 43,			--(操纵期货)抽取文件 PActivity.SFuturesSelect
+//  sFuturesNews = 44,				--(操纵期货)中奖信息 PActivity.SFuturesNews
+//  sNewFuturesNews = 45,			--(操纵期货)推送中奖信息 PActivity.SFuturesNews::PNewsInfo
+//  sFuturesReset = 46,				--(操纵期货)重置抽取数据
+//	sGlobalTravalAdventure = 47,	--(全球环行)前进返回 PActivity.sGlobalTravalAdventure
+//	sGlobalTravalBuy = 48,			--(全球环行)购买骰子 PActivity.sGlobalTravalBuy 
+// 	sGlobalTravalExchange = 49,		--(全球环行)兑换奖励 PActivity.sGlobalTravalExchange
+//	sLotterySuperGetter = 50,		--(抽奖)超级大奖得主同步 PActivity.SLotterySuperGetter
+//	sAdventureTaskRefresh = 51,		--(奇遇)刷新任务 PActivity.STaskRefresh
+// 	sAdventureFightResult = 52,		//(奇遇)发送战报 PCommon.SFight
+//  sGlobalTravalAdventureTen = 53,	--(全球旅行)前进十次 PActivity.sGlobalTravalAdventure
+//	sAdventureRemoveComBoss = 54,	//(奇遇)删除商会BOSS PCommon.PCommerceBoss
+//  sIgniteFireworks = 55,			--(烟花) PActivity.SIgniteFireworks
+//  sFireworksSrvReward = 56,		--(烟花) PActivity.SFireworksSrvReward
+//  sGetFireworksSrvReward = 57,	--(烟花) PActivity.SGetFireworksSrvReward
+//  sGetFireworksRankReward = 58,   --(烟花) 领取排行版奖励PActivity.SActivityGeted
+//  sFestivalRechargeDaysGet = 59,	--(节日充值) 领取累充天数奖励 PActivity.SRechargeDaysGet
+//  sFestivalRechargeUpdateDays = 60,--（节日充值）更新累计天数 PActivity.SRechargeUpdateDays
+//	sConsumeOpenUI	= 61,			//(消费积分)打开购买界面返回 PActivity.SConsumeShopUpdate
+//	sConsumeRefresh	= 62,			//(消费积分)刷新商品返回 PActivity.SConsumeShopUpdate
+//	sConsumeBuy		= 63,			//(消费积分)购买商品返回 PActivity.SConsumeShopBuy
+//	sConsumeSocreUpdate	= 64,		//(消费积分)积分更新 PActivity.SConsumeScoreUpdate
+//  sCommIgniteFireworks = 65,		//(通用烟花) PActivity.SIgniteFireworks
+//  sCommFireworksSrvReward = 66,	//(通用烟花) PActivity.SFireworksSrvReward
+//  sCommGetFireworksSrvReward = 67,//(通用烟花) PActivity.SGetFireworksSrvReward
+//  sCommGetFireworksRankReward = 68,//(通用烟花) 领取排行版奖励 PActivity.SActivityGeted
+//  sCommRechargeDaysGet = 69,	 	//(通用充值) 领取累充天数奖励 PActivity.SRechargeDaysGet
+//  sCommRechargeUpdateDays = 70,	//(通用充值) 更新累计天数 PActivity.SRechargeUpdateDays
+//  sFlopStart = 71,				//(翻牌活动)开局 PActivity.SFlopStart
+//  sOpenCard = 72,					//(翻牌活动)开牌 PActivity.SOpenCard
+//  sOpenAllCard = 73,				//(翻牌活动)全开 PActivity.SOpenAllCard
+//  sRefreshCards = 74,				//(翻牌活动)刷新卡牌 PActivity.SRefreshCards
+//  sRandomDrop = 75,				//随机掉落 PActivity.SRandomDrop
+//  sDig = 76,						//(探险)挖矿 PActivity.SDig
+//  sFightMineBoss = 77,			//(探险)挑战boss PActivity.SFightMineBoss
+//  sEnterNextMine = 78,			//(探险)进入下一层 PActivity.SEnterNextMine
+// }
+
+//////////////通用协议///////////////////////////
+
+//活动状态
+message PActivityState
+{
+	required int32 state = 1;		//活动状态 see : ActivityState
+	optional int64 startTime = 2;	//开始时间
+	optional int64 endTime = 3;		//结束时间
+	optional int32 lefttime = 4;	//结算倒计时
+}
+
+//获取奖励
+message CGet
+{
+	required int32 actId = 1;	//活动id
+	required int32 index = 2;	//索引
+}
+
+//获取窗口信息
+message CGetActivityInfo
+{
+	required int32 actId = 1;	//活动id
+	optional int32 index = 2;	//索引
+}
+
+//更新活动“新”标记
+message CUpdateNewFlag
+{
+	required int32 actId = 1;	//活动id
+	required bool newFlag = 2;	//是否新活动
+}
+
+//////////////冲榜活动///////////////////////////
+//排名奖励
+message PReward
+{
+	required string title = 1;			//奖励标题
+	repeated PIntInt rewards = 2;
+}
+//冲榜活动
+message PRankReward
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 selfRank = 3;		//自己排名
+	optional int32 GetState = 4;		//领取状态 0:未领取，1：已领取，2：未达标
+}
+
+//////////////四大奸臣///////////////////////////
+//四大奸臣
+message PJianChen
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+}
+
+//////////////绝世美人///////////////////////////
+//绝世美人
+message PSuperGirl
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+}
+
+//////////////限时奖励///////////////////////////
+message PTimeLimit
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	repeated int32 rewards = 3;			//已经领取项
+	required int64 pro = 4;
+}
+
+//每日，累计，累天充值通用列表结构
+message PRechargeReward
+{
+	required int32 id = 1;			//内部id标识
+	required bool isGeted = 2;		//是否领取
+}
+
+//每日充值
+message PRechargeReward_Day
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	repeated PRechargeReward list = 3;	//活动列表
+	required int64 num = 4;				//今日充值数
+}
+//累计充值
+message PRechargeReward_Total
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	repeated PRechargeReward list = 3;	//活动列表
+	required int64 num = 4;				//累计充值数
+}
+//累天充值
+message PRechargeReward_TotalDay
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	repeated PRechargeReward list = 3;	//活动列表
+	required int64 num = 4;				//累计充值天数
+}
+
+/////////////////////////////商会充值////////////////////
+message PCommerceRecharge
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	repeated PCommerceRechargeInfo list = 3;	//活动列表
+	required int64 num = 4;				//累计充值人数
+	required bool isRecharge = 5;		//是否充值
+}
+
+message PCommerceRechargeInfo
+{
+	required int32 id = 1;			//内部id标识
+	required bool isGeted = 2;		//是否领取
+	required bool isCanGet = 3;		//是否到达进度
+}
+
+message PCommerceMember
+{
+	required string name = 1;		//玩家名
+	required int64 time = 2;		//领取时间戳
+}
+
+message PCommerceInfo
+{
+	required string name = 1;		//玩家名
+	required int32 job = 2;			//玩家职位
+	required int32 money = 3;		//充值金额
+}
+
+/////////////////////商城礼包//////////////////////////
+message PShopPackage
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 times = 3;			//购买次数
+}
+
+///////////////// 限时抢购/////////////////////////////
+message PShopLimitBuy
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 times = 3;			//购买次数
+}
+
+/////////////////////新官上任///////////////////////////
+//新官上任活动
+message PXinGuan
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 point = 3;           //当前积分
+	repeated PShopItem itemList = 4;	//积分兑换数据
+	repeated PShopItem shopList = 5;    //活动商城列表
+	optional int32 selfGetState = 6;    //领取状态 0:未领取，1：已领取，2：未达标
+	optional int32 gangGetState = 7;    //领取状态 0:未领取，1：已领取，2：未达标
+}
+
+message PShopItem
+{
+	required int32 index = 1;    //商品位置
+	required int32 goodId = 2;   //对应兑换表中的id
+	required int32 buyCount = 3; //当前商品购买次数
+}
+
+message PNoticeInfo
+{
+	required string name = 1;      //名字
+	required int32 goodId = 2;     //使用的道具id
+	required PIntInt gainItem = 3; //获取的物品奖励
+}
+
+message PMessage
+{
+	required int32 index = 1;    // 排名
+	required string name = 2;    // 名称
+	required int32 score = 3;    // 积分
+}
+
+// C2S
+//(新官上任)进入活动
+message CNewEnter
+{
+	required int32 actId = 1;	//活动id
+}
+
+//(新官上任)购买商城道具
+message CNewBuyGoods
+{
+	required int32 actId = 1;	//活动id
+	optional int32 index = 2;	//索引
+}
+
+//(新官上任)兑换道具
+message CNewExchangeGoods
+{
+	required int32 actId = 1;	//活动id
+	optional int32 index = 2;	//索引
+}
+
+//(新官上任)使用道具
+message CNewUseGoods
+{
+	required int32 actId = 1;	//活动id
+	optional int32 index = 2;	//索引
+	required bool isBatch = 3;  //是否批量使用
+}
+
+//(新官上任)刷新最新10条公告
+message CNewRefreshInfo
+{
+	required int32 actId = 1;   //活动id
+}
+
+//(商会充值)获取该进度已领取的成员列表
+message CCommerceGeted
+{
+	required int32 index = 1;	//进度标识
+}
+
+//(七日目标)获取排名
+message CSevenDayGetRank
+{
+	required int32 actId  = 1;//活动Id
+}
+
+//慈善活动
+message CChairtyDrow
+{
+	required int32 type  = 1;//1:抽奖, 10:十连抽
+}
+
+message PChairtyAct
+{
+	required int32 actId  = 1;//活动Id
+	repeated PItem item = 2;
+	optional int32 params = 3;		//额外参数，代表自己的积分
+}
+
+////////////// Server -> Client ////////////////
+
+//领取返回
+message SActivityGeted
+{
+	required int32 actId = 1;				//活动id
+	required int32 index = 2;				//内部唯一标识, 没有为0
+	required bool isGeted = 3;				//是否已经得到了
+}
+
+//状态刷新
+message SUpdateState
+{
+	required int32 actId = 1;				//活动id
+	required PActivityState state = 2;		//活动状态
+}
+
+//进度刷新
+message SUpdatePro
+{
+	required int32 actId = 1;				//活动id
+	required int32 index = 2;				//内部唯一标识, 没有为0
+	required int64 pro = 3;					//进度，冲榜为自己排名
+}
+
+//(新官上任)进入活动
+message SNewEnter
+{
+	required int64 bossBlood = 1;		//当前目标总积分
+	repeated PNoticeInfo noticeData = 2;//战斗界面的广播
+	repeated PMessage selfRankList = 3; //个人排名列表
+	repeated PMessage gangRankList = 4; //商会排名列表
+	required PMessage selfRank = 5;		//个人排名
+	required PMessage gangRank = 6;		//个人排名
+}
+
+//(新官上任)购买商城道具
+message SNewBuyGoods
+{
+	required int32 actId = 1;	//活动id
+	required int32 index = 2;	//商品位置
+	required int32 buyCount = 3;//当前商品购买次数
+}
+
+//(新官上任)兑换道具
+message SNewExchangeGoods
+{
+	required int32 actId = 1;		//活动id
+	required int32 point = 2;		//活动积分
+	required int32 index = 3;		//商品位置
+	required int32 buyCount = 4;	//当前商品购买次数
+}
+
+//(新官上任)使用道具
+message SNewUseGoods
+{
+	required int32 actId = 1;		//活动id
+	optional int64 bossBlood = 2;		//当前目标总积分
+	repeated PMessage selfRankList = 3; //个人排名列表
+	repeated PMessage gangRankList = 4; //商会排名列表
+	required PMessage selfRank = 5;		//个人排名
+	required PMessage gangRank = 6;		//个人排名
+	optional int32 index = 7;			//索引
+	required int32 point = 8;           //当前积分
+	repeated PIntInt getRewards = 9;    //获取奖励
+}
+
+//(新官上任)刷新最新10条公告
+message SNewRefreshInfo
+{
+	repeated PNoticeInfo noticeData = 1;//战斗界面的广播
+}
+
+//(新官上任)活动当日开启、结束推送
+message SNewStatus
+{
+	required int32 actId = 1;	//活动id
+	required bool isInTime = 2;	//是否在活动时间内
+}
+
+//(新官上任)送去休息返回
+message SNewRest
+{
+	required int32 actId = 1;		//活动id
+	optional int64 bossBlood = 2;	//当前目标总积分
+}
+
+//（商会充值）活动充值列表
+message SCommerceMember
+{
+	required int32 rechargeNum = 1;	//充值金额总数
+	repeated PCommerceInfo list = 2;//充值列表
+}
+
+//（商会充值）查询该进度已领取奖励的成员列表
+message SCommerceGeted
+{
+	repeated PCommerceMember list = 1;//充值列表
+}
+
+//抽奖活动状态
+message SLotteryState
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 todayNum = 3;		//抽奖次数
+	required bool isFree = 4;			//是否已经可以免费
+	repeated int32 numGets = 5;			//已经领取了奖励的次数列表
+}
+//请求抽奖
+//请求领取次数奖励
+message CLottery
+{
+	//抽奖:1-->1次  10-->10次 过滤掉其他的
+	//领取次数奖励: 次数
+	required int32 num = 1;
+}
+//抽奖返回
+message SLottery
+{
+	required int32 actId = 1;		//活动id
+	required int32 todayNum = 2;		//今天抽奖次数
+	required bool isFree = 3;			//是否已经可以免费
+	repeated int32 itemList = 4;    	//抽到的抽奖物品表id列表  LotteryItem的id
+}
+//次数奖励返回
+message SLotteryNumGet
+{
+	required int32 actId = 1;		//活动id
+	repeated int32 numGets = 2;			//已经领取了奖励的次数列表
+	repeated PIntInt getRewards = 3;    //获取奖励列表
+}
+//更新消息
+message SLotteryMessage
+{
+	required int32 actId = 1;			//活动id
+	required int32 itemId = 2;			//物品ID
+	required string playerName = 3;    //玩家名
+}
+//获取消息列表
+message SLotteryMsgList
+{
+	message MessageInfo
+	{
+		required int32 itemId = 1;			//物品ID
+		required string playerName = 2;    //玩家名
+	}
+	required int32 actId = 1;		//活动id
+	repeated MessageInfo list = 2;	//消息列表
+}
+
+//超级大奖同步
+message SLotterySuperGetter
+{
+	required int32 playerId = 1;		//获得超级大奖的玩家id, 没有为0
+	optional string playerName = 2;		//获得超级大奖的玩家名
+}
+
+// vip 每日折扣礼包
+message PVIPDiscountGift
+{
+	repeated int32 list 	= 1;//已领取列表
+	required int32 actid 	= 2; //当前开启ID
+	required PActivityState state = 3;	//活动状态
+	optional int32 viplevel = 4; //领取后下发对应的领取level
+}
+
+//1, 3, 6元礼包
+message PDailyGiftInfo
+{
+	required int32 index = 1;			//档位
+	required int32 state = 2;			//2为可购买, 0为可领取, 1为已领取, 3为订单处理中(前端使用)
+	required int32 time = 3;			//已购买次数
+}
+
+message PDailyGift
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	repeated PDailyGiftInfo list = 3;	//礼包列表
+}
+
+//////////////七日目标///////////////////////////
+//七日目标
+message PSevenDayTarget
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 selfRank = 3;		//自己排名
+	required int64 rankPro = 4;			//排名进度
+	required int32 getState = 5;		//领取状态 0:未领取，1：已领取，2：未达标
+	repeated int32 getedRewards = 6;	//已经领取项
+	required int64 curPro = 7;			//当前进度
+}
+
+message SSevenDayRank
+{
+	required int32 actId = 1;//活动id
+	required int32 rank = 2;//排名
+	required int64 rankPro = 3;//排名进度
+}
+
+///////////////////换头活动///////////
+message PHeadChange
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+}
+
+/////////////////////////慈善活动/////////////////////
+message PCharity
+{
+	required int32 actId 			= 1;	//活动id
+	required PActivityState state 	= 2;	//活动状态
+	optional int32 rewardState 		= 3;	//奖励领取状态，1：未领取，2:已领取,3:不可领取
+}
+
+message SCharityDrow
+{
+	required int32 actId = 1;	//活动id
+	repeated int32 index = 2;	//CharityItem的id
+}
+
+//更新消息
+message SCharityMessage
+{
+	required int32 actId = 1;			//活动id
+	required int32 itemId = 2;			//物品ID
+	required string playerName = 3;    //玩家名
+	optional int32	score= 4;		 //获得积分,仅在打开捐赠公告有
+}
+
+//获取消息列表
+message SCharityMsgList
+{
+	message MessageInfo
+	{
+		required int32 itemId = 1;			//物品ID
+		required string playerName = 2;    //玩家名
+		optional int32	score= 3;		 //获得积分,仅在打开捐赠公告有
+	}
+	required int32 actId = 1;		//活动id
+	repeated MessageInfo list = 2;	//消息列表
+	optional int32 params = 3;		//额外参数，代表自己的积分,仅在打开捐赠公告有
+}
+
+message SCharityRank
+{
+	required int32 actId = 1;				//活动id
+	required int32 rank = 2;				//排名
+	required int64 pro = 3;					//进度，
+	required int32 state = 4;				//奖励领取状态，1：未领取，2:已领取,3:不可领取
+}
+
+/////////////////////奇遇活动///////////////////////
+message PAdventure
+{
+	required int32 actId 							= 1;	//活动id
+	required PActivityState state 					= 2;	//活动状态
+	optional int32 personalRewardState 				= 3;	//个人排名奖励领取状态，0：未领取，1:已领取,2:不可领取
+	optional int32 gangrewardState					= 4;	//商会排行奖励领取状态, 0：未领取，1:已领取,2:不可领取
+	repeated PTaskInfo personalTasklist 			= 5;	//当前个人活动任务列表
+	required int32 hotval 							= 6;	//当前幸运值
+	required PAdventureShop shop					= 7;	//奇遇兑换商城数据
+	required int32 refreshTimes						= 8;	//刷新次数
+	required int32 companyLevel						= 9;	//公司等级(阶级 * 100 + 星级)
+	required int32 exp								= 10;	//当前经验
+	required bool  isSelectDown						= 11;	//是否选中下次刷新低级任务
+	repeated PTaskInfo commerBossList				= 12;	//商会BOSS列表
+	repeated int32 stageRewardGeted					= 13;	//已领取的阶级奖励
+	required int32 todayLucky						= 14;	//今日获得幸运值
+	required bool isFirstOpen						= 15;	//是否初次打开奇遇界面
+}
+
+message PAInt
+{
+	required int32 id = 1;
+	required int32 value = 2;
+}
+
+message SAdventureLucky
+{
+	required int32 actId = 1;			//活动id
+	required int32 lucky = 2;//幸运值
+	required int32 todayLucky = 3;	//今日获得幸运值
+}
+
+message PAdventureShopItem
+{
+	required int32 actId = 1;		//活动id
+	required int32 index = 2;    //商品位置
+	required int32 goodId = 3;   //对应兑换表中的id
+	required int32 buyCount = 4; //当前商品购买次数
+}
+
+//奇遇兑换商城数据
+message PAdventureShop
+{
+	required int32 actId = 1;			//活动id
+	required int32 todayRefreshCount = 2;   // 当天刷新次数
+	repeated PAdventureShopItem itemList = 3;        // 商品列表
+	required int32 nextRefreshLeftTime = 4;//下次刷新时间
+}
+
+message CSelectDown
+{
+	required bool  isSelectDown		= 1;	//是否选中下次刷新低级任务
+	required bool  isLevelUpRefresh	= 2;	//是否是升级时刷新
+}
+
+//完成个人任务请求
+message CCompeleteTask
+{
+	required int32 taskIndex		= 1;	//任务index
+	repeated int32 staffIds			= 2;	//员工id列表
+	required bool  isSelectDown		= 3;	//是否选中下次刷新低级任务
+}
+
+//任务信息信息
+message PTaskInfo
+{
+	required int32 taskIndex = 1;//序号(降序，数值小是最旧的)
+	required int32 taskId = 2; //任务Id
+	repeated PEInfo eventInfo = 3; //事件的需求信息(用于事件任务)
+	optional int64 totalBlood = 4;//Boss总血量(用于个人BOSS任务和商会BOSS任务)
+	optional int64	curblood = 5;//Boss当前血量	
+	optional int32 bossTriTime = 6;//Boss任务触发时间
+	required int32 state = 7;	//0:未挑战,1:挑战中,2:已完成
+	repeated PJoinInfo joinInfo = 8;//第一个默认为发现者
+	required bool isDown = 9;//是否是降级任务
+}
+
+message PComBossInfo
+{
+	required int32 	actId 		= 1;	//活动id
+	repeated PTaskInfo bossInfo = 2;//
+}
+
+message PJoinInfo
+{
+	required int32 playerId = 1;
+	required string name = 2;
+}
+
+//具体每个格子需求
+message PEInfo
+{
+	required int32 	index = 1;		//格子序号
+	repeated PAttrItem attrInfo = 2; //每个格子所需要的属性列表
+}
+
+//每个属性需求
+message PAttrItem
+{
+	required int32 type = 1;	//事件要求类型
+	required int32 value = 2;  //具体要求的值
+	optional int32 params =3; //-1代表任意员工,大于0员工ID(仅后续事件)
+	optional int32 extra = 4; //1:必须,2:可选
+}
+
+//任务完成返回
+message SAdventureTask
+{
+	required int32 actId 			= 1;	//活动id
+	required int32 taskIndex= 2; //事件Index
+	required int32 compatibility = 3;//匹配度	
+	repeated PItem reward = 4;//奖励列表
+	required int32 hotval = 5; //当前幸运值
+	repeated int32 randMatch = 6;//匹配度随机数
+	required int32 state = 7;//0:未挑战,1:挑战中,2:已完成(个人BOSS和商会BOSS)
+	repeated PTaskInfo personalTasklist = 8;////当前个人活动任务列表(当事件全部做完事才有数据)
+	required int32 companyLevel	= 9;	//公司等级(阶级 * 100 + 星级)
+	required int32 exp	= 10;	//当前经验
+	required int32 todayLucky = 11;	//今日获得幸运值
+}
+
+message CAdventureShopRefresh
+{
+	required bool pay = 1; // 是否付费刷新
+}
+
+message CAdventureShopBuy
+{
+	required int32 index = 1;// 商品位置
+	required int32 count = 2;// 购买数量
+}
+
+message PCommerceBoss
+{
+	required int32 actId = 1;//活动id
+	required int32 taskIndex = 2;
+	repeated PItem reward = 3;
+	optional int32 hotval = 4; //当前幸运值
+	optional int32 companyLevel	= 5;	//公司等级(阶级 * 100 + 星级)
+	optional int32 exp	= 6;	//当前经验
+}
+
+message SEventReward
+{
+	required int32 actId = 1;//活动id
+	required int32 eventIndex = 2;
+	repeated PItem reward = 3;
+	required int32 compatibility = 4;//匹配度	
+}
+
+message PStageReward
+{
+	required int32 id = 1;//阶级
+}
+
+message STaskRefresh
+{
+	required int32 actId = 1;//活动id
+	required int32 refreshTimes	= 2;	//刷新次数
+	repeated PTaskInfo personalTasklist = 3;
+	required bool  isLevelUpRefresh	= 4;	//是否是升级时刷新
+}
+
+//打开奇遇排行榜返回
+message SAdventureOpenRank
+{
+	required int32 rank = 1;//商会排名
+	required int32 score = 2;//商会积分
+}
+
+/////////////////////////////银行理财////////////////////
+message CFinancingGet
+{
+	required int32 index = 1;			//当前阶段
+}
+
+message PFinancing
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 curIndex = 3;		//当前阶段
+	repeated POneFinancing getlist = 4; //历史数据
+}
+
+message POneFinancing
+{
+	required int32 index = 1;			//当前阶段
+	required float pro = 2;    	 		//获得的倍数
+}
+
+message POneGetInfo
+{
+	required string playername = 1;    	//玩家名字
+	required float pro = 2;    		  	//获得倍数
+	required int32 index = 3;			//阶段
+}
+
+message SFinancingInfo
+{
+	repeated POneGetInfo infolist = 1; 	//信息列表
+}
+
+message SFinancingGet
+{
+	required int32 curIndex = 1;		//当前阶段
+	repeated POneFinancing getlist = 2;	//历史数据
+}
+
+/////////////////////////////操纵期货/////////////////////////
+message PFutures
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	repeated int32 selectedFiles = 3;	//已抽取的文件（文件索引）
+	repeated float obtainedFactors = 4;	//已抽取的倍数
+	required int32 futuresState = 5;	//期货状态 1未抽取 2已抽取 3已充值
+	optional float curFactor = 6;		//当前倍数
+	optional int32 rechargeAddGold = 7;	//充值加成钻石
+	optional int32 resetNeedAmount = 8; //重置所需充值金额
+	optional int32 rechargeAmount = 9;	//已充值金额
+	optional int32 resetTimes = 10;		//已重置次数
+}
+
+//抽取文件
+message CFuturesSelect
+{
+	required int32 index = 1;			//文件索引
+}
+
+message SFuturesSelect
+{
+	required int32 index = 1;			//文件索引
+	required float factor = 2;			//抽取到的倍数
+}
+
+//中奖信息
+message SFuturesNews
+{
+	message PNewsInfo
+	{
+		required string playerName = 1;	//玩家名
+		required float factor = 2;		//倍数
+	}
+
+	repeated PNewsInfo newsList = 1;	//信息列表
+}
+
+
+//////////////////////环球旅行/////////////////
+message PGlobalTraval
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 travalLoopCount = 3;//旅行圈数(从1开始)
+	required int32 buyCount = 4;//购买骰子次数
+	repeated PItem numberCount = 5;//骰子号码出现的次数 (id:骰子号码,count:号码出现的次数)
+	repeated SGlobalTravalPos posReward = 6;//格子奖励	
+	repeated PItem exchangeShop = 7;//兑换次数	(id:兑换ID,count:已兑换次数)
+	required int32 curPosId = 8;//当前所在的格子
+	repeated int32 passPosList = 9; //经过的格子坐标集合
+}
+
+message CDiceBuy
+{
+	required int32 type = 1;//1:手动购买，2:自动购买
+	required int32 count = 2;//购买数量
+}
+
+message SGlobalTravalPos
+{
+	optional int32 posId = 1;
+	optional int32 itemId = 2;
+	optional int32 count = 3;
+}
+
+message sGlobalTravalAdventure
+{
+	required int32 actId = 1;	//活动id
+	required int32 curPosId = 2;//当前所在的格子
+	required int32 travalLoopCount = 3;//圈数	
+	repeated int32 diceNumber = 4;//摇出的骰子号码(为6时奖励翻倍)
+	repeated PItem numberCount = 5;//骰子号码出现的次数
+	repeated SGlobalTravalPos posReward = 6;//格子奖励
+	repeated int32 passPosList = 7; //经过的格子坐标集合
+	repeated PItem DrowReward = 8;//摇出的奖励
+}
+
+message sGlobalTravalBuy
+{
+	required int32 actId = 1;	//活动id
+	required int32 buyCount = 2;//购买骰子次数
+	required int32 type = 3;//1:手动购买 2:自动购买,3:十次手动购买,4:十次自动购买
+}
+
+message cGlobalTravalExchange
+{
+	required int32 exchangeId = 1;//兑换ID
+}
+
+message sGlobalTravalExchange
+{
+	required int32 actId = 1;	//活动id
+	required int32 exchangeId = 2;//兑换ID
+	required int32 exchangeCount = 3;//兑换次数
+	repeated PItem numberCount = 4;//骰子号码出现的次数
+}
+
+//单笔充值奖励信息
+message PSingleRechargeReward
+{
+	required int32 id = 1;//内部id标识
+	required int32 canGetTimes = 2;//可领取次数
+	required int32 getTimes = 3;//已领取次数
+}
+
+//单笔充值
+message PRechargeReward_Single
+{
+	required int32 actId = 1;//活动id
+	required PActivityState state = 2;//活动状态
+	repeated PSingleRechargeReward list = 3;//奖励列表
+}
+
+//投资基金奖励
+message PActReward
+{
+	required int32 id = 1;				//内部id标识
+	required bool isGeted = 2;			//是否领取
+}
+
+//投资基金
+message PFund
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态（投资前表示投资时间，投资后表示领奖时间）
+	repeated PActReward rewardList = 3;//奖励列表
+	required int32 investEndTime = 4;	//投资截止时间
+	required int32 day = 5;				//投资第几天（0表示未投资）
+}
+
+//烟花
+message PFireworksData
+{
+	required int32 index = 1;		//档位索引
+	required int32 isIgnite = 2;	//是否已点燃
+	optional int32 type = 3;		//类型 1普通 2高级
+}
+
+message PFireworks
+{
+	required int32 actId = 1;			//活动ID
+	required PActivityState state = 2;	//活动状态
+	required int32 leftFreeTimes = 3;	//剩余免费次数
+	required int32 igniteTimes = 4;		//已点燃次数
+	required int32 buyTimes = 5;		//已购买次数
+	repeated PFireworksData fireworksList = 6;//烟花列表
+	repeated int32 rewardedList = 7;	//已领取奖励列表[档位1,档位2,...]
+	optional int32 rankRewardState = 8;	//0已领取 1可领取 2未达成
+}
+
+//点燃烟花
+message CIgniteFireworks
+{
+	required int32 actId = 1;			//活动ID
+	required bool isTen = 2;			//是否十连抽
+	required int32 index = 3;			//档位索引（十连抽则为0）
+}
+
+message SIgniteFireworks
+{
+	message PFireworksResult
+	{
+		required int32 index = 1;		//档位索引
+		required int32 type = 2;		//类型 1普通 2高级
+		repeated PIntInt itemList = 3;	//奖励列表
+		optional int32 score = 4;		//积分（开启排行榜功能时才有）
+	}
+
+	required int32 actId = 1;			//活动ID
+	required bool isTen = 2;			//是否十连抽
+	repeated PFireworksResult results = 3;//点燃结果
+
+	required int32 leftFreeTimes = 4;	//剩余免费次数
+	required int32 igniteTimes = 5;		//已点燃次数
+	required int32 buyTimes = 6;		//已购买次数
+	repeated PFireworksData fireworksList = 7;//烟花列表
+}
+
+//烟花全服奖励
+message CFireworksSrvReward
+{
+	required int32 actId = 1;			//活动ID
+}
+
+message SFireworksSrvReward
+{
+	message PReward
+	{
+		required int32 index = 1;		//档位索引
+		required int32 state = 2;		//奖励状态 0已领取 1可领取 2未达成
+	}
+
+	required int32 actId = 1;			//活动ID
+	required PActivityState state = 2;  //活动状态
+	required int32 srvPrayTimes = 3;	//全服祈福次数
+	repeated PReward rewardList = 4;	//奖励列表
+	required int32 myPrayTimes = 5;		//个人祈福总次数
+}
+
+message CGetFireworksSrvReward
+{
+	required int32 actId = 1;			//活动ID
+	required int32 index = 2;			//档位索引
+}
+
+message SGetFireworksSrvReward
+{
+	required int32 actId = 1;			//活动ID
+	required int32 index = 2;			//档位索引
+}
+
+//累计登陆
+message PLogin
+{
+	required int32 actId = 1;			 //活动ID
+	required PActivityState state = 2;	 //活动状态
+	required int32 day = 3;				 //当前活动天数
+	repeated PActReward lanyernList = 4; //灯笼列表数据
+	required bool isHasShow = 5;		 //是否已经打开过预览界面
+}
+
+message CLoginSetShowTag
+{
+	required int32 actId = 1;			//活动ID
+}
+
+//充值(每日+累天)
+message PRecharge
+{
+	required int32 actId = 1;			 //活动ID
+	required PActivityState state = 2;	 //活动状态
+	required int32 day = 3;				 //当前活动天数
+	required int32 totalDays = 4;		 //累充天数
+	repeated PActReward totalDaysList = 5;//累天奖励档位列表
+	required int32 num = 6;				 //本日充值数
+	repeated PActReward dailylist = 7;	 //本日充值奖励列表
+}
+
+//累充天数奖励
+message SRechargeDaysGet
+{
+	required int32 actId = 1;			 //活动ID
+	required int32 index = 2;			 //索引
+	repeated PIntInt rewardList = 3;	 //获取奖励数组
+}
+
+//更新累充天数
+message SRechargeUpdateDays
+{
+	required int32 actId = 1;			 //活动ID
+	required int32 totalDays = 2;		 //累充天数
+}
+
+
+/////////////////////消费积分/////////////////
+
+message CConsumeRefresh
+{
+	required int32 	type = 1;//类型(1:全服限购，2:个人限购，3:个人无限购买)全服限购会自动推送
+}
+
+message CConsumeBuy
+{
+	required int32 	type = 1;//类型(1:全服限购，2:个人限购，3:个人无限购买)
+	required int32 itemId = 2;//道具ID
+}
+
+message PConsumeScore
+{	
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 score = 3;//积分
+}
+
+message SConsumeShop
+{
+	required int32 	type = 1;//类型(1:全服限购，2:个人限购，3:个人无限购买)
+	required int32  stage = 2;//阶段
+	repeated PConsumeGoods shop	= 3;
+	required uint32 nextRefreshTime = 4;//下阶段刷新时间
+	
+}
+
+message PConsumeGoods
+{
+	required PIntInt item = 1;		
+	required int32 sellCount = 2;//剩余可购买数量 (个人无限购买类型忽视该字段)
+	required int32 cost = 3;	//购买该物品所需积分
+}
+
+
+message SConsumeShopUpdate
+{
+	required int32 actId = 1;			//活动id
+	repeated SConsumeShop shop = 2;		//一般只更新一种类型，为后续扩展使用repeated		
+	optional bool isCountRefresh = 3;	//是否是剩余数量刷新
+}
+
+message SConsumeShopBuy
+{
+	required int32 actId = 1;			//活动id
+	required int32 type = 2;			
+	required PConsumeGoods goods = 3;	
+	optional int32 socre = 4;			
+}
+
+
+message SConsumeScoreUpdate
+{
+	required int32 actId = 1;		//活动id
+	required int32 socre = 2;		
+}
+
+//限时特卖
+message PSpecialOfferGift
+{
+	required int32 giftId = 1;		//礼包id
+	required int32 buyCount = 2;	//已购次数
+}
+
+message PSpecialOfferShop
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required int32 refreshTime = 3;		//刷新时间
+	repeated PSpecialOfferGift giftList = 4;//礼包列表
+}
+
+//翻牌活动
+message PCard
+{
+	required int32 id = 1;				//卡牌id
+	required PIntInt item = 2;			//道具
+	required int32 quality = 3;			//1低 2中 3高
+}
+
+message PFlop
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	repeated PCard previewCardList = 3;	//卡牌预览
+	repeated PCard openedCardList = 4;	//已开卡牌列表
+	required int32 refreshTime = 5;		//刷新时间
+	required bool started = 6;			//是否已开局
+}
+
+//开局
+message CFlopStart
+{
+	required int32 actId = 1;			//活动id
+}
+
+message SFlopStart
+{
+	required int32 actId = 1;			//活动id
+}
+
+//开牌
+message COpenCard
+{
+	required int32 actId = 1;			//活动id
+	required int32 cardId = 2;			//卡牌id
+}
+
+message SOpenCard
+{
+	required int32 actId = 1;			//活动id
+	required PCard card = 2;			//卡牌信息
+	repeated PCard previewCardList = 3;	//卡牌预览（开最后一张牌时返回本字段）
+}
+
+//全开
+message COpenAllCard
+{
+	required int32 actId = 1;			//活动id
+}
+
+message SOpenAllCard
+{
+	required int32 actId = 1;			//活动id
+	repeated PCard openedCardList = 2;	//已开卡牌列表
+	repeated PCard previewCardList = 3;	//卡牌预览
+}
+
+//刷新卡牌
+message CRefreshCards
+{
+	required int32 actId = 1;			//活动id
+}
+
+message SRefreshCards
+{
+	required int32 actId = 1;			//活动id
+	repeated PCard previewCardList = 2;	//卡牌预览
+	repeated PCard openedCardList = 3;	//已开卡牌列表
+	optional int32 refreshTime = 4;		//刷新时间
+}
+
+//随机掉落
+message SRandomDrop
+{
+	required int32 eventId = 1;			//事件id
+	repeated PIntInt itemList = 2;		//掉落道具
+	optional int32 actId = 3;			//活动id
+}
+
+
+//探险寻宝
+//岩石
+message PStone
+{
+	required int32 type = 1;			//1矿石 2boss 3入口
+	required int32 needDigTimes = 2;	//需要挖掘次数
+	required int32 digTimes = 3; 		//已挖掘次数
+	optional int32 stoneId = 4;			//矿石id
+	optional int32 bossId = 5;			//boss
+	optional bool isDefeatBoss = 6;		//是否击败boss
+}
+
+//矿坑
+message PMine
+{
+	required int32 id = 1;				//层id
+	repeated PStone stoneList = 2;		//岩石列表
+}
+
+//寻宝活动信息
+message PExplore
+{
+	required int32 actId = 1;			//活动id
+	required PActivityState state = 2;	//活动状态
+	required PMine mine = 3;			//矿坑
+	repeated int32 bigReward = 4;		//已获得的大奖（矿区列表）
+	required int32 buyDigTimes = 5;		//已购买挖掘次数
+	required int32 freeTimes = 6;		//当日免费挖掘次数
+}
+
+//挖矿
+message CDig
+{
+	required int32 actId = 1;			//活动id
+	required int32 pos = 2;				//位置
+}
+
+message SDig
+{
+	required int32 actId = 1;			//活动id
+	required int32 pos = 2;				//位置
+	required int32 buyDigTimes = 3;		//已购买挖掘次数
+	required PStone stone = 4;			//岩石
+	optional PItem reward = 5;			//奖励
+	optional bool isBigReward = 6;		//是否大奖
+	required int32 freeTimes = 7;		//当日免费挖掘次数
+}
+
+//挑战矿坑boss
+message CFightMineBoss
+{
+	required int32 actId = 1;			//活动id
+	required int32 pos = 2;				//位置
+}
+
+message SFightMineBoss
+{
+	required int32 actId = 1;			//活动id
+	required int32 pos = 2;				//位置
+	required SFight fight = 3;  		//战报
+	repeated PItem rewardList = 4;		//奖励
+}
+
+//进入下一层
+message CEnterNextMine
+{
+	required int32 actId = 1;			//活动id
+	required int32 pos = 2;				//位置
+}
+
+message SEnterNextMine
+{
+	required int32 actId = 1;			//活动id
+	required PMine mine = 2;			//矿坑
+}
+
+
+//整个活动刷新/初始化
+message SActivity
+{
+	//冲榜活动
+	repeated PRankReward rankReward = 1;
+	//四大奸臣
+	repeated PJianChen superStaffs = 2;
+	//限时奖励
+	repeated PTimeLimit timeLimit = 3;
+	//每日充值
+	optional PRechargeReward_Day rechargeReward_Day = 4;
+	//累计充值
+	optional PRechargeReward_Total rechargeReward_Total = 5;
+	//累天充值
+	optional PRechargeReward_TotalDay rechargeReward_TotalDay = 6;
+	//新官上任活动1-大丰收
+	optional PXinGuan xinguan1 = 7;
+	//新官上任活动2-剿土匪
+	optional PXinGuan xinguan2 = 8;
+	//商会充值
+	optional PCommerceRecharge commerce_Recharge = 9;
+	//商城礼包
+	repeated PShopPackage shop_Package = 10;
+	//抽奖活动
+	optional SLotteryState lottery = 11;
+	//vip 每日折扣礼包
+	optional PVIPDiscountGift vip_Discount = 12;
+	//1, 3, 6元礼包
+	optional PDailyGift rechargeReward_DailyGift = 13;
+	//七日目标
+	repeated PSevenDayTarget sevenDayTarget = 14;
+	//限时抢购
+	repeated PShopLimitBuy limitbuy = 15;
+	//头像兑换活动
+	optional PHeadChange headChange = 16;
+	//慈善活动
+	optional PCharity charity = 17;
+	//奇遇活动
+	optional PAdventure adventure = 18;
+	//银行理财
+	optional PFinancing financing = 19;
+	//操纵期货
+	optional PFutures futures = 20;
+	//环球旅行
+	optional PGlobalTraval globalTraval = 21;
+	//单笔充值
+	optional PRechargeReward_Single rechargeReward_Single = 22;
+	//投资基金
+	repeated PFund fund = 23;
+	//节日烟花
+	optional PFireworks fireworks = 24;
+	//节日累计登陆
+	optional PLogin festivalLogins = 25;
+	//节日充值
+	optional PRecharge festivalRecharge = 26;
+	//消费积分
+	optional PConsumeScore consumeScore = 27;
+	//绝世美人
+	repeated PSuperGirl superGirls = 28;
+	//通用烟花
+	repeated PFireworks commFireworks = 29;
+	//通用累计登陆
+	repeated PLogin commLogins = 30;
+	//通用充值
+	repeated PRecharge commRecharge = 31;
+	//限时特卖
+	repeated PSpecialOfferShop specialOffer = 32;
+	//翻牌
+	repeated PFlop flop = 33;
+	//新七日目标
+	repeated PSevenDayTarget newSeven = 34;
+	//探险寻宝
+	repeated PExplore explore = 35;
+}

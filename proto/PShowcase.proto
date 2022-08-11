@@ -1,0 +1,64 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PShowcase;
+
+//展览柜：195
+//cmd
+//{
+//	cPutOn = 1,		//装备 PShowcase.CPutOn
+//  cTakeOff = 2,	//卸下 PShowcase.CTakeOff
+//
+//	sInit = 1,		//初始化 PShowcase.SInit
+//  sPutOn = 2,		//装备 PShowcase.SPutOn
+//  sTakeOff = 3,	//卸下 PShowcase.STakeOff
+//  sAddItem = 4,	//添加纪念品 PShowcase.PShowItem
+//  sUpdateItem = 5,//刷新纪念品 PShowcase.PShowItem
+//  sDelItem = 6,	//删除纪念品 PShowcase.SDelItem
+//}
+
+//纪念品
+message PShowItem
+{
+	required int32 itemId = 1;		//纪念品id（道具id）
+	required int32 expireTime = 2;	//过期时间
+	optional int32 layerId = 3;		//层id（未装备没有）
+	optional int32 gridId = 4;		//格子id（未装备没有）
+	optional int32 startTime = 5;	//开始时间
+}
+
+message SInit
+{
+	repeated PShowItem itemList = 1;//展览柜（装备及未装备的纪念品）
+}
+
+message SDelItem
+{
+	required int32 itemId = 1;		//纪念品
+}
+
+message CPutOn
+{
+	required int32 layerId = 1;		//层id
+	required int32 gridId = 2;		//格子id
+	required int32 itemId = 3;		//纪念品id（道具id）
+}
+
+message SPutOn
+{
+	required int32 layerId = 1;		//层id
+	required int32 gridId = 2;		//格子id
+	required int32 itemId = 3;		//纪念品id（道具id）
+}
+
+message CTakeOff
+{
+	required int32 layerId = 1;		//层id
+	required int32 gridId = 2;		//格子id
+}
+
+message STakeOff
+{
+	required int32 layerId = 1;		//层id
+	required int32 gridId = 2;		//格子id
+}

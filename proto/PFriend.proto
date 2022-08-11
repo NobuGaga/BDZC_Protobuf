@@ -1,0 +1,149 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PFriend;
+
+//系统ID: Friend = 114,
+//好友和黑名单上限: Vip表的friendNum字段 blacklistNum字段
+
+// local CMD_ID = 
+// {
+// 	cAdd				=	1,--请求添加关系 PFriend.PPlayerRelation
+//	cAddList 			= 	2,--请求添加多个玩家到关系 PFriend.CAddList
+// 	cDelete				=	3,--删除某个关系 PFriend.PPlayerRelation
+//	cFeedback			= 	4,--好友请求反馈(同意/拒绝) PFriend.CFeedback
+// 	cLook 				= 	5,--查看关系列表 PFriend.CLook
+//	cFindIds 			= 	6,--搜索玩家信息 PFriend.CFindIds
+//  cAddFriendList 		= 	7,--点击好友请求按钮 无消息体
+//	cRecommend 			= 	8,--请求推荐好友 无消息体
+//	cFind				= 	9,--查找某个玩家信息 PFriend.CFind
+
+
+// 	sInit				=	1,--初始化关系列表 PFriend.SInit
+//	sUpdate				=	2,--更新关系 PFriend.SUpdate
+//	sAddFriendNum 		= 	3,--刷新好友请求数(收到好友请求的时候, 只同步数量) PFriend.SAddFriendNum
+// 	sLook 				= 	4,--关系列表返回 PFriend.PPlayerList
+//	sFindIds 			= 	5,--查到玩家返回(只发送信息有变更的玩家) PFriend.PPlayerList
+//	sAddFriendList		= 	6,--点击好友请求按钮返回 PFriend.PPlayerIdsList
+//  sRecommend			= 	7,--推荐好友列表返回 PFriend.PPlayerIdsList
+//	sFind				= 	8,--搜索好友 PFriend.PPlayerInfo
+// }
+
+// local RelationType
+// {
+//	None = 0,
+// 	Friend = 1,
+// 	BlackList = 2,
+// 	QinJia = 3
+// }
+
+//通用协议
+
+	//玩家信息
+	message PPlayerInfo
+	{
+		required int32 id = 1;			//ID
+		required string name = 2;		//名称
+		required int64 power = 3;       //势力
+		required int32 vip = 4;         //VIP等级
+		required int32 level = 5;       //当前等级
+		required int32 headId = 6;		//头像id
+		required int32 sex = 7;			//性别
+		required int64 leaveTime = 8;	//离线时间, 0为在线
+		required int32 relation = 9;	//0无关系 1好友 2黑名单 3亲家
+		required int32 commerceId = 10;	//商会id (没有为0)
+		optional string commerceName = 11;	//商会名(没商会不传)
+		required int32 marryNum = 12;	//子女结婚次数
+		optional int32 bodyId = 13;		//身体id
+		optional int32 chatBg = 14; 	//聊天和头像框ID
+	}
+
+	//玩家信息列表
+	message PPlayerList
+	{
+		repeated PPlayerInfo list = 1;	//玩家列表
+	}
+
+	//确定id列表的玩家信息列表
+	message PPlayerIdsList
+	{
+		repeated int32 ids = 1;			//玩家列表
+		repeated PPlayerInfo list = 2;	//玩家信息列表(只发送信息有变化的)
+	}
+
+	message PPlayerRelation
+	{
+		required int32 id = 1;			//玩家ID
+		required int32 relation = 2;	//1好友 2黑名单 3亲家
+	}
+
+//Client --> Server
+
+
+	//添加多个玩家到某个关系中
+	message CAddList
+	{
+		required int32 relation = 1;	//1好友 2黑名单 3亲家
+		repeated int32 ids = 2;			//玩家id列表
+	}
+
+	//对于好友请求列表进行处理
+	message CFeedback
+	{
+		message FeedbackInfo
+		{
+			required int32 id = 1;			//玩家ID
+			required int32 state = 3;		//1接受 2拒绝
+		}
+		repeated FeedbackInfo list = 1;		//处理列表
+	}
+
+	//请求查看某个关系的列表
+	message CLook
+	{
+		required int32 relation = 1;	//1好友 2黑名单 3亲家
+	}
+
+	//查找玩家 -- 查找一系列的玩家信息(用于最近联系人)
+	message CFindIds
+	{
+		repeated int32 ids = 1;			//玩家ID列表
+	}
+
+	//查找玩家 -- 玩家搜索
+	message CFind
+	{
+		required string nameOrId = 1;	//玩家昵称或者编号
+	}
+
+
+//Server --> Client
+
+	//初始化关系列表
+	message SInit
+	{
+		message RelationList
+		{
+			required int32 relation = 1;	//1好友 2黑名单 3亲家
+			repeated int32 list = 2;		//玩家列表id
+		}
+		repeated RelationList info = 1;		//关系列表
+		required int32 addNum = 2;			//请求添加好友的数量
+	}
+
+	//更新关系
+	message SUpdate
+	{
+		required int32 id = 1;				//玩家ID
+		required string name = 2;			//玩家名(用来做提示: 恭喜总裁和{name}结为好友/亲家等)
+		required int32 relation = 3;		//1好友 2黑名单 3亲家
+		required int32 state = 4;			//1往关系中增加 2从关系中删除		
+	}
+
+	//推送请求添加好友的数量
+	message SAddFriendNum
+	{
+		required int32 num = 1;			//请求添加好友的数量
+	}

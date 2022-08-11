@@ -1,0 +1,21 @@
+
+·
+PCrossRankReward.protoPCrossRankRewardPCommon.proto"U
+PRankReward
+actId (RactId
+state (Rstate
+GetState (RGetState"(
+CCURankRewardGet
+actid (Ractid"X
+SCURankRewardGet
+actId (RactId
+index (Rindex
+isGeted (RisGeted"M
+SUpdateState=
+
+rankReward (2.PCrossRankReward.PRankRewardR
+rankReward"N
+SCURankReward=
+
+rankReward (2.PCrossRankReward.PRankRewardR
+rankRewardBH

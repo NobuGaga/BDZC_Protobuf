@@ -1,0 +1,41 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PQuestionnaire;
+
+// local CMD_ID = 
+// {
+// 	cGetReward			=	1,--请求领取奖励	PQuestionnaire.CGetReward
+
+// 	sInit				=	1,--初始化		  PQuestionnaire.SUpdateSate
+// 	sUpdateSate			=	2,--更新活动状态	PQuestionnaire.SUpdateSate
+// 	sGetReward			=	3,--获取奖励成功返回	PQuestionnaire.SUpdateSate
+// }
+
+// Client -> Server
+
+//请求领取奖励
+message CGetReward
+{
+	message Answer
+	{
+		required int32 id = 1;		//题目id
+		repeated int32 choosed = 2;	//选择题的答案列表
+		optional string text = 3;	//问答题的内容
+	}
+	repeated Answer list = 1;	//答案列表
+}
+
+// Server -> Client
+
+//更新状态
+message SUpdateSate
+{
+	required int32 state = 1;		//状态 1开启 2关闭
+	///下面的字段只有在状态为1的情况下有效
+	optional int32 version = 2;		//问答版本号
+	optional int64 endTime = 3;		//问卷结束时间
+	repeated PIntInt list = 4;		//奖励列表(领取奖励成功, 也要返回, 用来做展示)
+}

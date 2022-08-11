@@ -1,0 +1,158 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+
+package PTalk;
+
+
+// enum TalkCmd
+// {
+//     cTalkReq							    =	1,//发起聊天			PTalk::CTalkReq
+//     cTalkHistoryReq						=	2,//请求聊天记录		PTalk::CHistoryTalkReq
+//     cOfflineMsgAck                       =   3,//接收离线留言确认
+
+//     sNewTalkMsg							=	1,//新增的聊天记录	PTalk::PTalkMsg
+//     sTalkHistoryMsg						=	2,//聊天历史记录信息	PTalk::STalkListMsg
+//     sTalkDebugMsg						=	3,//用于打印在unity控制台中 PTalk::STalkDbgMsg
+//     sSysNoticeMsg                        =   4,//聊天框的系统公告    PTalk::STalkListMsg
+//     sCorssChatDelete                     =   5,//删除指定聊天记录    PTalk::SDeleteChatCross
+//     sOfflineMsg                          =   6,//发送离线留言
+//     sOfflineMsgOver                      =   7,//发送离线留言结束
+//     sTalkCrossHistoryMsg                 =   8,//聊天历史记录  PTalk::PTalkMsg
+// };
+
+//聊天频道
+// 1 - 全服频道
+// 2 - 商会频道
+// 4 - 系统频道(用于服务器公告)
+// 5 - 跨服
+
+// Common
+message PTalkMsg
+{
+    required int32 index = 1;   //索引id
+    required int32 channel = 2; //聊天频道  1全服 2商会 3私聊 4系统频道 5跨服
+    required int64 sender = 3; //玩家id
+    required string sendername = 4;//玩家名称
+    required int64 time = 5;//时间
+    optional string value = 6;//聊天内容
+    required int32 viplv = 7;//vip等级
+    required int32 titleid = 8;//称号id
+    optional int32 gender = 9;//性别
+    optional int32 headid = 10;//头像id
+    optional int32 commerceJob = 11;//商会职务（商会频道）
+
+    //私聊相关增加
+    optional int32 from = 12;   //1我是发起者(sender等信息为接收者名) 2我是接收者(sender等信息为发送者名)
+    optional int64 voiceIndex = 13; //语音消息的索引
+    optional int32 voiceTime = 14; //语音消息的时长
+
+    //红包
+    optional PRedPacketMsg redPacket = 15;//红包
+    //系统公告
+    optional int32 noticeType = 16; //系统公告类型 1:后台公告（不读配置），2系统公告（读配置）
+    optional SystemNotice notice = 17;
+    //跨服
+    optional int32 serverId = 18; //区服ID
+    optional int32 param = 19;//1:跨服喇叭,2:跨服小喇叭
+    optional int32 chatBg = 20; //聊天和头像框ID
+
+    //游艇会邀请
+    optional int32 clubtype = 21; // 聊天游艇会邀请信息 (游艇会类型)
+    //全服提亲邀请
+    optional int32 married = 22; // 全服提亲邀请
+    //通用的邀请类型
+    optional int32 inviteType = 23; // 邀请类型 3跨服鲜花榜本服  4跨服鲜花榜跨服
+}
+
+//聊天红包消息
+//红包消息分为两类：
+//1、XX发了一个红包，此时红包有id(可通过此id获取具体红包信息)、红包状态等信息
+//2、XX领取了XX的红包，此时红包有红包发送者名字
+//3、若红包一直未领取则将在一段时间后过期，过期后不可再领取且显示过期时间
+message PRedPacketMsg
+{
+    required int32 type = 1;        //信息类型 1发红包 2领红包
+
+    //信息为发红包则包含收下字段
+    optional int64 packetId = 2;    //红包id
+    optional int32 state = 3;       //红包状态 1未拆开 2已领取 3已派完 4已过期
+    optional int32 expireTime = 4;  //过期时间
+
+    //信息为领红包则包含以下字段
+    optional string senderName = 5; //发送者名字
+    //红包上的提示语
+    optional string tips = 6;   //不传就默认
+}
+
+message SystemNotice
+{
+    required int32 id = 1;	//Notice表的id
+    repeated PStringString params = 2;     //拓展参数
+}
+
+
+
+//Client -> Server
+
+//发起聊天
+message CTalkReq
+{
+    required int32 channel = 1; //聊天频道  1全服 2商会 3私聊,5跨服
+    optional string value = 2;//聊天内容
+    optional int64 voiceIndex = 3; //语音消息的索引
+    optional int32 voiceTime = 4;  //语音消息的时长
+
+    //私聊相关增加
+    optional int32 recvId = 5;     //消息接受者ID
+    
+    //聊天信息原文
+    required int32 valueFlag = 6;//聊天内容标志 0正常 1违法（仅自己可见） 2敏感（被替换）
+    optional string oriValue = 7;//原文（内容正常时不需要）
+    //跨服相关增加
+    optional int32 param = 8;//1:跨服喇叭,2:跨服小喇叭
+    optional bool  isUseGold = 9;//是否使用砖石代替消耗
+    optional string  sign = 10;//后台加密token、没有该值表示非法、可以不传
+}
+
+
+//请求历史聊天记录
+message CHistoryTalkReq
+{
+    required int32 channel = 1; //聊天频道
+    required int32 startindex = 2;//索引id
+}
+
+//Server -> Client
+
+//历史聊天记录
+message STalkListMsg
+{
+    repeated PTalkMsg talkList = 1; //聊天记录
+}
+
+
+message SDeleteChatCross
+{
+    required int32 channel = 1; //聊天频道
+    required int32 index = 2;//索引id
+}
+//打印调试信息
+message STalkDbgMsg
+{
+    required string context = 1;//信息
+}
+
+//离线留言
+message SOfflineMsg
+{
+    message POfflineMsg
+    {
+        required int32 playerId = 1;
+        required STalkListMsg talkList = 2;
+    }
+
+    repeated POfflineMsg msgList = 1;
+}

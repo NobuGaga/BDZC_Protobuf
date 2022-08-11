@@ -1,0 +1,61 @@
+
+†	
+
+PBag.protoPBag"@
+PBagItem
+itemid (Ritemid
+	itemcount (R	itemcount";
+	MergeInfo
+mergeid (Rmergeid
+count (Rcount"î
+
+PStaffInfo
+staffid (Rstaffid
+attrtype (Rattrtype
+	attrvalue (R	attrvalue 
+addskillexp (Raddskillexp
+skillexp (Rskillexp
+
+addbookexp (R
+addbookexp
+bookexp (Rbookexp
+power (Rpower"I
+	PGirlInfo
+girlid (Rgirlid
+type (Rtype
+add (Radd"X
+CUseItem
+itemid (Ritemid
+	itemcount (R	itemcount
+params (Rparams"F
+
+CMergeItem
+mergeid (Rmergeid
+
+mergecount (R
+mergecount"G
+CExchangeItem
+itemid (Ritemid
+
+exchangeId (R
+exchangeId"Z
+SInit*
+itemlist (2.PBag.PBagItemRitemlist%
+merge (2.PBag.MergeInfoRmerge"/
+	SGainItem"
+item (2.PBag.PBagItemRitem".
+SDelItem"
+item (2.PBag.PBagItemRitem"E
+	SMergeRet
+mergeid (Rmergeid
+
+mergecount (R
+mergecount"4
+SStaffChange$
+list (2.PBag.PStaffInfoRlist"1
+SUsePackage"
+list (2.PBag.PBagItemRlist"2
+SGirlChange#
+list (2.PBag.PGirlInfoRlist"'
+SExchangeItem
+itemId (RitemIdBH

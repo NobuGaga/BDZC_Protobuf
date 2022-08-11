@@ -1,0 +1,41 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+package PBlackMark;
+
+// 协议描述
+//系统id: 黑市
+//BlackMark = 194,
+// enum BlackMarkCmd
+// {
+//  cBlackMarkRefresh 	= 1,//手动消耗钻石刷新请求 
+//  cBlackMarkBuy		= 2,//购买请求 PBlackMark.CBlackMarkBuy
+
+//	sBlackMarkInit		= 1,//初始化信息 PBlackMark.SBlackMarkInit
+//	sBlackMarkBuy		= 2,//购买返回 PBlackMark.PBlackMarkInfo
+// };
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+message CBlackMarkBuy
+{
+	required int32 index = 1;	//购买礼包index
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Server -> Client
+//初始化及刷新返回
+message SBlackMarkInit
+{
+	required int32 type = 1;			//开启类型, 对应表 BlackMarkOpen id, 为 0 时不开启
+	optional int32 refreshTime = 2;		//已刷新次数
+	repeated PBlackMarkInfo list = 3;	//礼包列表
+}
+
+//黑市礼包信息
+message PBlackMarkInfo
+{
+	required int32 index = 1;			//index
+	required int32 id = 2;
+	required int32 buyCount = 3;	//已购买数量
+}

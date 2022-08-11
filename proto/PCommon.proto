@@ -1,0 +1,188 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+message PIntInt
+{
+	required int32 key = 1;
+	required int64 value = 2;
+}
+
+message PIntString
+{
+	required int32 key = 1;
+	required string value = 2;
+}
+
+message PStringString
+{
+	required string key = 1;
+	required string value = 2;
+}
+
+message PStringInt
+{
+	required string key = 1;
+	required int32 value = 2;
+}
+
+message PVector2
+{
+	required float x = 1;
+	required float y = 2;
+}
+
+message PVector3
+{
+	required float x = 1;
+	required float y = 2;
+	required float z = 3;
+}
+
+// 通用属性
+message PAttribute
+{
+	required int64 Wuli = 1;		//胆识属性
+	required int64 Zhili = 2;		//学识属性
+	required int64 Zhengzhi = 3;		//魅力属性
+	required int64 Meili = 4;		//魄力属性
+}
+
+// 二元整型值
+message PBiInt
+{
+	required int32 ncur = 1;	// 当前值
+	required int32 nmax = 2;	// 最大值
+}
+
+// 道具
+message PItem
+{
+	required int32 id = 1;
+	required int32 count = 2;
+	repeated int32 params = 3;
+}
+
+// 二元整型值
+message PInt64Int64
+{
+	required int64 ncur = 1;	// 当前值
+	required int64 nmax = 2;	// 最大值
+}
+
+//角色外观
+message PAvatar
+{
+    required int32 head = 1;    //头部
+    required int32 body = 2;    //身体
+}
+
+//头像
+message PHead
+{
+	required int32 gender = 1; 	//性别
+	required int32 headid = 2;	//头像id
+}
+
+/***************************战斗模块*******************************/
+
+//战斗BUFF PVE
+message PBuff 
+{
+	required int32 skillid = 1;			//自己触发的BUFF
+	optional int32 buffid= 2;			//目标身上增加的buffid
+	repeated int32 staffid = 3;			//作用的目标员工id(不会增加给敌人BOSS等)	
+}
+
+//战斗详细信息 PVE
+message PFightDetail
+{
+	required int32 index = 1;	//回合数
+	required bool result = 2;	//战斗结果 true胜利， false 失败 
+	required int32 staffid = 3;	//我方员工ID
+	required int64 baseblood = 4; 	//触发本回合技能之前我方血量
+	required int64 initblood = 5;	//我方初始血量
+	required int64 laveblood = 6;	//我方剩余血量
+	required int64 rinitblood = 7;	//敌方初始血量
+	required int64 rlaveblood = 8;	//敌方剩余血量
+	repeated PBuff buffs = 9;		//触发buff的ID
+	optional int32 rstaffid = 10;	//敌方员工ID(没毛用)
+}
+
+//下发战斗结果 PVE
+message SFight
+{
+	required bool result = 1;			//战斗结果 true胜利， false 失败 
+	repeated PFightDetail fight = 2;     //战斗详细信息
+}
+
+//战斗BUFF PVP
+message PBuffPVP 
+{
+	message PBuffSkillPVP
+	{
+		required int32 buffid= 1;			//目标身上增加的buffid
+		required bool target = 2;			//目标是否是我方员工
+		required int32 staffid = 3;			//目标的员工id(不会增加给敌人BOSS等)
+	}
+	required bool source = 1;			//技能来源方是否为我方
+	required int32 skillid = 2;			//source触发的技能
+	repeated PBuffSkillPVP buffs = 3;		//这个技能产生的BUFF列表, 有可能加给自己人, 也有可能加给敌人
+}
+
+//PVP战斗的详细信息
+message PFightDetailPVP
+{
+	required int32 index = 1;		//回合数
+	required bool result = 2;		//战斗结果 true胜利， false 失败 
+
+	required int32 staffid = 3;		//我方员工ID
+	required int64 baseblood = 4; 	//触发本回合技能之前我方血量
+	required int64 initblood = 5;	//我方初始血量
+	required int64 laveblood = 6;	//我方剩余血量
+
+	required int32 rstaffid = 7;	//敌方员工ID
+	required int64 rbaseblood = 8; 	//触发本回合技能之前敌方血量
+	required int64 rinitblood = 9;	//敌方初始血量
+	required int64 rlaveblood = 10;	//敌方剩余血量
+
+	repeated PBuffPVP buffs = 11;	//触发的BUFF
+	repeated PPassiveBuff passBuff = 12; //被动buff，暂时只有疲劳
+}
+
+message PPassiveBuff
+{
+	required int32 buffid= 1;			//目标身上增加的buffid
+	required bool target = 2;			//目标是否是我方员工
+	required int32 staffid = 3;			//目标的员工id(不会增加给敌人BOSS等)
+	required int64 addblood = 4;		//变化血量（可加减）
+}
+
+//战斗PVP
+message SFightPVP
+{
+	message PFightStaffPVP
+	{
+		required int32 staffid = 1;		//员工id
+		required int32 staffcolor = 2;	//员工颜色
+		optional int64 power = 3;		//战力
+		optional int64 refineLevel = 4;	//专精等级
+	}
+
+	required bool result = 1;				//战斗结果 true胜利， false 失败 
+	repeated PFightDetailPVP fight = 2;     //战斗详细信息
+	repeated PFightStaffPVP staffs = 3;		//己方员工列表 -- 跟己方阵容顺序一致 --> 方便以后做战报信息
+	repeated PFightStaffPVP rstaffs = 4;	//敌方员工列表 -- 跟阵容顺序一致
+	optional string name = 5;				//己方玩家名称
+	optional string rname = 6;				//地方玩家名
+}
+/***************************战斗模块*******************************/
+
+
+//装备
+message PEquipInfo
+{
+	required int32 id = 1;			//唯一id
+	required int32 equipId = 2;		//装备id
+	required int32 level = 4;		//等级
+	required int32 star = 5;		//进阶等级
+}

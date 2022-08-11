@@ -1,0 +1,102 @@
+
+¥
+PArena.protoPArenaPCommon.proto" 
+CArenaExchange
+id (Rid"1
+CArenaFight
+id (Rid
+rank (Rrank"š
+
+SArenaInfo
+rank (Rrank
+	dailyRank (R	dailyRank
+
+dailyState (R
+dailyState
+
+fightTimes (R
+fightTimes
+
+fightTotal (R
+fightTotal
+buyTimes (RbuyTimes 
+refreshTime (RrefreshTime
+score (Rscore&
+shop	 (2.PArena.SArenaShopRshop"&
+SArenaRankUpdate
+rank (Rrank"„
+SArenaOpenUI4
+list (2 .PArena.SArenaOpenUI.PPlayerInfoRlist
+rank (Rrank
+
+fightTimes (R
+fightTimes
+
+fightTotal (R
+fightTotal
+buyTimes (RbuyTimes 
+refreshTime (RrefreshTime«
+PPlayerInfo
+id (Rid
+name (	Rname
+rank (Rrank
+head (Rhead
+body (Rbody
+sex (Rsex
+force (Rforce
+title (Rtitle"Æ
+SArenaMessage6
+list (2".PArena.SArenaMessage.PMessageInfoRlistü
+PMessageInfo
+id (Rid
+name (	Rname
+rank (Rrank
+head (Rhead
+vip (Rvip
+sex (Rsex
+force (Rforce
+time (Rtime
+downNum	 (RdownNum 
+attackerWin
+ (RattackerWin
+chatBg (RchatBg"¡
+
+SArenaRank8
+rankList (2.PArena.SArenaRank.PRankInfoRrankListY
+	PRankInfo
+id (Rid
+name (	Rname
+rank (Rrank
+force (Rforce"X
+SArenaReward(
+
+rewardList (2.PIntIntR
+rewardList
+
+dailyState (R
+dailyState"T
+SArenaExchange
+id (Rid
+socre (Rsocre
+	lessTimes (R	lessTimes"Û
+SArenaFight
+	isSuccess (R	isSuccess
+score (Rscore 
+reward (2.PIntIntRreward(
+	fightInfo (2
+.SFightPVPR	fightInfo
+
+dailyState (R
+dailyState,
+UIInfo (2.PArena.SArenaOpenUIRUIInfo"j
+
+SArenaShop
+shop (2.PIntIntRshop
+	shopTimes (R	shopTimes 
+refreshTime (RrefreshTime"r
+SArenaFightRefresh
+
+fightTimes (R
+fightTimes 
+refreshTime (RrefreshTime
+buyTimes (RbuyTimesBH

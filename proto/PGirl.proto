@@ -1,0 +1,696 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PGirl;
+
+// enum GirlCmd
+// {
+//     cGirlRandomDate						=	1,//随机约会
+//     cGirlDate							=	2,//消耗请求约会 PGirl.CDate
+//     cGirlSkillUp							=	4,//技能升级 PGirl.CSkillUp
+//     cGirlOneKeyDate						=	5,//一键约会 PGirl.COneKeyDate
+//     cGirlEventSelect                     =   6,//发送约会事件选项   PGirl.CGirlEventSelect
+
+//     cBabySetName                         =   7,//起名/改名 CSetBabyName
+//     cBabyTeach                           =   8,//教育 CBabyTeach
+//     cBabyTeachOneKey                     =   9,//一键教育 CBabyTeachOneKey
+//     cBabyAddSeats                        =   10,//扩建席位
+//     cBabyRandmonName                     =   11,//随机名字 CBabyRandomName
+//     cBabyGraduate                        =   12,//毕业 CBabyGraduate
+
+//     cZhaoQin                             =   13,//招亲
+//     cZhaoQinRefresh                      =   14,//刷新招亲
+//     cTiQin                               =   15,//提亲
+//     cTerminateTiQin                      =   16,//终止提亲
+//     cRefuseTiQin                         =   17,//拒绝提亲
+//     cMarrySomeone                        =   18,//结婚
+
+//     cChatGirl                            =   19,//与美女聊天
+//     cRollDice                            =   20,//掷骰子
+//     cRecoverEnergy                       =   21,//恢复酒量
+//     cDatePlayGame                        =   22,//玩约会游戏
+//     cDateGameOver                        =   23,//结束约会游戏
+//     cPostMoments                         =   24,//发布朋友圈
+//     cCommentMoments                      =   25,//评论朋友圈
+//     cDateGameStart                       =   26,//开始约会游戏
+//     cGirlRename                          =   27,//美女改名 PGirl.CGirlRename
+
+//     cLookOthersBaby                      =   28,//查看他人宝宝 PGirl.CLookOthersBaby
+//     cNewCoupleAck                        =   29,//确认新婚宝宝 PGirl.CNewCoupleAck
+//     cGirlSkillBreakout                   =   30,//技能突破 PGirl.CSkillBreakout
+//     cZhaoqinInvite                       =   31,//发送全服招亲超链接
+
+
+//     sGirlList							=	1,//已解锁美女列表 PGirl.SInit
+//     sGirlUpDate							=	2,//美女信息更新   PGirl.PGirlMsg
+//     sGirlDate							=	3,//约会 PGirl.SDate
+//     sGirlOneKeyDate						=	4,//一键约会返回 PGirl.SOneKeyDate
+//     sGirlUpdateCharm						=	5,//更新魅力 PGirl.SUpdateCharm
+//     sGirlUpdateIntimacy					=	6,//更新亲密度 PGirl.SUpdateIntimacy
+//     sGirlNewGirl							=	7,//获得新美女 PGirl.PGirlMsg
+//     sGirlUpdateFriend					=	8,//更新美女友谊值 PGirl.SUpdateFriend
+//     sGirlUpdateSkill						=	9,//更新美女技能等级 PGirl.SUpdateSkill
+//     sGirlDateEvent					    =	10,//约会事件返回 PGirl.SDateEvent
+//     sEnergy                              =   11,//精力更新   PGirl.SEnergy
+
+//     sBabyList			                =   12,//宝宝列表 SBabyList	
+//     sBabySetName                         =   13,//改名反馈 SSetBabyName
+//     sBabyUpdate                          =   14,//宝宝更新 SBabyUpdate
+//     sNewBaby                             =   15,//获得新宝宝 SNewBaby
+//     sBabyRandomName                      =   16,//随机名字 SBabyRandomName
+//     sBabyUpdateSeats                     =   17,//更新席位 SBabyUpdateSeats
+//     sBabyGraduate                        =   18,//毕业 SBabyGraduate
+//     sBabyTech                            =   19,//教育反馈 SBabyTech
+
+//     sUnmarriedBabyList                   =   20,//未婚列表
+//     sMarriedBabyList                     =   21,//已婚列表
+//     sTiQinList                           =   22,//提亲请求列表
+//     sMBabyUpdate                         =   23,//未婚宝宝更新
+//     sNewCouple                           =   24,//新婚夫妻
+//     sZhaoQin                             =   25,//招亲返回
+//     sTerminateTiQin                      =   26,//终止提亲返回
+//     sMarrySomeone                        =   27,//结婚返回
+//     sRefuseTiQin                         =   28,//拒绝提亲返回
+//     sNewMBaby                            =   29,//新的未婚宝宝
+
+//     sNewGirlKnown                        =   30,//新结识美女
+//     sUpdateGirlKnown                     =   31,//更新结识美女
+//     sChatGirl                            =   32,//与美女聊天
+//     sRollDice                            =   33,//掷骰子
+//     sRecoverEnergy                       =   34,//恢复酒量
+//     sDatePlayGame                        =   35,//玩约会游戏
+//     sDateGameOver                        =   36,//结束约会游戏
+//     sPostMoments                         =   37,//发布朋友圈
+//     sCommentMoments                      =   38,//评论朋友圈
+//     sNewMoments                          =   39,//朋友圈新动态PMoments
+//     sChatNewMsg                          =   40,//聊天新消息
+//     sDateGameStart                       =   41,//开始约会游戏
+//     sGirlRename                          =   42,//美女改名 PGirl.SGirlRename
+
+//     sBabyTechOneKey                      =   43,//一键教育 PGirl.SBabyTechOneKey
+//     sLookOthersBaby                      =   44,//查看他人宝宝 PGirl.SLookOthersBaby
+// };
+
+message PSkill
+{
+    required int32 id = 1;//技能id
+    required int32 lv = 2;//技能等级
+    optional int32 breakoutLv = 3;//突破等级
+}
+
+message PGirlMsg
+{
+    required int32 id = 1;
+    optional string name = 2;//美女名称
+    required int64 intimacy = 3;//亲密度
+    required int64 charm = 4; //魅力值
+    required int64 friend = 5; //友谊值
+    required int32 children = 6; //孩子
+    repeated PSkill skills = 7; //技能列表
+    required PGirlChat chat = 8;//聊天
+}
+
+message PDate
+{
+    required int32 girlid = 1;//美女id
+    required bool crit = 2;//是否暴击
+    required int32 gainFriend = 3;//获取魅力值
+    required int32 gainIntimacy = 4;//获取亲密度
+    required bool randevent = 5;//是否触发随机事件
+    optional int32 randEventId = 6;//随机事件id
+    required bool room = 7;//是否开房
+    required bool makebaby = 8;//是否生子
+}
+
+//Client -> Server
+
+message CDate
+{
+    required int32 girlid = 1;//美女id
+}
+
+message COneKeyDate
+{
+    required int32 girlid = 1;//美女id
+}
+
+message CSkillUp
+{
+    required int32 girlid = 1;
+    required int32 skillid = 2;//技能id
+}
+
+message CSkillBreakout
+{
+    required int32 girlid = 1;
+    required int32 skillid = 2;//技能id
+}
+
+message CGirlEventSelect
+{
+    required int32 selectID = 1;//选项index
+}
+
+
+//Server -> Client
+//已解锁美女列表
+message SInit
+{
+    repeated PGirlMsg girlList =  1; //美女列表
+    repeated PGirlKnown knownList = 2; //结识列表
+    repeated PMoments moments = 3;//朋友圈列表
+}
+
+message SDate
+{
+    required PDate date = 1;//约会记录
+    required int32 energy = 2; //当前精力
+    required int32 gainEnergyLeftTick = 3;//恢复精力倒计时(单位秒)
+}
+
+message SOneKeyDate
+{
+    repeated PDate dateList = 1;
+    required int32 energy = 2; //当前精力
+    required int32 gainEnergyLeftTick = 3;//恢复精力倒计时(单位秒)
+}
+
+message SUpdateCharm
+{
+    required int32 girlid = 1;
+    required int64 charm = 2;//当前魅力
+    required int64 changecharm = 3;//本次变更的魅力值(负数扣除，正数增加)
+}
+
+message SUpdateIntimacy
+{
+    required int32 girlid = 1;
+    required int64 intimacy = 2;//当前魅力
+    required int64 changeintimacy = 3;//本次变更的魅力值(负数扣除，正数增加)
+}
+
+message SUpdateFriend
+{
+    required int32 girlid = 1;
+    required int64 friend = 2;//当前友谊值
+    required int64 changefriend = 3;//变更友谊值(负数扣除，正数增加)
+}
+
+message SUpdateSkill
+{
+    required int32 girlid = 1;
+    required int64 skillid = 2;//技能id
+    required int64 skilllv = 3;//技能等级 (如果技能等级等于1，表示激活技能)
+    optional int32 breakoutLv = 4;//技能突破等级
+}
+
+message SDateEvent
+{
+    required int32 award = 1;//友谊值奖励
+}
+
+message SEnergy
+{
+    required int32 energy = 1;//精力
+    required int32 gainEnergyLeftTick = 2;//倒数时间
+    required int32 maxEnergy = 3;//最大精力值
+    required int32 gainEnergyCD = 4;//精力恢复CD
+}
+
+
+//-----------------------------------------------------------------------
+// 美女改版
+//-----------------------------------------------------------------------
+// 已认识
+message PGirlChat
+{
+    repeated int32 dialogues = 1;//对话列表
+}
+
+message PGameRecoverEnergy
+{
+    required int32 type = 1;//1牛奶 2茶
+    required int32 times = 2;//恢复次数
+}
+
+message PGirlGame
+{
+    repeated PGameRecoverEnergy recoverEnergy = 1;//已恢复酒量次数
+    required int32 ownEnergy = 2;//玩家酒量
+    required int32 ownMaxEnergy = 3;//玩家酒量上限
+    required int32 girlEnergy = 4;//美女酒量
+}
+
+message PGirlKnown
+{
+    required int32 id = 1;//美女id
+    required int64 intimacy = 2;//亲密度
+    required int64 charm = 3;//魅力值
+    required int64 friend = 4;//友谊值
+    required int32 state = 5;//状态 1聊天 2游戏 3约会
+    required PGirlChat chat = 6;//聊天数据
+    optional PGirlGame game = 7;//游戏数据
+    optional int32 cd = 8;//游戏失败时重新开始聊天cd
+}
+
+message CChatGirl
+{
+    required int32 type = 1;//1已认识 2已拥有
+    required int32 girlid = 2;//美女id
+    required int32 dialogueId = 3;//玩家回复对话id
+}
+
+message SChatGirl
+{
+    required int32 type = 1;//1已认识 2已拥有
+    required int32 girlid = 2;//美女id
+    required int32 dialogueId = 3;//玩家回复对话id
+}
+
+message SChatNewMsg
+{
+    required int32 girlid = 1;
+    required int32 dialogueId = 2;
+}
+
+message CRollDice
+{
+    required int32 girlid = 1;
+}
+
+message SRollDice
+{
+    required int32 girlid = 1;
+    required int32 result = 2;//1赢 2输
+}
+
+message CRecoverEnergy
+{
+    required int32 girlid = 1;
+    required int32 type = 2;//1牛奶 2茶
+}
+
+message SRecoverEnergy
+{
+    required int32 girlid = 1;
+    required int32 type = 2;
+    required bool isSuccess = 3;
+}
+
+
+// 约会游戏
+message CDateGameStart
+{
+    required int32 type = 1;//类型 1已认识 2已拥有
+    required int32 girlid = 2;//美女id
+}
+
+message SDateGameStart
+{
+    required int32 type = 1;//类型 1已认识 2已拥有
+    required int32 girlid = 2;//美女id
+}
+
+// 玩家点击画面中出现的实体时发送此消息，服务器由此统计游戏得分
+message CDatePlayGame
+{
+    required int32 type = 1;//类型 1已认识 2已拥有
+    required int32 girlid = 2;//美女id
+    required int32 objId = 3;//实体id
+}
+
+message SDatePlayGame
+{
+    required int32 type = 1;//类型 1已认识 2已拥有
+    required int32 girlid = 2;//美女id
+    required int32 objId = 3;//实体id
+}
+
+message CDateGameOver
+{
+    required int32 type = 1;//类型 1已认识 2已拥有
+    required int32 girlid = 2;//美女id
+}
+
+message SDateGameOver
+{
+    required int32 type = 1;//类型 1已认识 2已拥有
+    required int32 girlid = 2;//美女id
+}
+
+
+// 朋友圈
+message PMoments
+{
+    required int32 id = 1;//朋友圈id
+    optional int32 commentId = 2;//玩家评论id（针对NPC发布的朋友圈，玩家发布的朋友圈则没有）
+}
+
+message CPostMoments
+{
+    required int32 id = 1;//朋友圈id
+    required int32 girlid = 2;//美女id（用于验证亲密度）
+}
+
+message SPostMoments
+{
+    required int32 id = 1;
+}
+
+message CCommentMoments
+{
+    required int32 id = 1;//朋友圈id
+    required int32 commentId = 2;//评论id
+}
+
+message SCommentMoments
+{
+    required int32 id = 1;//朋友圈id
+    required int32 commentId = 2;//评论id
+}
+
+
+//-----------------------------------------------------------------------
+// 子嗣系统
+//-----------------------------------------------------------------------
+// enum EGender
+// {
+// 	Female = 1;	// 女
+// 	Male = 2;	// 男
+// }
+
+// enum EDegree
+// {
+// 	MiddleSchool = 1; 	// 初中
+// 	HighSchool = 2;		// 高中
+// 	Associate = 3;		// 专科
+// 	Bachelor = 4; 		// 本科
+// 	Master = 5;			// 硕士
+// 	Doctor = 6;			// 博士
+// 	Postdoctor = 7;		// 博士后
+// }
+
+// 宝宝信息
+message PBaby
+{
+    required int64 babyid = 1;			// 宝宝id
+	required string name = 2;			// 名称（为空时可赐名）
+	required int32 girlid = 3;			// 美女ID（母亲）
+    required int32 gender = 4;			// 性别（1女，2男）
+    required int32 IQ = 5;				// 智商
+    required int32 degree = 6;			// 学历（1初中、2高中、3专科、4本科、5硕士、6博士、7博士后）
+	required PBiInt level = 7;			// 等级
+	required PBiInt score = 8;			// 成绩
+	required PBiInt energy = 9;			// 活力
+	required int32 energyRecoverCD = 10;// 活力恢复剩余时间
+    required PAttribute attribute = 11;	// 属性值
+}
+
+// Client -> Server
+message CSetBabyName
+{
+    required int64 babyid = 1;	// 宝宝id
+    required string name = 2;	// 名称
+}
+
+message CBabyRandomName
+{
+    required int64 babyid = 1;  // 宝宝id
+}
+
+message CBabyTeach
+{
+	required int64 babyid = 1;	// 宝宝id
+}
+
+message CBabyTeachOneKey
+{
+	required int64 babyid = 1;	// 宝宝id
+}
+
+message CBabyGraduate
+{
+    required int64 babyid = 1;  // 宝宝id
+}
+
+
+// Server -> Client
+message SBabyList
+{
+	required int32 seats = 1;	    // 宝宝席位
+    repeated PBaby babyList = 2;    // 宝宝列表
+}
+
+message SBabyUpdate
+{
+    required PBaby baby = 1;	//宝宝
+}
+
+message SNewBaby
+{
+    required PBaby baby = 1;	//宝宝
+}
+
+message SSetBabyName
+{
+    required bool isSuccess	= 1;    //是否成功
+}
+
+message SBabyRandomName
+{
+    required string name = 1;   // 宝宝名称
+}
+
+message SBabyTech
+{
+    required int64 babyid = 1;    // 宝宝ID
+    optional int32 crits = 2;     // 暴击倍数
+}
+
+message SBabyTechOneKey
+{
+    message PTech
+    {
+        required int64 babyid = 1;  // 宝宝ID
+        optional int32 crits = 2;   // 暴击倍数
+    }
+
+    repeated PTech techList = 1;    // 教育列表
+}
+
+message SBabyUpdateSeats
+{
+    required int32 seats = 1;       //宝宝席位
+}
+
+message SBabyGraduate
+{
+    required bool isSuccess = 1;    //成功与否
+    optional PBaby baby = 2;        //宝宝信息 
+}
+
+
+//---------------------------------------------------------------
+// 联姻系统
+//---------------------------------------------------------------
+// 宝宝信息
+message PMBaby
+{
+    required int64 babyid = 1;			// 宝宝id
+	required string name = 2;			// 名字
+	required int32 girlid = 3;			// 美女ID（母亲）
+    required int32 gender = 4;			// 性别（1女，2男）
+    required int32 degree = 6;			// 学历（1初中、2高中、3专科、4本科、5硕士、6博士、7博士后）
+    required PAttribute attribute = 8;	// 属性值
+    required int32 state = 9;           // 状态（0待婚配、1提亲中、2提亲被拒绝）
+    optional int32 tiqinCD = 10;        // 提亲终止CD
+    optional int32 tiqinPlayerNo = 11;  // 被提亲玩家编号（0表示全服）
+    optional string tiqinPlayerName = 12;// 被提亲玩家名字
+    required int32 IQ = 13;             // 宝宝智商
+}
+
+// 招亲对象
+message PMBabyOther
+{
+    required int64 babyid = 1;          // 宝宝id
+    required string name = 2;           // 名字
+    required int32 gender = 3;          // 性别
+    required int32 degree = 4;          // 学位
+    required PAttribute attr = 5;       // 属性
+    required int32 ownerGender = 6;     // 配偶拥有者性别
+    required string ownerName = 7;      // 配偶拥有者（父亲/母亲）名字
+    required int32 IQ = 8;              // 宝宝智商
+    required int64 tiqinBabyid = 9;     // 被提亲宝宝id（对方指定）
+    optional int32 ownerId = 10;        // 配偶拥有者id
+    optional PAvatar ownerAvatar = 11;  // 配偶拥有者形象
+    optional int32 expireTime = 12;     // 过期时间
+}
+
+// 夫妻
+message PCouple
+{
+    required int64 babyid = 1;          // 宝宝id
+    required string babyName = 2;       // 宝宝名字
+    required int32 babyGender = 3;      // 宝宝性别
+    required int32 babyDegree = 4;      // 宝宝学位
+    required int32 babySumAttr = 5;     // 宝宝总属性
+    required int64 mateid = 6;          // 配偶id
+    required string mateName = 7;       // 配偶名字
+    required int32 mateGender = 8;      // 配偶性别
+    required int32 mateDegree = 9;      // 配偶学位
+    required int32 mateSumAttr = 10;    // 配偶总属性
+    required string mateOwnerName = 11; // 配偶拥有者（父亲/母亲）名字
+    required int32 mateOwnerGender = 12;// 配偶拥有者性别
+    required int32 marriedTime = 13;    // 结婚时间
+    optional bool isNew = 14;           // 是否新婚
+}
+
+// Client -> Server
+// 招亲
+message CZhaoQin
+{
+    required int64 babyid = 1;
+}
+
+// 刷新招亲对象
+message CZhaoQinRefresh
+{
+    required int64 babyid = 1;
+}
+
+// 提亲
+message CTiQin
+{
+    required int64 babyid = 1;      // 宝宝id
+    required int32 costItemId = 2;  // 选择消耗道具id
+    optional int32 playerNo = 3;    // 玩家编号（0表示全服）
+    optional int64 otherBabyId = 4; // 对方宝宝id
+}
+
+// 终止提亲
+message CTerminateTiQin
+{
+    required int64 babyid = 1;
+}
+
+// 拒绝提亲
+message CRefuseTiQin
+{
+    required int64 babyid = 1;      // 宝宝id
+}
+
+// 结婚
+message CMarrySomeone
+{
+    required int64 babyid = 1;      // 宝宝id
+    required int64 otherBabyId = 2; // 对方宝宝id
+    required int32 costItemId = 3;  // 选择消耗道具id
+}
+
+// 查看他人宝宝
+message CLookOthersBaby
+{
+    required int64 ownBabyid = 2;   // 宝宝id
+    required int32 tarPlayerId = 1; // 目标玩家id
+}
+
+// 确认新婚宝宝
+message CNewCoupleAck
+{
+    required int64 babyid = 1;      // 宝宝id
+}
+
+// Server -> Client
+// 未婚列表
+message SUnmarriedBabyList
+{
+    repeated PMBaby babyList = 1;    // 宝宝列表
+}
+
+// 已婚列表
+message SMarriedBabyList
+{
+    repeated PCouple cpList = 1;    // 夫妻列表
+}
+
+// 提亲请求列表
+message STiQinList
+{
+    repeated PMBabyOther babyList = 1;  // 提亲对象列表
+}
+
+// 新未婚宝宝
+message SNewMBaby
+{
+    required PMBaby baby = 1;
+}
+
+// 未婚宝宝更新
+message SMBabyUpdate
+{
+    required PMBaby baby = 1;
+}
+
+// 新婚夫妻
+message SNewCouple
+{
+    required PCouple couple = 1;    // 夫妻
+}
+
+// 招亲返回
+message SZhaoQin
+{
+    repeated PMBabyOther babyList = 1;   // 招亲对象列表
+    optional int32 refreshCD = 2;
+}
+
+// 终止提亲返回
+message STerminateTiQin
+{
+    required int64 babyid = 1;      // 宝宝id
+    required PItem itemRefund = 2;  // 返还道具
+}
+
+// 拒绝提亲返回
+message SRefuseTiQin
+{
+    required int64 babyid = 1;      // 宝宝id
+    required bool success = 2;      // 是否成功
+}
+
+// 结婚返回
+message SMarrySomeone
+{
+    required int64 babyid = 1;      // 宝宝id
+    required int64 otherBabyId = 2; // 对方宝宝id
+    required bool success = 3;      // 是否成功
+}
+
+// 查看他人宝宝
+message SLookOthersBaby
+{
+    required int64 ownBabyid = 1;     // 宝宝id
+    required int32 tarPlayerId = 2;   // 目标玩家id
+    optional string tarPlayerName = 3;// 目标玩家名
+    repeated PMBaby tarBabyList = 4;  // 目标宝宝列表
+}
+
+
+//---------------------------------------------------------------
+// 美女
+//---------------------------------------------------------------
+// 美女改名
+message CGirlRename
+{
+    required int32 girlid = 1;      // 美女id
+    required string name = 2;       // 美女名称
+	required int32 costItemId = 3;	//消耗道具id
+}
+
+message SGirlRename
+{
+    required int32 girlid = 1;      // 美女id
+    required string name = 2;       // 美女名称
+}

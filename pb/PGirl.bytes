@@ -1,0 +1,336 @@
+
+÷8
+PGirl.protoPGirlPCommon.proto"H
+PSkill
+id (Rid
+lv (Rlv
+
+breakoutLv (R
+breakoutLv"á
+PGirlMsg
+id (Rid
+name (	Rname
+intimacy (Rintimacy
+charm (Rcharm
+friend (Rfriend
+children (Rchildren%
+skills (2.PGirl.PSkillRskills$
+chat (2.PGirl.PGirlChatRchat"ç
+PDate
+girlid (Rgirlid
+crit (Rcrit
+
+gainFriend (R
+gainFriend"
+gainIntimacy (RgainIntimacy
+	randevent (R	randevent 
+randEventId (RrandEventId
+room (Rroom
+makebaby (Rmakebaby"
+CDate
+girlid (Rgirlid"%
+COneKeyDate
+girlid (Rgirlid"<
+CSkillUp
+girlid (Rgirlid
+skillid (Rskillid"B
+CSkillBreakout
+girlid (Rgirlid
+skillid (Rskillid".
+CGirlEventSelect
+selectID (RselectID"
+SInit+
+girlList (2.PGirl.PGirlMsgRgirlList/
+	knownList (2.PGirl.PGirlKnownR	knownList)
+moments (2.PGirl.PMomentsRmoments"q
+SDate 
+date (2.PGirl.PDateRdate
+energy (Renergy.
+gainEnergyLeftTick (RgainEnergyLeftTick"
+SOneKeyDate(
+dateList (2.PGirl.PDateRdateList
+energy (Renergy.
+gainEnergyLeftTick (RgainEnergyLeftTick"^
+SUpdateCharm
+girlid (Rgirlid
+charm (Rcharm 
+changecharm (Rchangecharm"m
+SUpdateIntimacy
+girlid (Rgirlid
+intimacy (Rintimacy&
+changeintimacy (Rchangeintimacy"c
+SUpdateFriend
+girlid (Rgirlid
+friend (Rfriend"
+changefriend (Rchangefriend"z
+SUpdateSkill
+girlid (Rgirlid
+skillid (Rskillid
+skilllv (Rskilllv
+
+breakoutLv (R
+breakoutLv""
+
+SDateEvent
+award (Raward"“
+SEnergy
+energy (Renergy.
+gainEnergyLeftTick (RgainEnergyLeftTick
+	maxEnergy (R	maxEnergy"
+gainEnergyCD (RgainEnergyCD")
+	PGirlChat
+	dialogues (R	dialogues">
+PGameRecoverEnergy
+type (Rtype
+times (Rtimes"®
+	PGirlGame?
+recoverEnergy (2.PGirl.PGameRecoverEnergyRrecoverEnergy
+	ownEnergy (R	ownEnergy"
+ownMaxEnergy (RownMaxEnergy
+
+girlEnergy (R
+girlEnergy"Ø
+
+PGirlKnown
+id (Rid
+intimacy (Rintimacy
+charm (Rcharm
+friend (Rfriend
+state (Rstate$
+chat (2.PGirl.PGirlChatRchat$
+game (2.PGirl.PGirlGameRgame
+cd (Rcd"W
+	CChatGirl
+type (Rtype
+girlid (Rgirlid
+
+dialogueId (R
+dialogueId"W
+	SChatGirl
+type (Rtype
+girlid (Rgirlid
+
+dialogueId (R
+dialogueId"E
+SChatNewMsg
+girlid (Rgirlid
+
+dialogueId (R
+dialogueId"#
+	CRollDice
+girlid (Rgirlid";
+	SRollDice
+girlid (Rgirlid
+result (Rresult"<
+CRecoverEnergy
+girlid (Rgirlid
+type (Rtype"Z
+SRecoverEnergy
+girlid (Rgirlid
+type (Rtype
+	isSuccess (R	isSuccess"<
+CDateGameStart
+type (Rtype
+girlid (Rgirlid"<
+SDateGameStart
+type (Rtype
+girlid (Rgirlid"Q
+CDatePlayGame
+type (Rtype
+girlid (Rgirlid
+objId (RobjId"Q
+SDatePlayGame
+type (Rtype
+girlid (Rgirlid
+objId (RobjId";
+CDateGameOver
+type (Rtype
+girlid (Rgirlid";
+SDateGameOver
+type (Rtype
+girlid (Rgirlid"8
+PMoments
+id (Rid
+	commentId (R	commentId"6
+CPostMoments
+id (Rid
+girlid (Rgirlid"
+SPostMoments
+id (Rid"?
+CCommentMoments
+id (Rid
+	commentId (R	commentId"?
+SCommentMoments
+id (Rid
+	commentId (R	commentId"¿
+PBaby
+babyid (Rbabyid
+name (	Rname
+girlid (Rgirlid
+gender (Rgender
+IQ (RIQ
+degree (Rdegree
+level (2.PBiIntRlevel
+score (2.PBiIntRscore
+energy	 (2.PBiIntRenergy(
+energyRecoverCD
+ (RenergyRecoverCD)
+	attribute (2.PAttributeR	attribute":
+CSetBabyName
+babyid (Rbabyid
+name (	Rname")
+CBabyRandomName
+babyid (Rbabyid"$
+
+CBabyTeach
+babyid (Rbabyid"*
+CBabyTeachOneKey
+babyid (Rbabyid"'
+CBabyGraduate
+babyid (Rbabyid"K
+	SBabyList
+seats (Rseats(
+babyList (2.PGirl.PBabyRbabyList"/
+SBabyUpdate 
+baby (2.PGirl.PBabyRbaby",
+SNewBaby 
+baby (2.PGirl.PBabyRbaby",
+SSetBabyName
+	isSuccess (R	isSuccess"%
+SBabyRandomName
+name (	Rname"9
+	SBabyTech
+babyid (Rbabyid
+crits (Rcrits"‚
+SBabyTechOneKey8
+techList (2.PGirl.SBabyTechOneKey.PTechRtechList5
+PTech
+babyid (Rbabyid
+crits (Rcrits"(
+SBabyUpdateSeats
+seats (Rseats"O
+SBabyGraduate
+	isSuccess (R	isSuccess 
+baby (2.PGirl.PBabyRbaby"·
+PMBaby
+babyid (Rbabyid
+name (	Rname
+girlid (Rgirlid
+gender (Rgender
+degree (Rdegree)
+	attribute (2.PAttributeR	attribute
+state	 (Rstate
+tiqinCD
+ (RtiqinCD$
+tiqinPlayerNo (RtiqinPlayerNo(
+tiqinPlayerName (	RtiqinPlayerName
+IQ (RIQ"â
+PMBabyOther
+babyid (Rbabyid
+name (	Rname
+gender (Rgender
+degree (Rdegree
+attr (2.PAttributeRattr 
+ownerGender (RownerGender
+	ownerName (	R	ownerName
+IQ (RIQ 
+tiqinBabyid	 (RtiqinBabyid
+ownerId
+ (RownerId*
+ownerAvatar (2.PAvatarRownerAvatar
+
+expireTime (R
+expireTime"½
+PCouple
+babyid (Rbabyid
+babyName (	RbabyName
+
+babyGender (R
+babyGender
+
+babyDegree (R
+babyDegree 
+babySumAttr (RbabySumAttr
+mateid (Rmateid
+mateName (	RmateName
+
+mateGender (R
+mateGender
+
+mateDegree	 (R
+mateDegree 
+mateSumAttr
+ (RmateSumAttr$
+mateOwnerName (	RmateOwnerName(
+mateOwnerGender (RmateOwnerGender 
+marriedTime (RmarriedTime
+isNew (RisNew""
+CZhaoQin
+babyid (Rbabyid")
+CZhaoQinRefresh
+babyid (Rbabyid"~
+CTiQin
+babyid (Rbabyid
+
+costItemId (R
+costItemId
+playerNo (RplayerNo 
+otherBabyId (RotherBabyId")
+CTerminateTiQin
+babyid (Rbabyid"&
+CRefuseTiQin
+babyid (Rbabyid"i
+CMarrySomeone
+babyid (Rbabyid 
+otherBabyId (RotherBabyId
+
+costItemId (R
+costItemId"Q
+CLookOthersBaby
+	ownBabyid (R	ownBabyid 
+tarPlayerId (RtarPlayerId"'
+CNewCoupleAck
+babyid (Rbabyid"?
+SUnmarriedBabyList)
+babyList (2.PGirl.PMBabyRbabyList":
+SMarriedBabyList&
+cpList (2.PGirl.PCoupleRcpList"<
+
+STiQinList.
+babyList (2.PGirl.PMBabyOtherRbabyList".
+	SNewMBaby!
+baby (2.PGirl.PMBabyRbaby"1
+SMBabyUpdate!
+baby (2.PGirl.PMBabyRbaby"4
+
+SNewCouple&
+couple (2.PGirl.PCoupleRcouple"X
+SZhaoQin.
+babyList (2.PGirl.PMBabyOtherRbabyList
+	refreshCD (R	refreshCD"Q
+STerminateTiQin
+babyid (Rbabyid&
+
+itemRefund (2.PItemR
+itemRefund"@
+SRefuseTiQin
+babyid (Rbabyid
+success (Rsuccess"c
+SMarrySomeone
+babyid (Rbabyid 
+otherBabyId (RotherBabyId
+success (Rsuccess"¨
+SLookOthersBaby
+	ownBabyid (R	ownBabyid 
+tarPlayerId (RtarPlayerId$
+tarPlayerName (	RtarPlayerName/
+tarBabyList (2.PGirl.PMBabyRtarBabyList"Y
+CGirlRename
+girlid (Rgirlid
+name (	Rname
+
+costItemId (R
+costItemId"9
+SGirlRename
+girlid (Rgirlid
+name (	RnameBH

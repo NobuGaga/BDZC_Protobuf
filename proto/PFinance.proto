@@ -1,0 +1,243 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+
+package PFinance;
+
+// enum FinanceCmd
+// {
+//    cGetInvade							=	1,//请求副本信息(金融入侵)
+//    cGetResist							=	2,//请求副本信息(反恶意收购)
+//    cInvadeFight                          =   3,//开始战斗(金融入侵)
+//    cResistFight                          =   4,//开始战斗(反恶意收购)
+//    cExchangeItem                         =   5,//兑换物品
+//    cUnlockStaff                          =   6,//解锁员工
+//    cGetKillRank                          =   7,//击杀榜
+//    cLeaveInvade                          =   8,//离开副本（金融入侵）
+//    cLeaveResist                          =   9,//离开副本（反恶意收购）
+//    cGetResistRankReward                  =   10,//领取排名奖励（反恶意收购）
+
+//    sInitFinance							=	1,//金融机构初始化
+//    sGetInvade							=	2,//副本信息(金融入侵)
+//    sGetResist							=	3,//副本信息(反恶意收购)
+//    sInvadeFight                          =   4,//战斗结果（金融入侵）
+//    sResistFight                          =   5,//战斗结果（反恶意收购）
+//    sResistRankReward                     =   6,//奖励 （反恶意收购排名奖励）
+//    sExchangeItem                         =   7,//兑换物品
+//    sUnlockStaff                          =   8,//解锁员工
+//    sGetKillRank                          =   9,//击杀榜
+//    sInvadeList                           =   10,//抵御列表（金融入侵）
+//    sGetResistRankReward                  =   11,//领取排名奖励（反恶意收购）
+//    sFinanceStateNotify                   =   12,//金融机构状态通知
+//    sInvadeListUpdate                     =   13,//抵御列表更新（金融入侵）
+//    sResistRank                           =   14,//伤害排行（反恶意收购）
+//    sFinanceUpdate                        =   15,//金融机构更新
+// };
+
+// enum EFinanceInstanceType
+//{
+//    Finance_WaveBoss = 1,     //金融入侵（个人波数本）
+//    Finance_WorldBoss = 2,    //索罗斯（世界boss）
+//    Finance_Perm = 3          //乔布斯（世界boss）
+//}
+
+// 关于新增乔布斯副本的修改：
+// 1、新增副本类型3（乔布斯），该副本由特定权限玩家开启且为任意时段
+// 2、乔布斯副本、反恶意收购（索罗斯）同属于世界boss，因此使用同一套协议，并在相关协议中增加副本类型字段
+// 2018-04-23
+
+// 抵御信息（金融入侵）
+message PInvade
+{
+    required int32 id = 1;      // 玩家id
+    required string name = 2;   // 名称
+    required int32 waves = 3;   // 第几波
+    optional int32 jifen = 4;   // 积分
+    optional int32 score = 5;   // 分数
+    repeated PItem items = 6;   // 奖励物品
+}
+
+// 伤害排行信息（反恶意收购）
+message PResistRank
+{
+    required int32 index = 1;   // 排名
+    required int32 id = 2;      // 玩家id
+    required string name = 3;   // 名称
+    required int64 hurt = 4;    // 伤害
+}
+
+message PScoreRank
+{
+    required int32 index = 1;   // 排名
+    required int32 id = 2;      // 玩家id
+    required string name = 3;   // 名称
+    required int32 score = 4;   // 分数
+}
+
+message PKillRank
+{
+    required int32 index = 1;   // 序号
+    required int32 id = 2;      // 玩家id
+    required string name = 3;   // 名称
+    required int32 time = 4;    // 击杀时间
+}
+
+
+//Client -> Server
+message CInvadeFight
+{
+    required int32 staffid = 1;   // 出战员工id
+}
+
+message CGetResist
+{
+    required int32 type = 1;      // 副本类型 2索罗斯 3乔布斯
+}
+
+message CResistFight
+{
+    required int32 staffid = 1;   // 出战员工id
+    optional int32 type = 2;      // 副本类型 2索罗斯 3乔布斯
+}
+
+message CLeaveResist
+{
+    required int32 type = 1;      // 副本类型 2索罗斯 3乔布斯
+}
+
+message CGetResistRankReward
+{
+    required int32 type = 1;      // 副本类型 2索罗斯 3乔布斯
+}
+
+message CGetKillRank
+{
+    required int32 type = 1;      // 副本类型 2索罗斯 3乔布斯
+}
+
+message CUnlockStaff
+{
+    required int32 staffid = 1;   // 出战员工id
+    optional int32 type = 2;      // 副本类型 1金融入侵 2索罗斯 3乔布斯
+}
+
+message CExchangeItem
+{
+    required int32 id = 1;       //商品id
+    required int32 count = 2;    //数量
+}
+
+//Server -> Client
+message SFinanceStateNotify
+{
+    required int32 type = 1;        //1金融入侵 2索罗斯 3乔布斯
+    required int32 state = 2;       //1开启 0关闭
+    optional int32 openTime = 3;    //开启时间
+    optional int32 closeTime = 4;   //关闭时间
+}
+
+message SInitFinance
+{
+    required int32 jifen = 1;       //积分
+    optional string skiller = 2;    //击杀者（索罗斯结束后在副本主界面会出现击杀者名称）
+    repeated PItem items = 3;       //奖励兑换列表（id，剩余兑换数量）
+} 
+
+message SGetInvade
+{
+    optional bool isEnd = 1;            //是否已结束
+    optional int32 waves = 2;           //第几波
+    optional PInt64Int64 bossBlood = 3; //boss血量
+    repeated int32 lockedStaffs = 4;    //我锁定的员工列表
+    repeated PItem staffLifeNum = 5;	//员工已经使用加班通知的次数{{id:员工id,count:已用的加班通知的次数}}
+}
+
+message SInvadeList
+{
+    repeated PInvade list = 1;      //抵御入侵列表（仅展示获得道具掉落的抵御记录）
+}
+
+message SInvadeListUpdate
+{
+    repeated PInvade list = 1;      //抵御入侵列表（仅展示获得道具掉落的抵御记录）
+}
+
+message SGetResist
+{
+    optional bool isEnd = 1;            //是否已结束
+    optional PInt64Int64 bossBlood = 2; //boss血量
+	repeated int32 lockedStaffs = 3;    //我锁定的员工列表
+    optional PResistRank own = 4;       //自己
+    optional int32 actorNum = 5;        //参与人数（用于结束时显示）
+    optional string killer = 6;         //击杀者
+    repeated PItem staffLifeNum = 7;	//员工已经使用加班通知的次数{{id:员工id,count:已用的加班通知的次数}}
+    optional int32 type = 8;            //副本类型 2索罗斯 3乔布斯
+    optional bool isBattled = 9;        //是否已挑战
+    optional int32 itemBoxNum = 10;     //幸运宝箱数量
+}
+
+message SResistRank
+{
+    repeated PResistRank rankList = 1;  //伤害排行
+    optional int32 type = 2;            //副本类型 2索罗斯 3乔布斯
+}
+
+message SInvadeFight
+{
+    required bool isWin = 1;    //胜利/失败
+    required int64 hurt = 2;    //抵御伤害
+    required int32 jifen = 3;   //积分
+    required int32 score = 4;   //分数
+    repeated PItem items = 5;   //奖励物品
+    required SFight fight = 6;  //战报
+}
+
+message SResistFight
+{
+    required int64 hurt = 1;        //抵御伤害
+    required int32 jifen = 2;       //积分
+    required int32 score = 3;       //分数
+    optional int32 type = 4;        //副本类型 2索罗斯 3乔布斯
+    required SFight fight = 5;      //战报
+    optional int32 itemBoxNum = 6;  //幸运宝箱数量
+    optional int32 itemBoxId = 7;   //幸运宝箱ID 0表示未掉落
+}
+
+message SResistRankReward
+{
+    required int32 rank = 1;   //排名
+    required int32 jifen = 2;  //积分
+    required int32 score = 3;  //分数
+    repeated PItem items = 4;  //奖励物品
+    optional int32 type = 5;   //副本类型 2索罗斯 3乔布斯
+}
+
+message SGetResistRankReward
+{
+    required int32 rank = 1;   //排名
+    required int32 jifen = 2;  //积分
+    required int32 score = 3;  //分数
+    repeated PItem items = 4;  //奖励物品
+    optional int32 type = 5;   //副本类型 2索罗斯 3乔布斯
+}
+
+//解锁员工成功反馈
+message SUnlockStaff
+{   
+    required int32 staffid = 1;     //员工id
+    optional PItem staffLifeNum = 2;//员工已经使用加班通知的次数{id:员工id,count:已用的加班通知的次数}
+    optional int32 type = 3;        //副本类型 2索罗斯 3乔布斯
+}
+
+//物品兑换成功反馈 
+message SExchangeItem
+{
+	required int32 id = 1;	//兑换表id
+	required int32 num = 2;	//已经兑换的次数
+}
+
+message SGetKillRank
+{
+    repeated PKillRank list = 1; // 榜单
+    optional int32 type = 2;     // 副本类型 2索罗斯 3乔布斯
+}

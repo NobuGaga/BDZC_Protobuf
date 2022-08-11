@@ -1,0 +1,73 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PMail;
+
+// enum MailCmd
+// {
+// 	cMailRead							=	1,//阅读邮件		PMail.CRead
+// 	cMailGainAward						=	2,//领取邮件奖励		PMail.CGainAward
+//	cMailGainAll						=	3,//一键领取附件
+//	cMailDeleteAll						=	4,//一键删除邮件
+
+// 	sMailInit							=	1,//邮件初始化		PMail.SInit
+// 	sMailUpdateStatus					=	2,//更新邮件状态		PMail.SUpdateStatus
+// 	sMailAddNew							=	3,//收到新邮件		PMail.PMail
+//	sMailGainAll						=	4,//一键领取附件列表	PMail.SGainList
+//	sMailDeleteAll						=	5,//一键删除游戏列表	PMail.SDeleteList
+// };
+
+
+// common message
+message PMail
+{
+	required int64 mailid = 1;//邮件ID（唯一编号，用于其他协议交互）
+	optional string sender = 2;//发送者
+	optional string title = 3;//标题
+	optional string content = 4;//内容
+	required int32 sendtime = 5;//发送时间（unix时间戳）
+	repeated PIntInt awardList = 6;//奖励列表
+	required bool read = 7; //是否已读
+	required bool gainAward = 8;//是否已领取奖励
+	//多语言做特殊处理
+	optional int32 csvId = 9;//邮件表的id
+	repeated string titleParams = 10;//标题对应的参数列表
+	repeated string contentParams = 11;//内容对应的参数列表
+}
+
+// Client -> Server
+message CRead
+{
+	required int64 mailid = 1;//邮件ID
+}
+
+message CGainAward
+{
+	required int64 mailid = 1;//邮件ID
+}
+
+// Server -> Client
+message SInit
+{
+    repeated PMail maillist = 1;//邮件列表
+}
+
+message SUpdateStatus
+{
+	required int64 mailid = 1;//邮件ID
+	required bool read = 2; //是否已读
+	required bool gainAward = 3;//是否已领取奖励
+}
+
+message SGainList
+{
+	repeated int64 mails = 1;//邮件id列表
+	repeated PIntInt awardList = 2;//奖励列表
+}
+
+message SDeleteList
+{
+	repeated int64 mails = 1;//邮件id列表
+}

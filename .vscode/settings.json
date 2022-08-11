@@ -1,0 +1,11 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "files.exclude": {
+        "**/.svn": true,
+        "**/*.meta": true,
+        "pb": true,
+        "tools": true,
+        ".vscode": true
+    },
+    "editor.insertSpaces": false
+}

@@ -1,0 +1,50 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PShop;
+
+//系统id: 商城
+//Airport = 109,
+// local CMD_ID = 
+// {
+// 	cShop 		= 1,
+
+// 	sShopInit 	= 1,
+// 	sShopResult = 2,
+// }
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+
+//请求购买
+message CShopBuy
+{
+	required int32 type		= 1;	//商城类型
+	required int32 index	= 2;	//购买索引
+}
+
+
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+
+message PResult
+{
+	required int32 type			= 1;	//商城类型 1:单品限购，2:特惠礼包，3：单品限购
+	required int32 index		= 2;	//对应索引ID 
+	required int32 times		= 3;	//已购买次数
+	optional int32 closetime 	= 4;	//结束时间 单品限购时下发对应活动ID 关闭时间
+} 
+//初始化
+message SShopInit
+{
+	repeated PResult result = 1;	//可购买列表
+}
+
+//结果
+message SShopResult
+{
+	required PResult result = 1;	//结果
+}
+

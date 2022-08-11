@@ -1,0 +1,60 @@
+
+ø	
+PParliament.protoPParliamentPCommon.proto"Õ
+PParliamentList
+titleID (RtitleID
+playerID (RplayerID
+sex (Rsex
+head (Rhead
+
+playerName (	R
+playerName
+msg (	Rmsg
+endTime (RendTime
+serverid (Rserverid":
+
+PTitleList
+titleID (RtitleID
+time (Rtime"@
+CParliamentMessage
+titleID (RtitleID
+msg (	Rmsg"9
+	CUseTitle
+titleID (RtitleID
+type (Rtype"=
+CGift
+playerID (RplayerID
+titleId (RtitleId"Y
+SParliamentList0
+list (2.PParliament.PParliamentListRlist
+isGet (RisGet"S
+SUpdateTitleId-
+title (2.PParliament.PTitleListRtitle
+type (Rtype"‰
+
+STitleList
+titleId (RtitleId5
+	titlelist (2.PParliament.PTitleListR	titlelist*
+titleLvList (2.PIntIntRtitleLvList";
+SParliamenMsg
+titleID (RtitleID
+msg (	Rmsg"D
+
+SGivenList
+playerID (RplayerID
+restTime (RrestTime"B
+SGetGift
+playerID (RplayerID
+restTime (RrestTime"N
+SParliamentAdd<
+
+parliament (2.PParliament.PParliamentListR
+parliament">
+SParliamentSex
+playerID (RplayerID
+sex (Rsex"$
+CLevelUp
+titleID (RtitleID":
+SLevelUp
+titleID (RtitleID
+level (RlevelBH

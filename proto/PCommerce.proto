@@ -1,0 +1,521 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PCommerce;
+
+//商会
+//Define.SysId.Commerce = 152
+// local CMD_ID = 
+// {
+// 	--Client -> Server	
+// 	--会长操作:
+// 	cCreate = 1,		--创建		PCommerce.CCreate
+// 	cUpdateInfo = 2,	--修改商会信息PCommerce.CUpdateInfo
+// 	cOperateApply = 3,	--申请操作 	  PCommerce.COperateApply
+// 	cRefuseAll = 4,		--拒绝所有申请
+// 	cTransfer = 5,		--转让会长    PCommerce.PID
+// 	cDisband = 6,		--解散商会	  PCommerce.CDisband
+// 	cOut = 7,			--踢出成员	  PCommerce.PID
+// 	cAppoint = 8,		--职位任免    PCommerce.CAppoint
+// 	cLevelUp = 9,		--商会升级	
+// 	cAllowAutoJoin = 10,--自动加入状态变更 PCommerce.CAllowAutoJoin
+//  cApplyList = 11,	--入会申请列表获取
+//  cTransferList = 12,	--可以转让的会员列表
+
+// 	--会员操作		
+// 	cAutoJoin = 13,		--随机入会	
+// 	cApplyJoin = 14,	--申请加入    PCommerce.PID
+// 	cQuit = 15,			--退出商会
+// 	cQuery = 16,		--查询商会 	  PCommerce.PID	
+// 	cRank = 17,			--排行榜	   PCommerce.CRankReq
+// 	cBuild = 18,		--商会建设 	  PCommerce.PID
+// 	cExchange = 19, 	--兑换物品 	  PCommerce.PID
+// 	cMembers = 20,		--查看成员列表
+
+// 	--副本操作
+// 	cOpenBattle = 21,	--开启副本 	  PCommerce.COpenBattle
+// 	cBattle = 22,		--副本对战    PCommerce.CBattle
+// 	cUnlock = 23,		--使用出战令解锁员工 PCommerce.PID
+//  cBattleInfo = 24,	--打开副本时初始化副本信息 
+// 	cBattleReport = 25,	--已经打过的查看副本的战报 PCommerce.PID
+// 	cBattleBattle = 26,	--没有打完的点击挑战按钮 PCommerce.PID
+	
+// 	--刷新操作
+// 	cOpen = 27,			--进入商会界面(接受商会内动态的广播)
+// 	cClose = 28,		--退出商会界面
+// 	cBattleLeave = 29,	--退出商会副本 PCommerce.PID
+
+//	cCancelDisband = 30,	--取消解散商会
+
+//  --生产研发
+//  cDonate = 31,		--生产捐赠	PCommerce.CDonate
+//  cShowItem = 32,		--展出商会展品 PCommerce.CShowItem
+//  cResearchItem = 33, --研究个人展品 PCommerce.CResearchItem
+//  cInvestItem = 34,	--投资个人展品 PCommerce.CInvestItem
+//  cGetProduceReward = 35, --领取生产奖励
+//  cGetDonateReward = 36, 	--领取捐赠奖励 PCommerce.CGetDonateReward
+//  cDonateLog = 37,	--捐赠日志
+//  cGetShowItem = 38,	--领取展品 PCommerce.PID
+	
+// 	--Server -> Client
+// 	--初始化 --> 只发商会id(用来标识有没有商会)
+// 	sInit = 1,			--PCommerce.SInit
+// 	--创建成功 --> 创建成功返回商会id
+// 	sCreate = 2,		--PCommerce.PID
+// 	--加入商会 --> 返回商会id
+//  sJoin = 3,			--PCommerce.PID
+// 	--被踢出商会 --> 通知被踢出的人
+//  sOut = 4,			--PCommerce.SOut
+// 	--打开了商会界面
+// 	sOpen = 5,			--PCommerce.SInfo
+//  --在商会界面中的刷新
+// 	sUpdate = 6,		--PCommerce.SInfo
+// 	--查看商会信息
+// 	sQuery = 7,			--PCommerce.SQuery
+// 	--入会申请列表获取
+// 	sApplyList = 8,		--PCommerce.SPlayerList
+// 	--可以转让的会员列表
+// 	sTransferList = 9,	--PCommerce.SPlayerList
+// 	--查看成员列表
+// 	sMembers = 10,		--PCommerce.SPlayerList
+// 	--排行榜获取
+// 	sRank = 11,			--PCommerce.SRank
+// 	--兑换成功反馈
+// 	sExchange = 12,		--PCommerce.SExchange
+// 	--获取副本信息(点击副本按钮时返回)
+// 	sBattleList = 13,	--PCommerce.SBattleList
+// 	--已打完的副本查看战报
+// 	sBattleReport = 14,	--PCommerce.SBattleReport
+// 	--没有打完的副本进入对战界面
+// 	sBattleBattle = 15,	--PCommerce.SBattleBattle
+// 	--员工解锁成功
+// 	sUnlock = 16,		--PCommerce.SUnlock
+// 	--战斗回包
+// 	sBattleResult = 17,	--PCommerce.SBattleResult
+//  --开启副本反馈
+//  sOpenBattle = 18,	--PCommerce.SBattleBattle
+//  sApplyJoin = 19,	--PCOmmerce.PID
+//  sTransfer = 20,		--PCommerce.STransfer
+//  sCloseBattle = 21,	--关闭副本
+//	sUpdateStudyRed = 22,	--刷新商会修学状态
+
+//  --生产研发
+//  sDonate = 31,		--生产捐赠	PCommerce.SDonate
+//  sShowItem = 32,		--展出商会展品 PCommerce.SShowItem
+//  sResearchItem = 33, --研究个人展品 PCommerce.SResearchItem
+//  sInvestItem = 34,	--投资个人展品 PCommerce.SInvestItem
+//  sGetProduceReward = 35, --领取生产奖励
+//  sGetDonateReward = 36, 	--领取捐赠奖励 PCommerce.SGetDonateReward
+//  sDonateLog = 37,	--捐赠日志列表 PCommerce.SDonateLog
+//  sUpdateProduce = 38,--更新生产信息 PCommerce.PProduce
+//  sGetShowItem = 40,	--领取展品 PCommerce.PID
+//  sNewDonateLog = 41, --新捐赠日志信息 PCommerce.SDonateLog
+// }
+
+//////////////通用协议///////////////////////////
+message PID
+{
+	required int64 id = 1;
+}
+
+////////////// Client -> Server ////////////////
+
+//创建商会
+message CCreate
+{
+	required string name = 1;		//商会名
+	required string password = 2;	//密码
+	required bool isAuto = 3;		//true允许, false不允许
+	required string weixin = 4;		//微信
+	required string qq = 5;			//QQ
+	required string declaration = 6;//对外宣言
+}
+
+//更改商会信息
+message CUpdateInfo
+{
+	required string name = 1;		//商会名
+	required string weixin = 2;		//微信
+	required string qq = 3;			//QQ
+	required string declaration = 4;//对外宣言
+	required string notice = 5;		//对内公告
+}
+
+//职位任免
+message CAppoint
+{
+	required int64 id = 1;		//玩家id
+	required int32 job = 2;		//职位(0普通会员, 1会长, 2副会长, 3精英)
+}
+
+//解散商会
+message CDisband
+{
+	required string password = 1;	//密码
+}
+
+//玩家加入处理
+message COperateApply
+{
+	required int64 playerId = 1;//玩家id
+	required bool isAllow = 2;	//true允许, false不允许
+}
+
+//自动加入状态变更
+message CAllowAutoJoin
+{
+	required bool isAuto = 1;	//true允许, false不允许
+}
+
+//开启副本
+message COpenBattle
+{
+	required int32 battleId = 1;	//副本id
+	required int32 openType = 2;	//开启类型(1财富开启, 2钻石开启)
+}
+
+//打副本
+message CBattle
+{
+	required int32 id = 1;		//副本id
+	optional int32 staffId = 2;	//员工id
+}
+
+//请求排行榜
+message CRankReq
+{
+	required int64 lastTime = 1;//上次进行时间
+}
+
+////////////// Server -> Client ////////////////
+
+message SInit
+{
+	required int64 id = 1; 					//没有商会为0
+	optional int64 joinTime = 2;			//如果没有商会, 这里为可以再次加入的时间(服务器时间戳)
+	optional string name = 3;				//没商会不传
+	optional int32 studyRed = 4; 			//1有小红点, 0没有
+	optional int32 level = 5; 				//商会等级, 0没有
+}
+
+message SUpdateStudyRed
+{
+	required int32 studyRed = 1; 			//1有小红点, 0没有
+}
+
+//商会动态
+message SDynamics
+{
+	required int32 type = 1;	//动态类型(1创建, 2加入, 3退出, 4踢出, 5转让 6任命, 7建设, 8开启副本, 9击杀副本BOSS)
+	required string name = 2;	//玩家名
+	required int64 time = 3;	//操作时间
+	optional int32 param1 = 4;	//操作参数1: 
+	optional string param2 = 5;	//操作参数2:
+	optional int32 param3 = 6;	//操作参数3:   
+								//1创建 --> 没有
+								//2加入 --> 没有
+								//3退出 --> 没有
+								//4踢出 --> param1(职位), param2(玩家名)
+								//5转让 --> param1(1主动转让, 2离线超过15天), param2(被转让玩家名)
+								//6任命 --> param1(职位), param2(玩家名), param3(任命的职位)
+								//7建设 --> param1(id)
+								//8开启副本 --> param1(1财富开启, 2钻石开启), param3(副本id)
+								//9击杀副本BOSS --> param1(副本id)
+}
+
+//我的联盟信息
+message SMyInfo
+{
+	required int32 job = 1;					//我的职位(0普通会员, 1会长, 2副会长, 3精英)
+	required int32 build = 2;				//我的建设ID(0没有建设)
+	required PInt64Int64 contribution = 3;	//我的贡献(当前贡献和历史总贡献)
+	repeated PIntInt exchangeList = 4;		//我已经兑换的物品次数列表
+	repeated int32 lockedStaffs = 5;		//我锁定的员工列表
+	repeated PItem staffLifeNum = 6;		//员工已经使用加班通知的次数{{id:员工id,count:已用的加班通知的次数}}
+	required bool hasBattled = 7;			//是否已打商会副本
+	optional PProduce produce = 8;			//生产信息
+	optional PPriDonate donate = 9;			//捐赠信息
+	optional int32 investItemTimes = 10;	//投资展品次数
+	optional PPriShowItem showItem = 11;	//个人展品
+}
+
+//捐赠
+message PDonate
+{
+	required int32 score = 1;				//捐赠积分
+	required int32 commerceLevel = 2;		//商会等级（0点更新）
+}
+
+//商会信息
+message SInfo
+{
+	optional int64 id = 1;		//商会编号
+	optional string name = 2;	//商会名
+	optional int32 level = 3;	//商会等级
+	optional int64 exp = 4;		//商会经验
+	optional int64 money = 5;	//商会财富
+	optional string notice = 6;	//对内公告
+	optional int32 memberNum = 7;//成员数
+	optional SMyInfo myInfo = 8; //我的信息
+	optional bool canFight = 9;	//副本是不是可以打(用于副本小红点 1可打, 0不可以打)
+	repeated SDynamics dynamics = 10;//今天动态列表, 更新的时候会新增的动态
+	optional int64 power = 11;	//势力
+	optional string qq = 12;	//QQ
+	optional string declaration = 13;//对外宣言
+	optional string leader = 14;	//会长名
+	optional int32 rank = 15;	//排名
+	optional string weixin = 16;//微信群
+	optional bool allowAuto = 17;//允许自动加入
+	optional bool haveApply = 18;//true有申请(用于管理按钮的小红点)
+	optional int32 buildTimes = 19;//商会总建设次数
+	optional bool isOpenStudy = 20;//是否开启商会学习
+	optional int64 disbandTime = 21; //商会解散到期时间
+	optional PDonate donate = 22;//捐赠
+	optional PShowItem showItem = 23;//商会展品
+}
+
+//玩家信息
+message SPlayer
+{
+	required string name = 1;	//玩家名称(全部有)
+	optional int64 id = 2;		//玩家id
+	optional int32 level = 3;	//玩家等级
+	optional PInt64Int64 contribution = 4;	//贡献
+	optional int64 lastTime = 5;//在线时间(0表示正在线)
+	optional int32 job = 6;		//职位(0普通会员, 1会长, 2副会长, 3精英)
+	optional int32 buildId = 7;	//建设id (0未建设)
+	optional int64 power = 8;	//势力
+	optional int32 headId = 9;	//头像id
+	optional int32 sex = 10;	//性别
+	optional int32 vip = 11;	//vip等级
+	optional int32 chatBg = 12; //聊天和头像框ID
+}
+
+//玩家信息列表
+message SPlayerList
+{
+	repeated SPlayer list = 1; //申请的玩家列表
+}
+
+// 转让
+message STransfer
+{
+	required int32 playerid = 1;	// 被转让的玩家id
+	required string playerName = 2; // 被转让的玩家名
+}
+
+//被踢出商会
+message SOut
+{
+	required string coName = 1;	//商会名
+	required int32 outType = 2; //1. 被踢出  2. 自己退出  3. 别人解散商会  4. 自己解散商会
+	optional string leaderName = 3;	//谁踢得我, 谁解散的商会
+	optional int32 leaderJob = 4;	//踢我的人/解散商会的人的职位(0普通会员, 1会长, 2副会长, 3精英)
+	required int64 joinTime = 5;	//下次可以加入的时间
+}
+
+//查询商会
+message SQuery
+{
+	required SInfo info = 1;	//商会信息
+	repeated SPlayer players = 2; //玩家列表
+}
+
+//排行榜
+message SRank
+{
+	repeated SInfo list = 1;	//商会列表
+	required int32 myRank = 2;	//我的商会排名
+	optional string myName = 3;	//我的商会名称
+}
+
+//物品兑换成功反馈 
+message SExchange
+{
+	required int32 id = 1;	//兑换表id
+	required int32 num = 2;	//已经兑换的次数
+}
+
+//副本状态信息
+message SBattleInfo
+{
+	required int32 id = 1;
+	required int32 state = 2;	//1未开启 2进行中 3已击杀 4已关闭
+	optional int64 blood = 3;	//剩余血量 (进行中有效)
+	optional int64 killerId = 4;
+	optional string killerName = 5;
+}
+
+//获取副本信息(点击副本按钮时返回)
+message SBattleList
+{
+	repeated SBattleInfo list = 1;	//副本列表
+}
+
+message SReportInfo 
+{
+	required string name = 1;	//玩家名称
+	required int64 hurt = 2;	//总伤害值
+	required int64 contribution = 3;	//获得的贡献
+	required int32 rank = 4;	//排名
+	required int64 id = 5;	//玩家id
+}
+
+//已打完的副本查看战报
+message SBattleReport
+{
+	required string killer = 1;		//击杀者
+	repeated SReportInfo rank = 2;	//伤害排名
+}
+
+//伤害信息
+message SHurtMessage
+{
+	required string attacker = 1;	//攻击者名称
+	required int64 hurt = 2;		//伤害值 
+	required int64 time = 3;		//时间 
+	required int32 staffId = 4;		//员工id 
+	required int32 job = 5;			//玩家职位
+	required string staffName = 6;	//员工名字
+}
+
+//没有打完的副本进入对战界面
+message SBattleBattle
+{
+	required SBattleInfo info = 1;	//这里有可能已经死了
+	repeated SHurtMessage message = 2;//伤害流水
+}
+
+//战斗结果
+message SBattleResult
+{
+	required SBattleInfo info = 1;	//这里有可能已经死了
+	required int64 hurt = 2;	//对敌的伤害值
+	required int32 lockStaff = 3; //锁定员工id(没有传0)
+	required int64 contribution = 4;	//获得的贡献
+	optional PItem staffLifeNum = 5;	//员工已经使用加班通知的次数{id:员工id,count:已用的加班通知的次数}
+	required SFight fight = 6;		//战报
+}
+
+//员工锁定解锁
+message SUnlock
+{
+	required int32 staffId = 1;	//员工id 
+	optional PItem staffLifeNum = 2;	//员工已经使用加班通知的次数{id:员工id,count:已用的加班通知的次数}
+}
+
+
+//////////////////////////////////////////////////////
+// 生产部门
+message PProduce
+{
+	//因为‘单位时间产量’可能随商会等级变化，因此需要以‘库存数量’来保存‘旧的单位时间产量’下的总产量，‘新的单位时间产量’下需要重新计时
+	//当前总产量 = 库存数量 + 单位时间产量* (当前时间-生产开始时间) / 产出间隔
+	required int32 stockCount = 1;	//库存数量
+	required int32 startTime = 2;	//生产开始时间戳
+}
+
+message PPriDonate
+{
+	required int32 timesByProduct = 1;//货物捐赠次数
+	required int32 timesByGold = 2;	//钻石捐赠次数
+	repeated int32 rewardedList = 3;//已领取奖励的档位
+}
+
+message PDonateLog
+{
+	required string playerName = 1;	//玩家名
+	required int32 type = 2;		//1货物捐赠 2钻石捐赠
+	required int32 score = 3;		//积分（增加进度）
+	required int32 contribution = 4;//贡献
+	required int32 time = 5;		//捐赠时间
+}
+
+//捐赠
+message CDonate
+{
+	required int32 type = 1;		//1货物捐赠 2钻石捐赠
+}
+
+message SDonate
+{
+	required int32 type = 1;		//1货物捐赠 2钻石捐赠
+	required int32 score = 2;		//积分
+	required int32 contribution = 3;//贡献
+}
+
+//领取生产奖励
+message SGetProduceReward
+{
+	required int32 itemCount = 1;	//奖励数量
+	required int32 startTime = 2;	//生产开始时间
+}
+
+//领取捐赠奖励
+message CGetDonateReward
+{
+	required int32 index = 1;		//奖励档位
+}
+
+message SGetDonateReward
+{
+	required int32 index = 1;		//奖励档位
+}
+
+//捐赠日志
+message SDonateLog
+{
+	repeated PDonateLog logList = 1;//日志列表
+}
+
+//商会展品
+message PShowItem
+{
+	required int32 itemId = 1;		//道具id
+	required int32 expireTime = 2;	//过期时间
+}
+
+//展出
+message CShowItem
+{
+	required int32 itemId = 1;		//道具id
+}
+
+message SShowItem
+{
+	required int32 itemId = 1;		//道具id
+	required int32 expireTime = 2;	//过期时间
+}
+
+//个人展品
+message PPriShowItem
+{
+	required int32 itemId = 1;		//道具id
+	required int32 finishTime = 2;	//研发结束时间
+}
+
+//研究
+message CResearchItem
+{
+	required int32 itemId = 1;		//道具id
+}
+
+message SResearchItem
+{
+	required int32 itemId = 1;		//道具id
+	required int32 finishTime = 2;	//研发结束时间
+}
+
+//投资
+message CInvestItem
+{
+	required int32 itemId = 1;		//道具id
+}
+
+message SInvestItem
+{
+	required int32 itemId = 1;		//道具id
+	required int32 finishTime = 2;	//研发结束时间
+}

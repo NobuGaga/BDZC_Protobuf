@@ -1,0 +1,32 @@
+
+ª
+PMail.protoPMailPCommon.proto"»
+PMail
+mailid (Rmailid
+sender (	Rsender
+title (	Rtitle
+content (	Rcontent
+sendtime (Rsendtime&
+	awardList (2.PIntIntR	awardList
+read (Rread
+	gainAward (R	gainAward
+csvId	 (RcsvId 
+titleParams
+ (	RtitleParams$
+contentParams (	RcontentParams"
+CRead
+mailid (Rmailid"$
+
+CGainAward
+mailid (Rmailid"1
+SInit(
+maillist (2.PMail.PMailRmaillist"Y
+SUpdateStatus
+mailid (Rmailid
+read (Rread
+	gainAward (R	gainAward"I
+	SGainList
+mails (Rmails&
+	awardList (2.PIntIntR	awardList"#
+SDeleteList
+mails (RmailsBH

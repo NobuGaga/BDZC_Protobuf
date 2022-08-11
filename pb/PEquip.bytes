@@ -1,0 +1,48 @@
+
+¿
+PEquip.protoPEquipPCommon.proto"L
+CEquip
+operate (Roperate
+staffid (Rstaffid
+id (Rid"9
+CEquipLevelUp
+id (Rid
+staffid (Rstaffid"X
+CEquipStarUp
+id (Rid
+staffid (Rstaffid
+
+costEquips (R
+costEquips"
+
+CDecompose
+id (Rid""
+CDecomposeOnekey
+id (Rid"7
+
+SEquipInit)
+	equipList (2.PEquipInfoR	equipList"a
+SEquipUpdate
+
+updateType (R
+updateType!
+equip (2.PEquipInfoRequip
+id (Rid"O
+SEquipLevelUp
+id (Rid
+level (Rlevel
+staffid (Rstaffid"l
+SEquipStarUp
+id (Rid
+star (Rstar
+staffid (Rstaffid
+
+costEquips (R
+costEquips"B
+
+SDecompose
+id (Rid$
+itemList (2.PIntIntRitemList"P
+SDecomposeOnekey
+idList (RidList$
+itemList (2.PIntIntRitemListBH

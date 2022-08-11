@@ -1,0 +1,55 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+package PRecharge;
+
+// 协议描述
+//系统id: 充值
+//Recharge = 108,
+// enum RechargeCmd
+// {
+//  cRecharge							=	1,//充值请求，客户端测试使用
+
+//	sRechargeInit						=	1,//初始化信息
+//	sRechargeSuccess					=	2,//充值成功
+// 	sVipSysInfo							=	3,//vip信息	PRecharge.SVipSysInfo
+//	sRechargeInfo						= 	4,//充值信息
+// };
+
+//充值信息
+message PRechargeInfo
+{
+	required int32 productId = 1;	//充值商品ID
+	required int32 buyTimes = 2;	//购买次数
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+//充值请求（如果向SDK发起充值前需要向服务器进行验证则可使用该协议）
+message CCharge
+{
+	required int32 chargeID = 1;	//充值档位id
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Server -> Client
+
+//充值到账
+message SRechargeSuccess
+{
+	required int32 productId = 1;	//商品ID
+	required int32 amount = 2;		//金额
+}
+
+//vip信息
+message SVipSysInfo
+{
+	required int32 viplevel = 1;	//当前vip等级
+	required int32 value = 2;		//当前vip累计值
+}
+
+//充值列表
+message SRechargeInfo
+{
+	repeated PRechargeInfo list = 1;//充值列表
+}

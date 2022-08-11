@@ -1,0 +1,123 @@
+
+—
+PFinance.protoPFinancePCommon.proto"ç
+PInvade
+id (Rid
+name (	Rname
+waves (Rwaves
+jifen (Rjifen
+score (Rscore
+items (2.PItemRitems"[
+PResistRank
+index (Rindex
+id (Rid
+name (	Rname
+hurt (Rhurt"\
+
+PScoreRank
+index (Rindex
+id (Rid
+name (	Rname
+score (Rscore"Y
+	PKillRank
+index (Rindex
+id (Rid
+name (	Rname
+time (Rtime"(
+CInvadeFight
+staffid (Rstaffid" 
+
+CGetResist
+type (Rtype"<
+CResistFight
+staffid (Rstaffid
+type (Rtype""
+CLeaveResist
+type (Rtype"*
+CGetResistRankReward
+type (Rtype""
+CGetKillRank
+type (Rtype"<
+CUnlockStaff
+staffid (Rstaffid
+type (Rtype"5
+CExchangeItem
+id (Rid
+count (Rcount"y
+SFinanceStateNotify
+type (Rtype
+state (Rstate
+openTime (RopenTime
+	closeTime (R	closeTime"\
+SInitFinance
+jifen (Rjifen
+skiller (	Rskiller
+items (2.PItemRitems"¥
+
+SGetInvade
+isEnd (RisEnd
+waves (Rwaves*
+	bossBlood (2.PInt64Int64R	bossBlood"
+lockedStaffs (RlockedStaffs*
+staffLifeNum (2.PItemRstaffLifeNum"4
+SInvadeList%
+list (2.PFinance.PInvadeRlist":
+SInvadeListUpdate%
+list (2.PFinance.PInvadeRlist"Õ
+
+SGetResist
+isEnd (RisEnd*
+	bossBlood (2.PInt64Int64R	bossBlood"
+lockedStaffs (RlockedStaffs'
+own (2.PFinance.PResistRankRown
+actorNum (RactorNum
+killer (	Rkiller*
+staffLifeNum (2.PItemRstaffLifeNum
+type (Rtype
+	isBattled	 (R	isBattled
+
+itemBoxNum
+ (R
+itemBoxNum"T
+SResistRank1
+rankList (2.PFinance.PResistRankRrankList
+type (Rtype"°
+SInvadeFight
+isWin (RisWin
+hurt (Rhurt
+jifen (Rjifen
+score (Rscore
+items (2.PItemRitems
+fight (2.SFightRfight"ø
+SResistFight
+hurt (Rhurt
+jifen (Rjifen
+score (Rscore
+type (Rtype
+fight (2.SFightRfight
+
+itemBoxNum (R
+itemBoxNum
+	itemBoxId (R	itemBoxId"Ö
+SResistRankReward
+rank (Rrank
+jifen (Rjifen
+score (Rscore
+items (2.PItemRitems
+type (Rtype"à
+SGetResistRankReward
+rank (Rrank
+jifen (Rjifen
+score (Rscore
+items (2.PItemRitems
+type (Rtype"h
+SUnlockStaff
+staffid (Rstaffid*
+staffLifeNum (2.PItemRstaffLifeNum
+type (Rtype"1
+SExchangeItem
+id (Rid
+num (Rnum"K
+SGetKillRank'
+list (2.PFinance.PKillRankRlist
+type (RtypeBH

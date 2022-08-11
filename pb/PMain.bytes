@@ -1,0 +1,22 @@
+
+Î
+PMain.protoPMainPCommon.proto"&
+
+CGuideDone
+guideid (Rguideid"&
+
+CStoryDone
+storyid (Rstoryid"0
+CWeakGuideDo 
+weakGuideid (RweakGuideid"q
+SInit
+funcList (RfuncList
+	guideList (R	guideList.
+weakguideList (2.PIntIntRweakguideList"x
+SFuncUpdate.
+list (2.PMain.SFuncUpdate.FunInfoRlist9
+FunInfo
+funcId (RfuncId
+isOpen (RisOpen"6
+SWeakGuideDo&
+	weakguide (2.PIntIntR	weakguideBH

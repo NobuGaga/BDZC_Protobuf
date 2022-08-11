@@ -1,0 +1,41 @@
+
+’
+PMeeting.protoPMeetingPCommon.proto""
+CMeetingExchange
+id (Rid" 
+CMeetingReward
+id (Rid"(
+CMeetingShop
+refresh (Rrefresh"¶
+SMettingInit
+floodId (RfloodId
+currID (RcurrID
+score (Rscore
+
+resetTimes (R
+resetTimes
+
+getRewards (R
+getRewards
+power (2.PIntIntRpower"z
+SMeetingBossInfo
+id (Rid
+bossid (Rbossid
+power (Rpower(
+
+staffPower (2.PIntIntR
+staffPower"±
+SMeetingFight
+result (Rresult
+id (Rid(
+	fightInfo (2
+.SFightPVPR	fightInfo
+award (2.PItemRaward
+score (Rscore
+addscore (Raddscore"H
+SMeetingShopInfo
+times (2.PIntIntRtimes
+score (Rscore"@
+SMeetingReward
+id (Rid
+reward (2.PItemRrewardBH

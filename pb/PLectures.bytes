@@ -1,0 +1,31 @@
+
+ó
+PLectures.proto	PLecturesPCommon.proto"!
+CLecturesBattle
+id (Rid"8
+CLecturesTotalBattle
+id (Rid
+num (Rnum"
+SLecturesInit
+id (Rid(
+
+showReward (2.PIntIntR
+showReward
+	bossBlood (R	bossBlood
+isOpen (RisOpen"Ÿ
+SLecturesResult
+id (Rid
+type (Rtype
+state (Rstate
+selfcost (Rselfcost
+getscore (Rgetscore"
+getlist (2.PIntIntRgetlist(
+
+showReward (2.PIntIntR
+showReward
+	bossBlood (R	bossBlood
+nextId	 (RnextId
+isOpen
+ (RisOpen"B
+SLecturesChapterList*
+chapterList (2.PIntIntRchapterListBH

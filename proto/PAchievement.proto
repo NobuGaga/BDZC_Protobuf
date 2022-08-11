@@ -1,0 +1,39 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+package PAchievement;
+
+// 协议描述
+// enum AchievementCmd
+// {
+// 	cAchieveAward								=	1,//获取奖励 PAchievement.CAchieveAward
+
+// 	SAchieveInit								=	1,//初始化	PAchievement.SAchieveInit
+//  SAchieveRefresh								=	2,//成就刷新  PAchievement.SAchiveRefresh
+// };
+
+//////////////////////////////////////////////////////////////////////////
+// Common message
+message PAchieveInfo
+{
+	required int32 questid = 1; //成就id
+	required int32 pro = 2;		//档期id
+	required int64 val = 3;		//当前进度
+}
+// Server -> Client
+message SAchieveInit
+{
+	repeated PAchieveInfo list = 1;		//成就列表
+}
+
+message SAchiveRefresh
+{
+	required PAchieveInfo achieve = 1;		//成就刷新
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+message CAchieveAward
+{
+	required int32 questid = 1; //成就id
+}

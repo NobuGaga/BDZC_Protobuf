@@ -1,0 +1,65 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PCrossRankReward;
+
+//CrossRankReward = 180,		--跨服冲榜
+
+//活动状态定义
+// _M.CUActivityState = 
+// {
+// 	Waiting = 1,	--未开始
+// 	Doing = 2,		--进行中
+// 	Finish = 3,		--已结束(结算中)
+//	Close = 4,		--关闭（消失）
+// }
+
+// local CMD_ID = 
+// {
+//  cCURankRewardGet = 1,				--领奖请求	PCrossRankReward.CCURankRewardGet
+
+//	sCURankRewardGet = 1,			  	--返回领奖结果	PCrossRankReward.SCURankRewardGet
+// 	sCUActivityInit = 2,			  	--初始化	PCrossRankReward.SCURankReward
+// 	sCUActivityUpdate = 3,		  		--更新 		PCrossRankReward.SUpdateState
+// }
+
+
+//////////////冲榜活动///////////////////////////
+//冲榜活动
+message PRankReward
+{
+	required int32 actId = 1;			//活动id
+	required int32 state = 2;			//活动状态
+	optional int32 GetState = 3;		//领取状态 0:未领取，1：已领取，2：未达标
+}
+
+////////////// Clinet -> Server ////////////////
+message CCURankRewardGet
+{
+	required int32 actid = 1;		//活动ID
+}
+
+////////////// Server -> Client ////////////////
+
+//领取返回
+message SCURankRewardGet
+{
+	required int32 actId = 1;				//活动id
+	required int32 index = 2;				//内部唯一标识
+	required bool isGeted = 3;				//是否已经得到了
+}
+
+//状态刷新
+message SUpdateState
+{
+	required PRankReward rankReward = 1;
+}
+
+
+message SCURankReward
+{
+	//冲榜活动
+	repeated PRankReward rankReward = 1;
+}

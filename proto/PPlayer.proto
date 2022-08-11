@@ -1,0 +1,386 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+package PPlayer;
+
+// enum PlayerCmd
+// {
+//  cLevelUp 		= 1, --升级请求 
+//  cLookPlayer		= 2, --查看其他玩家 PPlayer.CLookPlayer
+//  cHeartBeat		= 4, --请求心跳 PPlayer.CHeartBeat
+//  cRename         = 5, --改名 PPlayer.CRename
+//  cGetGift        = 6, --获取礼包 PPlayer.CGetGift
+//  cChangeDress    = 7, --更改装扮 PPlayer.CChangeDress
+
+//  cSendRedPacket  = 8, --发红包 PPlayer.CSendRedPacket
+//  cOpenRedPacket  = 9, --打开红包 PPlayer.COpenRedPacket
+
+//  cOpenChangeHead = 10,--打开换头界面
+//  cLiveHead       = 11,--兑换头像 PPlayer.CLiveHead
+//  cChangeHead     = 12,--修改头像 PPlayer.CLiveHead
+//  cChatBGPutOn    = 13,--穿戴聊天框 PPlayer.CChatBGPutOn
+//  cSecretary      = 14,--更换秘书皮肤 PPlayer.CSecretary
+
+//  sCommonError 	= 1, --通用提示协议 PPlayer.SCommonError
+//  sDailyReset 	    = 2, --跨天消息
+//  sNotice 		    = 3, --公告 PPlayer.SNotice
+//  sInit 			= 4, --自己信息的初始化 PPlayer.SPlayer
+//  sUpdateAttr 	    = 5, --发送角色属性数据 PPlayer.SUpdateAttr
+//  sUpdateExp 		= 6, --发送角色属性数据 PPlayer.SUpdateExp
+//  sUpdateVip 		= 7, --发送角色属性数据 PPlayer.SUpdateVip
+//  sUpdateAvatar 	= 8, --发送角色属性数据 PAvatar
+//  sLookPlayer 	    = 9, --查看其他玩家的回包 PPlayer.SPlayer
+//  sUpdateName      = 10,--名字变更 PPlayer.SUpdateName
+//  sHeartBeat 		= 11,--心跳回包, 客户端同步服务器时间 PPlayer.SHeartBeat
+//  sQuitGame 		= 12,--退出游戏  PPlayer.SQuitGame
+//  sRename         = 13,--改名 PPlayer.SRename
+//  sGetGift        = 14, -- 获取礼包返回 PPlayer.SGetGift
+
+//  sTest           = 15, --测试专用 PPlayer.STest
+//  sNoticeID       = 16, --读取Notice表的公告方式 PPlayer.SNoticeID
+
+//  sChangeDress    = 17, --更改装扮 PPlayer.SChangeDress
+//	sDisconnect		= 18, --断开连接 PLogin.SDisconnect
+
+//  sSendRedPacket  = 19, --发红包 PPlayer.SSendRedPacket
+//  sOpenRedPacket  = 20, --打开红包 PPlayer.SOpenRedPacket
+//  sRedPacketList  = 21, --红包列表 PPlayer.SRedPacketList
+//  sNewRedPacket   = 22, --新红包 PPlayer.SNewRedPacket
+//  sRedPacketAllReceived = 23, --红包派完了 PPlayer.SRedPacketAllReceived
+
+//  sOpenChangeHead   = 24, --打开换头界面 PPlayer.SOpenChangeHead
+//  sLiveHead         = 25, --兑换头像 PPlayer.SLiveHead
+//  sChangeHead       = 26, --修改头像 PPlayer.SChangeHead
+//  sIsCrossSrv       = 27, --是否跨服 PPlayer.SCrossSrv
+//  sChatBGPutOn      = 28, --穿戴的聊天框变更, 前端判断没有则为新增加入 PPlayer.SChatBGPutOn
+//  sChatBGUpdate     = 29, --穿戴的聊天框变更, 前端判断没有则为新增加入 PPlayer.SChatBGPutOn
+//  sChangeSexSuccess = 30, --修改性别成功 PPlayer.SChangeSex
+//  sSexUpdate        = 31, --性别更新 PPlayer.SChangeSex
+//  sSecretary        = 32, --秘书装扮信息更新PPlayer.SSecretary
+// }
+
+
+//Common message
+
+//角色装扮
+message PDress
+{
+    required int32 sysId = 1;   //系统id(全局表可查)
+    required int32 itemId = 2; //装扮id
+}
+
+//Client -> Server
+message CLookPlayer
+{
+    required int32 id = 1;          //编号
+    optional int32 serverid = 2;    //区服ID
+}
+
+//请求心跳
+message CHeartBeat
+{
+	required int64 sendTime = 1;	//发送的时间
+	required int64 servTime = 2;	//发送前端的服务器时间
+}
+
+// 改名
+message CRename
+{
+    required int32 itemid = 1;  //道具id
+    required string name = 2;   //新名字
+}
+
+
+//领取礼包
+message CGetGift
+{
+    required string giftid = 1;     //礼包id
+}
+
+//修改装扮
+message CChangeDress
+{
+    required int32 sysId = 1;   //系统id(全局表可查)
+    required int32 itemId = 2; //装扮id
+}
+
+//秘书装扮信息请求
+message CSecretary
+{
+    optional int32 id = 1; //装扮ID、倒计时结束时无ID
+}
+
+//Server -> Client
+message SCommonError
+{
+    required bool right = 1;        //正确
+    required string errorcode = 2;  //错误
+    repeated PStringString params = 3;     //拓展参数
+    optional int32 sysId = 4;	    //请求的系统id
+    optional int32 msgId = 5;	    //请求的协议id
+}
+
+//公告
+message SNotice
+{
+    required string str = 1;        //文本
+    required int32 level = 2;       //紧急等级
+    required int32 hierarchy = 3;   //显示层级
+    required int32 effectType = 4;  //特效类型
+    optional int32 loop = 5;	    //重复次数
+}
+//播放Notice表的公告
+message SNoticeID
+{
+    required int32 id = 1;	//Notice表的id
+    repeated PStringString params = 2;     //拓展参数
+}
+
+//玩家信息
+message SPlayer
+{
+    required int64 id = 1;          //编号
+    required string name = 2;       //名称
+    required int64 power = 3;       //势力
+    required int32 vip = 4;         //VIP等级
+    required int32 level = 5;       //当前等级
+    required int64 exp = 6;         //当前经验
+    required PAvatar avatar = 7;    //外观     
+    required PAttribute attr = 8;   //属性
+    required int32 sex = 9;         //性别
+
+    /////////查看其他玩家////////// 
+    optional int32 battleId = 10;   //当前关卡id
+    optional int64 intimacy = 11;   //亲密度
+    optional int32 serverId = 12;   //区服
+    repeated PIntInt titleList =13; //称号列表 [[id, level],...]
+
+    optional int32 lastOnlineTime = 14; //上一次在线时间
+    /////////查看其他玩家////////// 
+    optional int32 titleId = 15;    //称号ID
+    /////////查看其他玩家////////// 
+    optional int32 commerceId = 16;     //商会ID
+    optional string commerceName = 17;  //商会名
+
+    repeated PDress dress = 18;         //装扮列表
+
+    optional int32 chatBg = 19;     //当前的聊天框id
+    repeated int32 getChatBg = 20;  //拥有的聊天框列表
+
+    optional int32 originServerId = 21;//源区服
+    optional int64 highestPower = 22;//历史最高势力
+
+    repeated int32 cabinetList = 23;//展览品id数组
+}
+
+//属性刷新
+message SUpdateAttr
+{
+    required PAttribute attr = 1;//属性
+    required int64 fightpower = 2;//各模块的战力
+    optional int32 sysid = 3;//系统ID（员工获得：101，生孩子：10203，孩子结婚：10204）
+    optional int64 highestPower = 4;//历史最高势力
+}
+
+//经验跟等级刷新
+message SUpdateExp
+{
+    required int32 level = 1;       //当前等级
+    required int64 exp = 2;         //当前经验
+}
+
+//改名
+message SRename
+{
+    required string name = 1;   //新名字
+}
+
+//名字变更
+message SUpdateName
+{
+    required string name = 1;       //名字刷新
+}
+
+//VIP刷新
+message SUpdateVip
+{
+    required int32 vip = 1;       //vip等级
+}
+
+//心跳回包
+message SHeartBeat
+{
+	required int64 sendTime = 1;	//发送的时间
+	required int64 servTime = 2;	//发送前端的服务器时间
+    required bool forcereset = 3;   //强制重置
+}
+
+//退出游戏
+message SQuitGame
+{
+	required int32 errorCode = 1;	//退出条件
+}
+
+
+// 兑换码返回，获取奖励
+message SGetGift
+{
+    required int32 errCode = 1;	//错误字符串
+    repeated PIntInt items = 2; //物品列表
+}
+
+message STest
+{
+    required int64 index = 1;	//递增索引
+    required int64 servTime = 2;    //服务器时间
+}
+
+//修改装扮
+message SChangeDress
+{
+    required PDress dress = 1;      //修改装扮信息
+}
+
+//网络断开连接
+message SDisconnect
+{
+	required int32 reason = 1;
+	optional string desc = 2;
+}
+
+
+//-----------------------------------------------------
+// 通用红包功能
+//-----------------------------------------------------
+//红包领取者信息
+message PRedPacketReceiver
+{
+    required int32 playerId = 1;        //玩家id
+    required string playerName = 2;     //玩家名
+    required PHead head = 3;            //头像
+    required int32 gold = 4;            //钻石数量
+    required int32 time = 5;            //领取时间
+}
+
+//红包信息
+message PRedPacket
+{
+    required int64 id = 1;              //红包id
+    required int32 senderId = 2;        //发送者id
+    required string senderName = 3;     //发送者名字
+    required PHead senderHead = 4;      //发送者头像
+    required int32 sendTime = 5;        //发送时间
+    required int32 type = 6;            //红包类型 1拼运气 2平分（备用字段）
+    optional int32 gold = 7;            //钻石数量
+    optional int32 leftGold = 8;        //剩余钻石
+    optional int32 packetNum = 9;       //红包总个数
+    optional int32 receivedNum = 10;    //已领取个数
+    repeated PRedPacketReceiver receiverList = 11;
+    optional int32 expireTime = 12;     //过期时间
+    optional int32 talkChannel = 13;    //聊天频道 1世界 2商会 3私人
+    optional int32 titleid = 14;        //称号id
+    //红包上的提示语
+    optional string tips = 15;          //不传就默认
+}
+
+//发红包
+message CSendRedPacket
+{
+    required int32 gold = 1;            //红包钻石数量（玩家部分）
+    required int32 type = 2;            //红包类型 1拼运气 2平分（备用字段）
+    required int32 packetNum = 3;       //红包个数（备用字段）
+}
+
+message SSendRedPacket
+{
+    required bool isSuccess = 1;
+}
+
+//打开红包
+message COpenRedPacket
+{
+    required int64 id = 1;
+}
+
+message SOpenRedPacket
+{
+    required int64 id = 1;              //红包id
+    required int32 result = 2;          //结果 1抢到红包 2已抢过 3已派完 4已过期
+    required PRedPacket redPacket = 3;  //红包信息
+}
+
+message SRedPacketList
+{
+    repeated PRedPacket list = 1;          //红包列表
+}
+
+message SNewRedPacket
+{
+    required PRedPacket redPacket = 1;
+}
+
+//红包派完了（通知客户端删除）
+message SRedPacketAllReceived
+{
+    required int64 id = 1;
+}
+
+//兑换头像
+message CLiveHead
+{
+    required int32 headid = 1;  //头像id
+    required int32 actid = 2;   //活动id，不是活动传0
+}
+
+message SOpenChangeHead
+{
+    repeated int32 list = 1;        //头像id列表
+    required PAttribute attr = 2;   //头像总加成属性
+}
+
+message SLiveHead
+{
+    required int32 headid = 1;      //头像id
+    required PAttribute attr = 2;   //头像总加成属性
+}
+
+message SChangeHead
+{
+    required int32 headid = 1;
+}
+
+message SCrossSrv
+{
+    required bool iscross = 1;//是否跨服
+}
+
+//前端请求穿戴聊天框
+message CChatBGPutOn
+{
+    required int32 id = 1;  //穿戴聊天框
+}
+//穿戴聊天框和新获得聊天框返回
+message SChatBGPutOn
+{
+    required int32 id = 1;  //穿戴的聊天框变更, 前端判断没有则为新增加入
+}
+
+message SChangeSex
+{
+    required int32 sex = 1;//性别
+}
+
+//秘书装扮信息
+message SSecretary
+{
+    required int32 id = 1; //当前装扮ID
+    message DressInfo
+    {
+        required int32 id = 1;  //装扮ID
+        required int32 lefttime = 2; //对应倒计时、永久为-1(结束时间戳)
+    }
+    repeated DressInfo idlist = 2; //拥有的
+    required int32 status = 3; //1:初始化、2、增加、3、消失、4：更换
+}

@@ -1,0 +1,347 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+
+package PSiegeWall;
+
+
+// enum SiegeCmd
+// {
+//		cSiegeInit						=	1,//请求初始化数据
+//		cSiegeStage						=	2,//请求阶段信息
+//		cProtest						=	3,//抗议请求
+//		cBossList						=	4,//请求boss列表 
+//		cInitFight						=	5,//请求进入备战 --PSiegeWall.CInitFight
+//		cBuyBuffInBattle				=	6,//备战界面中购买buff （购买直接使用）--PSiegeWall.CBuyBuffInBattle
+//		cUsekillBuff					=	7,//使用击杀buff	--PSiegeWall.CUsekillBuff
+//		cSiegeFight						=	8,//战斗	--PSiegeWall.CSiegeFight
+//		cUnlockStaff                    =   9,//解锁员工 --PSiegeWall.CUnlockStaff
+//		cOpenUdisk						=	10,//开启U盘 --PSiegeWall.COpenUdisk
+//		cDonate							=	11,//捐赠 --PSiegeWall.CDonate
+//		cBuyOrder						=	12,//购买斩杀令 --PSiegeWall.CDonate
+//		cEnterTreasure					=	13,//进入宝库界面 -- PSiegeWall.CEnterTreasure
+//		cShopBuy						=	14,//商城购买（兑换）PSiegeWall.CShopBuy
+//		cGetRankReward					= 	15,//领取排行版奖励 PSiegeWall.CGetRankReward
+//		cSiegeBuyActions				= 	16,//购买行动点 
+
+//	
+//		sSiegeInit						=	1,//初始化数据	--PSiegeWall.SSiegeMsg
+//		sSiegeStage						=	2,//接受阶段信息  --PSiegeWall.SSiegeStageMsg
+//		sProtest						=	3,//抗议返回	--PSiegeWall.SProtest
+//		sBossList						=	4,//boss列表返回	--PSiegeWall.SBossList
+//		sInitFight						=	5,//请求进入备战	--PSiegeWall.SInitFight
+//		sBuyBuffInBattle				=	6,//备战界面中购买buff	--PSiegeWall.SBuyBuffInBattle
+//		sUsekillBuff					=	7,//使用击杀buff	--PSiegeWall.SUsekillBuff
+//		sSiegeFight						=	8,//战斗返回	--PSiegeWall.SSiegeNewFight
+//		sUnlockStaff                    =   9,//解锁员工	--PSiegeWall.SUnlockStaff
+//		sOpenUdisk						=	10,//开启U盘	--PSiegeWall.SOpenUdisk
+//		sDonate 						=	11,//捐赠 --PSiegeWall.SDonate
+//		sBuyOrder						= 	12,//购买斩杀令 -- PSiegeWall.SBuyOrder
+//		sEnterTreasure					=	13,//进入宝库界面 --PSiegeWall.SEnterTreasure
+//		sShopBuy						=	14,//商城购买（兑换）PSiegeWall.SShopBuy
+//		sGetRankReward					= 	15,//领取排行版奖励 PSiegeWall.SGetRankReward
+//		sGetRankStatePush				=	16,//领取状态变化推送 PSiegeWall.SGetRankStatePush
+//		sGetActionPoint					=	17,//更新行动点 PSiegeWall.SActionPoint
+//		sSiegeActivityStatus			= 	18,//下发活动状态  PSiegeWall.SActivityStatus
+//		sSiegeSwitchStage				= 	19,//下发阶段切换后的开始时间  PSiegeWall.SSiegeSwitchStage
+//		sSiegeBuff						= 	20,//下发阶buff信息  PSiegeWall.SSiegeBuff
+// }
+
+
+//boss信息
+message PBossMsg
+{
+	//除id外其他都是optional，
+	//原因是前端在boss被发现前也需要知道id，用来展示（第三阶段）
+	
+	optional int32 indexID = 1;   //唯一id id * 1000 + times
+	required int32 id = 2;   //id
+
+	optional PInt64Int64 bossBlood = 3; //boss血量
+	optional string discoverer = 4;//发现者
+	optional int32 commerceId = 5;	//发现者商会id
+
+	optional int32 type = 6; //阵营
+	repeated int32 staffId = 7;//已死亡员工列表
+	optional int32 times = 8;//被攻击次数
+}
+
+//伤害信息
+message PHurtRank
+{
+    required int32 index = 1;   // 排名
+    required int32 id = 2;      // 玩家id
+    required string name = 3;   // 名称
+    required int64 hurt = 4;    // 伤害
+}
+
+//u盘数据
+message PDiskMsg
+{
+	required int32 id = 1;   		//itemid
+	required int32 playerid = 2;    //捐献者id
+	required string playername = 3; //捐献者名字
+	required int32 count = 4;		//拥有数量
+}
+
+//斩杀令数据
+message POrderMsg
+{
+	required int32 id = 1;   		//id
+	required int32 leavecount = 2;  //捐献剩余数量
+}
+
+//兑换商店item数据
+message PShopItem
+{
+	required int32 index = 1;   // 商品位置（用于购买协议中定位用）
+	required int32 goodid = 2;  // 对应商城表中的id
+	required int32 buyCount = 3;// 当前购买次数（客户端需判定是否允许继续购买）
+}
+
+message POneStageData
+{
+	required int32 stage = 1;		   // 阶段id，1,2,3
+	required int64 point = 2;		   // 当前阶段积分
+	repeated PShopItem itemList = 3;   // 当前阶段商品列表数据
+	optional int32 selfGetState = 4;   // 领取状态 0:未领取，1：已领取
+	optional int32 gangGetState = 5;   // 领取状态 0:未领取，1：已领取
+}
+
+message PPhaseProgress
+{
+	optional int32 type = 1;			//阵营 
+	optional int32 progressCur = 2; 	  //进度当前值
+	optional int32 progressMax = 3; 	  //进度最大值
+}
+
+message PTeam
+{
+	required int32 type = 1;		//阵营
+	required int32 bossId = 2;		//boss信息
+	repeated PIntString commerce = 3;		//商会信息 id，名称
+}
+
+//Client -> Server
+message CInitFight
+{
+	required int32 bossIndexID = 1; //boss唯一id
+}
+
+message CBuyBuffInBattle
+{
+	required int32 id = 1;   // buff 
+}
+
+message CUsekillBuff
+{
+	required int32 id = 1;   // buff 
+}
+
+message CSiegeFight
+{
+	//required int32 staffid = 1;   // 出战员工id
+	required int32 bossIndexID = 2;	//boss唯一id
+}
+
+message CUnlockStaff
+{
+    required int32 staffid = 1;   // 出战员工id
+    required int32 bossIndexID = 2;      // boss唯一id
+}
+
+message COpenUdisk
+{
+	required int32 id = 1;   	 // U盘ID
+	required int32 playerid = 2; // u盘所属者
+	required bool istreasure = 3;// 是否是商会宝库
+}
+
+message CDonate
+{
+	required int32 id = 1;   // ID （U盘，斩杀令）
+}
+
+message CEnterTreasure
+{
+	required int32 actId = 1;	// 活动id
+	required int32 stage = 2;// 阶段id，1,2,3
+}
+
+message CShopBuy
+{
+	required int32 stage = 1;// 阶段id，1,2,3
+	required int32 index = 2;// 商品位置
+	required int32 count = 3;// 购买数量
+}
+
+message CGetRankReward
+{
+	required int32 actId = 1;	 // 活动id
+	required int32 stage = 2;	 // 阶段id，1,2,3
+	required int32 ranktype = 3; // 排行版类型，1是个人，2商会
+}
+
+
+
+//Server -> Client
+message SSiegeMsg
+{
+	required int32 activityID = 1;	//活动id
+	required int32 phase = 2;		//阶段	
+	
+	repeated POneStageData stageData = 3; //三个阶段数据（兑换商店数据、是否可领）
+}
+
+message SActionPoint
+{
+	required int32 action = 1;   //抗议点
+	optional int64 lastTime = 2; //下次恢复抗议点时间
+	optional int32 buytimes = 3; //已购买次数
+}
+
+message SSiegeStageMsg
+{
+	required int32 phase = 1;		//阶段	
+	repeated PPhaseProgress progress = 2; //进度
+	required PBiInt lastUdisk = 3;//剩余U盘 id 数量
+	optional int32 enemy = 4;             //剩余敌人数量 第三阶段.
+	repeated PBossMsg boss = 5;           //大boss信息
+	repeated int32 staffs = 6;//已恢复过员工列表
+	repeated PTeam teams = 7;//阵营信息 第二阶段
+}
+
+message SProtest
+{
+	required int32 type = 1;   //类型 1，boss 2，U盘 3，道具列表
+	required int32 jifen = 2;  //积分（这是货币）
+	required int32 score = 3;  //贡献（这拿来排名）
+	optional PBossMsg boss = 4;	//boss
+	
+	optional int32 uDiskID = 5; //U盘id
+	repeated PItem items = 6;	//道具列表
+}
+
+message SBossList
+{
+	repeated PBossMsg bossList = 1;	//boss列表
+}
+
+message SInitFight
+{
+	required PBossMsg boss = 1;	//boss信息
+	required int64 ownHurt = 2;//自己伤害
+	repeated PHurtRank hurtList = 3;//总伤害列表
+	
+}
+
+message SBuyBuffInBattle
+{
+	required PIntInt buff = 1;//buff
+}
+
+//
+message SUsekillBuff
+{
+	required PIntInt buff = 1;//buff
+}
+//废弃
+message SSiegeFight
+{
+    required int64 hurt = 1;   //伤害
+    required int32 jifen = 2;  //积分(单次砍杀积分)
+	required int64 score = 3;  //总剩余积分
+	required bool isKill = 4;  //是否击杀
+	repeated PItem killitems = 5;  //击杀获得道具掉落 （20180527,策划信誓旦旦说非击杀必定不会获得道具掉落）
+	//下方伤害列表
+	required int64 ownHurt = 6;//自己伤害
+	repeated PHurtRank hurtList = 7;//全部伤害列表
+}
+
+//新版战斗
+message SSiegeNewFight
+{
+    required int32 jifen = 1;  //积分(单次砍杀积分)
+	required int64 score = 2;  //总剩余积分
+	required SFight fight = 3; //战报·
+	repeated PItem killitems = 4;  //击杀获得道具掉落 （20180527,策划信誓旦旦说非击杀必定不会获得道具掉落）
+	repeated PHurtRank hurtList = 5;//全部伤害列表
+	required int64 ownHurt = 6;//自己伤害
+}
+
+message SUnlockStaff
+{   
+    required int32 staffid = 1;     //员工id
+    repeated int32 staffs = 2;//已恢复过员工列表
+    required int32 bossIndexID = 3;   //boss唯一id
+}
+
+message SOpenUdisk
+{
+	required int32 id = 1;        //u盘道具ID
+	required int32 playerid = 2; // u盘所属者
+	required bool istreasure = 3;// 是否是商会宝库
+	repeated PItem items = 4;//开启获得物品
+}
+
+message SDonate
+{
+	required int32 id = 1;     // ID （U盘，斩杀令 -- 加入商会宝库）
+}
+
+message SBuyOrder
+{
+	required POrderMsg orderdata = 1;   // 公会捐献斩杀令数据
+}
+
+message SEnterTreasure
+{
+	required int32 stage = 1;			// 阶段id，1,2,3
+	required int64 point = 2;       	// 可用积分
+	repeated PDiskMsg disklist = 3; 	// 公会捐献u盘数据
+	required POrderMsg orderdata = 4;   // 公会捐献斩杀令数据
+}
+
+message SShopBuy
+{
+	required int32 stage = 1;	 // 阶段id，1,2,3
+	required int32 index = 2;    // 商品位置
+	required int32 goodid = 3;   // 商品id
+	required int32 buyCount = 4; // 购买数量
+	required int64 costpoint = 5;// 消耗积分
+	required int64 point = 6;    // 剩余积分
+}
+
+message SGetRankReward
+{
+	required int32 actId = 1;	// 活动id
+	required int32 stage = 2;	// 阶段id，1,2,3
+	required int32 index = 3;	// 奖励档次
+	required int32 type = 4;	// 1:个人，2是商会成员，3是商会会长
+}
+
+message SGetRankStatePush
+{
+	repeated PIntInt selfGetState = 1;   // 领取状态 k : 阶段， v 0:未领取，1：已领取，2：未上榜
+	repeated PIntInt gangGetState = 2;   // 领取状态 k : 阶段， v 0:未领取，1：已领取，2：未上榜
+}
+
+message SActivityStatus
+{
+	required bool state = 1;		//活动状态  // true 开启 false关闭
+	optional int32 actid = 2;		//活动id
+	optional int64 startTime = 3;	//开始时间
+	optional int64 endTime = 4;		//结束时间
+}
+
+message SSiegeSwitchStage
+{
+	required int32 starttime = 1;	//开启时间
+}
+
+message SSiegeBuff
+{
+	repeated PIntInt buffs = 1;//buff id 数量
+}

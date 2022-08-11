@@ -1,0 +1,208 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PCrossArena;
+
+//系统id: 跨服竞技场 CrossArena = 142,
+
+
+// local CMD_ID = 
+// {
+//  cCUArenaTopRank = 1,				--竞技场前10名信息请求	
+//	cCUMatchInfo = 2,					--请求匹配信息
+//	cCUMatchPlayer = 3,					--请求匹配玩家
+//	cCUArenaFight = 4,					--请求战斗
+// 	cCUArenaReward = 5,					--请求领取积分排名奖励  PCrossArena.CCUArenaReward
+// 	cCUArenaChipInfo = 6,				--请求押注信息 
+// 	cCUArenaChip = 7,					--请求押注   			PCrossArena.CCUArenaChip
+// 	cCUArenaFightRecord = 8,			--请求战斗记录
+
+//	sCUArenaTopRank = 1,				--竞技场战力前10榜单	PCrossArena.SRankList
+//	sCUMatchInfo = 2,					--匹配信息				PCrossArena.SCUArenaMatchInfo
+//	sCUMatchPlayer = 3,					--请求匹配玩家			PCrossArena.SCUArenaMatchInfo
+//	sCUArenaFight = 4,					--战斗结果下发			PCrossArena.SCUArenaFight
+//  sCUArenaReward = 5,					--领取积分排名奖励		PCrossArena.SCUArenaReward 
+// 	sCUArenaChipInfo = 6,				--押注信息				PCrossArena.SCUArenaChipInfo 
+// 	sCUArenaChip = 7,					--押注					PCrossArena.SCUArenaChipInfo 
+// 	sCUArenaFightRecord = 8,			--战斗记录				PCrossArena.SCUArenaFightRecord 
+// 	sCUArenaActUpdate = 10,		  		--活动状态更新			PCrossArena.SCorssArenaInit
+// 	sCUArenaVsPlayer = 11,		  		--战斗记录即将对决玩家下发	PCrossArena.SCUArenaVsPlayer
+//	sCUArenaMyChip = 12,				--我的押注玩家			PCrossArena.SCUArenaMyChip
+// }
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+message CCUArenaReward
+{
+	required int32 type = 1;		//1:积分排名奖励 2:玩家押注奖励 3:押注奖池奖励 4:淘汰赛奖励
+	optional int32 playerid = 2;	//type为2，对应投注玩家ID
+}
+
+
+//请求押注
+message CCUArenaChip
+{
+	required int32 playerId = 1;
+	required int32 type = 2;	//1:一票, 2:全下
+	required int32 index = 3;	//对应分组
+}
+
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+
+//活动初始化
+message SCorssArenaInit
+{
+	required int32 actId = 1;			//活动id
+	required int32 state = 2;			//活动状态 1： 开启、2关闭
+	optional int32 starttime = 3;		//开启时间
+	optional int32 endtime = 4;			//关闭时间
+	optional bool isScoreMatch = 5;		//积分赛是否有资格
+	optional int32 matchCount = 6;		//剩余匹配次数剩余匹配次数
+	optional bool scorereward = 7;		//积分赛是否领奖
+	optional bool topreward = 8;		//淘汰赛是否奖励
+	optional int32 arenaStage = 9;		//竞技场当前阶段 -0：无，1预备帅选，2：预备帅选结果展示(积分排行)，3：积分赛，4：积分赛结果展示，5:16进8准备阶段，6:16进8战斗阶段
+										//7:8进4准备阶段，8:8进4战斗阶段，9:4进2准备阶段，10：4进2战斗阶段，11:决赛准备阶段，12：决赛战斗阶段，13：决赛结果展示
+	optional bool redpoint = 10;		//是否提示红点
+	optional bool cantop = 11;		//淘汰赛领奖赛红点
+	optional bool canScore = 12;		//积分赛能否领奖
+	optional bool canChip =13;			//押注分红有领取红点
+}
+
+message PRankInfo
+{
+    required int32 rank = 1;     //排名
+    required int64 playerid = 2; //玩家ID
+    required string name = 3;    //玩家名
+    required int64 value = 4;    //数值
+    required int32 level = 5;    //公司规模（财势榜特有）
+    optional int32 titleid = 6;	//称号id
+    optional int32 headid = 7;//头像id
+    optional int32 sex = 8;     //性别
+    optional int32 vip = 9;     //vip等级
+    optional int32 serverid = 10;    //区服ID
+}
+
+// 榜单
+message SRankList
+{
+    repeated PRankInfo rankList = 1;
+}
+
+//对战界面信息
+message PFightPageInfo
+{
+	required int32 rank = 1;			//积分排名
+	required int32 score = 2;			//积分
+	required int64 power = 3;			//总战力
+	optional int32 times = 4;			//剩余匹配次数
+}
+
+message PCUArenaPlayer
+{
+	message lineup
+	{
+		required int32 staffid = 1;		//员工ID
+		required int32 color = 2;		//员工品质
+		optional int32 refineLv = 3;	//专精等级
+	}
+	required int32 playerid = 1;		//玩家ID
+	required string name = 2;			//角色名
+	optional int32 serverid = 3;		//区服ID
+	optional int64 power = 4;			//公关战力
+	optional int32 rank = 5;			//积分排名
+	optional int32 score = 6;			//积分
+	optional string commercename = 7;	//商会
+	optional int32 title = 8;			//称号
+	optional int32 sex = 9;				//性别
+	optional int32 headid =10;			//头像ID
+	optional int32 headframe = 11;		//头像框
+	optional int32 body = 12;			//身体
+	optional int32 chip = 13;			//投票数
+	optional bool vsresult = 14;		//对决结果
+	optional int32 vip = 15;			//vip
+	repeated lineup staffs = 16;		//阵容  
+	optional int32 showserverid = 17;	//显示区服ID
+}
+
+message SCUArenaMatchInfo
+{
+	required int64 power = 1;			//公关战力
+	optional int32 rank = 2;			//积分排名
+	optional int32 score = 3;			//自己积分自己积分
+	optional int32 matchCount = 4;		//剩余匹配次数剩余匹配次数
+	optional PCUArenaPlayer other = 5;	//对手信息
+	repeated PCUArenaPlayer randplayer = 6;	//随机对手
+	optional string selfname = 7;				//名字
+}
+
+message SCUArenaFight
+{
+	required bool result = 1;	//是否胜利
+	required int32 score = 2;	//当前积分
+	required int32 rank = 3;	//当前排名 
+	required SFightPVP fightInfo = 4; //战斗信息
+}
+
+message SCUArenaReward
+{
+	required int32 type = 1;	 //1:积分排名奖励 2:玩家押注奖励 3:押注奖池奖励 4:淘汰赛奖励
+	optional int32 index = 2;	//type1：排名奖励 档期 type4：16,8,4,2，1
+}
+
+message SCUArenaChipInfo
+{
+	message matchplayer
+	{
+		required PCUArenaPlayer player1 = 1;//
+		required PCUArenaPlayer player2 = 2;//
+		optional int32 playerId = 3;//押注玩家id 
+		optional int32 tickCount = 4;//投票数
+		optional bool gisget = 5;//是否领取
+	}
+	required int32 days = 1;	//连胜天数
+	required int32 odds = 2;	//赔率
+	required int32 reward = 3;	//奖池
+	optional PCUArenaPlayer player1 = 4;	//万众瞩目
+	optional PCUArenaPlayer player2 = 5;	 //夺冠热门
+	optional PCUArenaPlayer player3 = 6;	 //本期黑马
+	optional int32 value1 = 7;		 		//战力悬殊值
+	optional PCUArenaPlayer player4 = 8;	 //潜力总裁
+	optional int32 value2 = 9;	 	 //前日充值额度
+	repeated  matchplayer player = 10; //今日比赛列表
+	optional  matchplayer mymatch = 11; //对阵玩家
+	optional int32 allinid = 12;//all in 玩家ID 
+	optional bool update = 13;//刷新
+}
+
+message SCUArenaFightRecord
+{
+	message fightdetail
+	{
+		required PCUArenaPlayer player1 = 1;//对阵玩家
+		required PCUArenaPlayer player2 = 2;//对阵玩家
+		optional SFightPVP fightInfo = 3; //战斗信息
+	}
+	repeated fightdetail fight16 = 1;//16强
+	repeated fightdetail fight8 = 2;//8强
+	repeated fightdetail fight4 = 3;//4强
+	repeated fightdetail fight2 = 4;//2强
+	repeated fightdetail vsplayer = 5;//即将对决玩家列表
+}
+
+message SCUArenaVsPlayer
+{
+	message fightdetail
+	{
+		required PCUArenaPlayer player1 = 1;//对阵玩家
+		required PCUArenaPlayer player2 = 2;//对阵玩家
+	}
+	repeated fightdetail vsplayer = 1;//即将对决玩家列表
+}
+
+message SCUArenaMyChip
+{
+	repeated int32 playerlist = 1;		//我押注的玩家ID列表
+}

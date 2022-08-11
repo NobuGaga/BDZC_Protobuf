@@ -1,0 +1,181 @@
+
+Ø
+PSiegeWall.proto
+PSiegeWallPCommon.proto"ä
+PBossMsg
+indexID (RindexID
+id (Rid*
+	bossBlood (2.PInt64Int64R	bossBlood
+
+discoverer (	R
+discoverer
+
+commerceId (R
+commerceId
+type (Rtype
+staffId (RstaffId
+times (Rtimes"Y
+	PHurtRank
+index (Rindex
+id (Rid
+name (	Rname
+hurt (Rhurt"l
+PDiskMsg
+id (Rid
+playerid (Rplayerid
+
+playername (	R
+playername
+count (Rcount";
+	POrderMsg
+id (Rid
+
+leavecount (R
+leavecount"U
+	PShopItem
+index (Rindex
+goodid (Rgoodid
+buyCount (RbuyCount"¶
+POneStageData
+stage (Rstage
+point (Rpoint1
+itemList (2.PSiegeWall.PShopItemRitemList"
+selfGetState (RselfGetState"
+gangGetState (RgangGetState"h
+PPhaseProgress
+type (Rtype 
+progressCur (RprogressCur 
+progressMax (RprogressMax"\
+PTeam
+type (Rtype
+bossId (RbossId'
+commerce (2.PIntStringRcommerce".
+
+CInitFight 
+bossIndexID (RbossIndexID""
+CBuyBuffInBattle
+id (Rid"
+CUsekillBuff
+id (Rid"/
+CSiegeFight 
+bossIndexID (RbossIndexID"J
+CUnlockStaff
+staffid (Rstaffid 
+bossIndexID (RbossIndexID"X
+
+COpenUdisk
+id (Rid
+playerid (Rplayerid
+
+istreasure (R
+istreasure"
+CDonate
+id (Rid"<
+CEnterTreasure
+actId (RactId
+stage (Rstage"L
+CShopBuy
+stage (Rstage
+index (Rindex
+count (Rcount"X
+CGetRankReward
+actId (RactId
+stage (Rstage
+ranktype (Rranktype"z
+	SSiegeMsg
+
+activityID (R
+activityID
+phase (Rphase7
+	stageData (2.PSiegeWall.POneStageDataR	stageData"^
+SActionPoint
+action (Raction
+lastTime (RlastTime
+buytimes (Rbuytimes"†
+SSiegeStageMsg
+phase (Rphase6
+progress (2.PSiegeWall.PPhaseProgressRprogress%
+	lastUdisk (2.PBiIntR	lastUdisk
+enemy (Renemy(
+boss (2.PSiegeWall.PBossMsgRboss
+staffs (Rstaffs'
+teams (2.PSiegeWall.PTeamRteams"¬
+SProtest
+type (Rtype
+jifen (Rjifen
+score (Rscore(
+boss (2.PSiegeWall.PBossMsgRboss
+uDiskID (RuDiskID
+items (2.PItemRitems"=
+	SBossList0
+bossList (2.PSiegeWall.PBossMsgRbossList"ƒ
+
+SInitFight(
+boss (2.PSiegeWall.PBossMsgRboss
+ownHurt (RownHurt1
+hurtList (2.PSiegeWall.PHurtRankRhurtList"0
+SBuyBuffInBattle
+buff (2.PIntIntRbuff",
+SUsekillBuff
+buff (2.PIntIntRbuff"Ø
+SSiegeFight
+hurt (Rhurt
+jifen (Rjifen
+score (Rscore
+isKill (RisKill$
+	killitems (2.PItemR	killitems
+ownHurt (RownHurt1
+hurtList (2.PSiegeWall.PHurtRankRhurtList"Î
+SSiegeNewFight
+jifen (Rjifen
+score (Rscore
+fight (2.SFightRfight$
+	killitems (2.PItemR	killitems1
+hurtList (2.PSiegeWall.PHurtRankRhurtList
+ownHurt (RownHurt"b
+SUnlockStaff
+staffid (Rstaffid
+staffs (Rstaffs 
+bossIndexID (RbossIndexID"v
+
+SOpenUdisk
+id (Rid
+playerid (Rplayerid
+
+istreasure (R
+istreasure
+items (2.PItemRitems"
+SDonate
+id (Rid"@
+	SBuyOrder3
+	orderdata (2.PSiegeWall.POrderMsgR	orderdata"£
+SEnterTreasure
+stage (Rstage
+point (Rpoint0
+disklist (2.PSiegeWall.PDiskMsgRdisklist3
+	orderdata (2.PSiegeWall.POrderMsgR	orderdata"ž
+SShopBuy
+stage (Rstage
+index (Rindex
+goodid (Rgoodid
+buyCount (RbuyCount
+	costpoint (R	costpoint
+point (Rpoint"f
+SGetRankReward
+actId (RactId
+stage (Rstage
+index (Rindex
+type (Rtype"o
+SGetRankStatePush,
+selfGetState (2.PIntIntRselfGetState,
+gangGetState (2.PIntIntRgangGetState"u
+SActivityStatus
+state (Rstate
+actid (Ractid
+	startTime (R	startTime
+endTime (RendTime"1
+SSiegeSwitchStage
+	starttime (R	starttime",
+
+SSiegeBuff
+buffs (2.PIntIntRbuffsBH

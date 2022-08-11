@@ -1,0 +1,93 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+
+package PEquip;
+
+// enum EquipCmd
+// {
+//		cEquip					=	1,	//装备/卸下
+//		cEquipLevelUp			=	2,	//升级
+//		cEquipStarUp			=	3,	//进阶
+//		cDecompose				=	4,	//分解
+//		cDecomposeOnekey		=	5,	//一键分解
+
+//		sEquipInit				=	1,	//初始化推送装备列表
+//		sEquipUpdate			=	2,	//装备更新 （装备，卸下，升级，进阶）
+//		sDecompose				=	3,	//分解返回
+//		sDecomposeOnekey		=	4,	//一键分解返回
+//		sEquipLevelUp			= 	5,	//升级
+//		sEquipStarUp			=   6,	//升星
+// };
+
+
+//C-S
+message CEquip
+{
+	required int32 operate = 1;		//操作 1装备 2卸下
+	required int32 staffid = 2;		//员工id
+	required int32 id = 3;			//唯一id
+}
+
+message CEquipLevelUp
+{
+	required int32 id = 1;			//唯一id
+	optional int32 staffid = 2;		//员工id
+}
+
+message CEquipStarUp
+{
+	required int32 id = 1;			//唯一id
+	optional int32 staffid = 2;		//员工id
+	repeated int32 costEquips = 3;	//消耗装备（为空时消耗道具）
+}
+
+message CDecompose
+{
+	required int32 id = 1;			//唯一id
+}
+
+message CDecomposeOnekey
+{
+	repeated int32 id = 1;			//唯一id列表
+}
+
+//S-C
+message SEquipInit
+{
+	repeated PEquipInfo equipList 	= 1;//装备列表
+}
+
+message SEquipUpdate
+{
+	required int32 updateType = 1;	//1添加 2更新 3删除
+	optional PEquipInfo equip = 2;	//装备信息（删除时为空）
+	optional int32 id = 3;			//装备id（删除时不为空）
+}
+
+message SEquipLevelUp
+{
+	required int32 id = 1;			//唯一id
+	required int32 level = 2;		//等级
+	optional int32 staffid = 3;		//员工id
+}
+
+message SEquipStarUp
+{
+	required int32 id = 1;			//唯一id
+	required int32 star = 2;		//星级
+	optional int32 staffid = 3;		//员工id
+	repeated int32 costEquips = 4;	//消耗装备（为空时消耗道具）
+}
+
+message SDecompose
+{
+	required int32 id = 1;			//装备
+	repeated PIntInt itemList = 2;	//获得的道具列表
+}
+
+message SDecomposeOnekey
+{
+	repeated int32 idList = 1;		//装备信息
+	repeated PIntInt itemList = 2;	//获得的道具列表
+}

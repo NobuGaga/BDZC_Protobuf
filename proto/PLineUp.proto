@@ -1,0 +1,53 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PLineUp;
+
+//系统id: 阵容179
+//LineUp = 179,
+// local CMD_ID = 
+// {
+// 	cPLineUpAddStaff				= 1,//添加员工 	PLineUp.CAddStaff
+//  cPLineUpOpen					= 2,//开启格子
+//	cPLineUpFight					= 3,//请求战斗  PCommon.CFight
+//	cPLineUpDownStaff				= 4,//请求下阵  PLineUp.CDownStaff
+//  cPLineUpAuto 					= 5,//一键上阵, 返回PStaff.SStaffsLineup, 并且给个提示语: 一键上阵成功
+
+// 	sPLineUpInit					= 1,//初始化 	PLineUp.SPLineUpInit
+//  sPLineUpOpen					= 2,//开启格子	PLineUp.SPLineUpOpen
+//	sPlineUpFight					= 3,//战斗结果	PCommon.SFight
+// }
+
+
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+
+message CAddStaff
+{
+	required int32 id 		= 1;//员工ID	
+	required int32 index 	= 2;//格子位置
+}
+
+message CDownStaff
+{
+	required int32 index 	= 1;//格子位置
+}
+
+
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+message SPLineUpInit
+{
+	repeated PIntInt list 	= 1;//列表 k:index, v:staffid
+	optional int32 size 	= 2;//格子个数
+}
+
+
+message SPLineUpOpen
+{
+	required int32 size 	= 1;//格子个数
+}
+

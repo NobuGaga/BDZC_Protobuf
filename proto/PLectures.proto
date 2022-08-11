@@ -1,0 +1,68 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+import "PCommon.proto";
+package PLectures;
+
+//系统id: 经济演讲
+// local CMD_ID = 
+// {
+// 	cLecturesBattle					= 1,//演讲 PLectures.CLecturesBattle
+// 	cLecturesTotalBattle			= 2,//一键演讲 PLectures.CLecturesTotalBattle
+//	cLecturesOpen					= 3,//打开一键演讲界面
+
+// 	sLecturesInit					= 1,//初始化 PLectures.SLecturesInit
+// 	sLecturesResult					= 2,//演讲结果返回 PLectures.SLecturesResult
+//  sLecturesReset					= 3,//零点重置PLectures.SLecturesInit
+//  sLecturesOpen					= 4,//PLectures.SLecturesChapterList
+// }
+
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+
+//请求演讲战斗
+message CLecturesBattle
+{
+	required int32 id = 1;		//关卡id
+}
+
+message CLecturesTotalBattle
+{
+	required int32 id = 1;		//关卡id
+	required int32 num = 2;	//关卡数量
+}
+
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+
+//初始化
+message SLecturesInit
+{
+	required int32 id = 1;		//关卡id
+	repeated PIntInt showReward= 2;	//展示奖励
+	optional int64 bossBlood = 3;//Boss血量
+	required bool isOpen	= 4;//是否开启一键演讲
+}
+
+//战斗结果
+message SLecturesResult
+{
+	required int32 id = 1;		 	//关卡id
+	required int32 type = 2;		// 1:演讲 , 10:一键演讲
+	required int32 state = 3;	 	//1胜利, 2失败
+	optional int64 selfcost = 4; 	//自己消耗的经验值
+	optional int32 getscore = 5; 	//获得知名度分数
+	repeated PIntInt getlist = 6;	//获得奖励列表
+	repeated PIntInt showReward = 7;//下一关的展示奖励
+	optional int64 bossBlood = 8; //Boss血量
+	optional int32 nextId = 9;	//下一个关卡id (胜利时传入)
+	required bool isOpen	= 10;//是否开启一键演讲
+}
+
+
+message SLecturesChapterList
+{
+	repeated PIntInt  chapterList = 1; //key:关卡id,value:经验消耗
+}

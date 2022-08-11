@@ -1,0 +1,64 @@
+
+ö
+PCrossFlower.protoPCrossFlowerPCommon.proto"M
+CListByPlayer
+playerid (Rplayerid 
+oriServerId (RoriServerId")
+CListByType
+rankType (RrankType"W
+CSendFlower
+playerid (Rplayerid
+serverid (Rserverid
+num (Rnum"%
+CSearch
+playerid (Rplayerid"
+CShopBuy
+id (Rid"
+CSerChat
+type (Rtype"Š
+SState
+actId (RactId
+state (Rstate
+	starttime (R	starttime
+endtime (Rendtime
+	closetime (R	closetime"m
+SInfo
+Rank (RRank
+RankType (RRankType 
+RewardState (RRewardState
+type (Rtype"X
+SSerChat"
+mySerChatNum (RmySerChatNum(
+corssSerChatNum (RcorssSerChatNum"ƒ
+SInit*
+state (2.PCrossFlower.SStateRstate
+shop (2.PIntIntRshop0
+serChat (2.PCrossFlower.SSerChatRserChat"Û
+SPlayerInfo
+id (Rid 
+oriServerId (RoriServerId
+name (	Rname
+head (Rhead
+chatBg (RchatBg
+vip (Rvip
+sex (Rsex
+rank (Rrank
+rankType	 (RrankType
+getNum
+ (RgetNum
+sendNum (RsendNum
+body (Rbody
+level (Rlevel
+title (Rtitle
+force (Rforce"w
+SOpenSearch5
+commerce (2.PCrossFlower.SPlayerInfoRcommerce1
+friend (2.PCrossFlower.SPlayerInfoRfriend"”
+	SRankList-
+list (2.PCrossFlower.SPlayerInfoRlist
+rankType (RrankType
+playerid (Rplayerid 
+oriServerId (RoriServerId"?
+	SDropItem
+index (Rindex
+list (2.PIntIntRlistBH

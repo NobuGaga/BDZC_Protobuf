@@ -1,0 +1,143 @@
+﻿syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+import "PCommon.proto";
+
+
+package PBattle;
+
+//系统id: 机场
+//Airport = 156,
+// local CMD_ID = 
+// {
+// 	cBattle = 1,
+// 	cUnlock = 2,
+//  cSeckillBattle = 3,
+//	cAcquisition = 4,//一键收购
+//	cBossReset = 5,//BOSS血量和挑战次数重置 PBattle.CBattle
+//	cMapOneGet = 6,//领取一个地图的宝箱收益 PBattle.CMapOneGet
+//	cMapAllGet = 7,//领取所有地图的收菜收益
+
+// 	sInit = 1,
+// 	sResult = 2,
+// 	sUnlock = 3,
+//	sSeckillBattle = 4,
+//	sAcquisition = 5, //一键收购返回 PBattle::SAcquisition
+//  sBattleBossFight = 6,//boss战斗结果返回
+//	sBossReset = 7,//BOSS血量和挑战次数重置 PBattle.SBossReset
+//	sMapUpdate = 8,//刷新关卡大地图 PBattle.PMapUpdate
+//	sMapOneGet = 9,//领取宝箱收益 PBattle.SMapOneGet
+// }
+
+//////////////////////////////////
+// Client -- Server
+//////////////////////////////////
+
+//请求关卡战斗
+message CBattle
+{
+	required int32 id = 1;		//关卡id
+	optional int32 staffId = 2;	//员工id
+}
+
+//请求解锁
+message CUnlock
+{
+	required int32 staffId = 1;	//员工id
+}
+
+//请求一键秒杀战斗
+message CSeckillBattle
+{
+	required int32 id = 1;		//关卡id
+}
+
+//请求一个地图的宝箱收益
+message CMapOneGet
+{
+	required int32 id = 1;		//地图id
+}
+
+//////////////////////////////////
+// Server -- Client
+//////////////////////////////////
+
+//地图刷新
+message PMapUpdate
+{
+	message OneMapInfo
+	{
+		required int32 id = 1;			//地图id
+		required int64 startTime = 2;	//宝箱收益开始时间
+	}
+	required int32 curMapId = 1;		//当前地图id
+	repeated OneMapInfo mapList = 2;	//地图列表
+	required int64 startTime = 3;		//收菜收益开始时间
+	repeated PItem rewards = 4;			//收菜收益列表, cMapAllGet收菜时返回
+}
+
+//初始化
+message SInit
+{
+	required int32 id = 1;		//关卡id
+	required int64 blood = 2;	//剩余血量 
+	repeated int32 lockStaffs = 3;	//锁定员工的id列表
+	repeated PItem staffLifeNum = 4;	//员工已经使用加班通知的次数{{id:员工id,count:已用的加班通知的次数}}
+	required int32  fightBossTimes = 5; //每日挑战BOSS次数
+	optional PMapUpdate mapInfo = 6;	//地图信息
+}
+
+//战斗结果
+message SResult
+{
+	required int32 id = 1;		//关卡id
+	required int32 state = 2;	//1继续, 2胜利, 3失败
+	//敌人的---------//
+	optional int64 hurt = 3;	//对敌的伤害值
+	optional int64 blood = 4;	//敌方的剩余血量值(胜利时没有 -- 直接减到0)
+	optional int32 nextId = 5;	//下一个关卡id (胜利时传入)
+	optional int32 lockStaff = 6; //锁定员工id(BOSS战时需要)
+	optional int64 money = 7;
+	optional int64 selfcost = 8; //自己消耗（boss没有）
+	optional PItem staffLifeNum = 9;	//员工已经使用加班通知的次数{id:员工id,count:已用的加班通知的次数}
+}
+
+message SUnlock
+{
+	required int32 staffId = 1;	//员工id
+	optional PItem staffLifeNum = 2;	//员工已经使用加班通知的次数{id:员工id,count:已用的加班通知的次数}
+}
+
+
+message SSeckillBattle
+{
+	required int32 curId = 1;	 // 当前关卡id
+	required int32 lastId = 2;   // 最后关卡id
+	repeated SResult list = 3;   // 战斗列表
+}
+
+message PAcquisition
+{
+	repeated SResult list = 3;   // 战斗列表
+}
+
+message SAcquisition
+{
+	required int32 curId = 1;	 // 当前关卡id
+	required int32 lastId = 2;   // 最后关卡id
+	repeated PAcquisition battle = 3;//战斗关卡
+}
+
+message SBossReset
+{
+	required int32 id = 1;		//关卡id
+	required int64 blood = 2;	//剩余血量 
+	required int32  fightBossTimes = 3; //每日挑战BOSS次数
+}
+
+message SMapOneGet
+{
+	required int32 id = 1;			//地图id
+	required int64 startTime = 2;	//宝箱收益开始时间
+	repeated PItem rewards = 3;		//宝箱收益列表, cMapOneGet领取宝箱时返回
+}

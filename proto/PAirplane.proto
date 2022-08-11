@@ -1,0 +1,106 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+
+package PAirplane;
+
+// 协议描述
+// 系统id: 飞机
+// School = 157,//先复用原来的商学院系统命令
+//enum AirplaneCmd
+//{
+//    //c->s
+//    cAirplaneUp        = 1,//飞机升级		PAirplane.CAirplane
+//    cAirplaneSkin      = 2,//飞机皮肤		PAirplane.CAirplane
+//    cAirplaneChoice    = 3,//游学选人		PAirplane.CAirplaneChoice
+//    cAirplaneStart     = 4,//开始游学
+//    cAirplaneAward     = 5,//完成游学		PAirplane.CAirplaneAward
+//    cAirplaneActivate  = 6,//激活皮肤		PAirplane.CAirplane
+//    //s->c
+//    sAirplaneInit      = 1,//飞机初始化	PAirplane.SAirplaneInit
+//    sAirplaneUp        = 2,				PAirplane.SAirplane
+//    sAirplaneChoice    = 3,				PAirplane.SAirplaneSeats
+//    sAirplaneSkin      = 4,				PAirplane.SAirplane
+//    sAirplaneStart     = 5,				PAirplane.SAirplane
+//    sAirplaneAward     = 6,				PAirplane.SAirplaneAward
+//	  sAirplaneAddSkin	 = 7,//增加未激活皮肤 PAirplane.SAirplaneSkins
+//    sAirplaneActivate  = 8,//激活皮肤		 PAirplane.SAirplaneActivate
+//	  sAirplaneStudyTimes= 9,//更新游学次数   PAirplane.PStudyTimes
+//};
+
+//////////////////////////////////////////////////////////////////////////
+// Common message
+message PAirplaneSeat
+{
+	required int32 index = 1;		//位置编号
+	required int32 staffid = 2;     //员工id（位置为空时）
+	required bool finish = 3;		//是否可完成
+}
+
+message PAirplaneAward
+{
+	required PAirplaneSeat airplanes = 1;
+	required int32 skillexp = 2;
+	required int32 bookexp = 3;
+	optional bool isGod = 4;
+}
+////////////////////////////////////////////////////////////////////////////
+// Client -> Server
+message CAirplane
+{
+	required int32 ID = 1; 			//进化飞机id或者飞机皮肤id
+}
+
+message CAirplaneChoice
+{
+	required int32 index = 1;		//位置编号
+	required int32 staffid = 2;		//员工ID
+}
+
+message CAirplaneAward
+{
+	optional int32 index = 1;		//位置编号（不传值则为一键完成）
+}
+
+////////////////////////////////////////////////////////////////////////////
+// Server -> Client
+message PStudyTimes
+{
+	required int32 maxTimes = 1;	//最大次数
+    required int32 leftTimes = 2;	//剩余次数
+    optional int32 recoveryCD = 3;  //次数恢复CD
+}
+
+message SAirplaneInit
+{
+	required SAirplane airplane = 1;			//飞机
+	repeated int32 airplaneSkin = 2;			//已拥有未激活皮肤列表
+	optional SAirplaneSeats airplaneSeats = 3;  //座位列表
+    optional PStudyTimes studyTimes = 4;		//游学次数
+}
+
+message SAirplane
+{
+	required int32 airplaneID = 1;		//飞机ID
+	required int32 airplaneSkinID = 2;	//皮肤ID，0代表没有皮肤
+	optional int32 airplaneTime = 3;	//剩余时间（单位为秒）不传代表可飞行
+}
+
+message SAirplaneSkins//已拥有未激活飞机皮肤列表
+{
+	repeated int32 skinID = 1; 			//皮肤ID
+}
+
+message SAirplaneSeats
+{
+	repeated PAirplaneSeat airplaneSeat = 1;
+}
+
+message SAirplaneAward
+{	
+	repeated PAirplaneAward airplaneAwards = 1;//奖励列表
+}
+
+message SAirplaneActivate
+{
+	required int32 skinID = 1;			//皮肤ID
+}
